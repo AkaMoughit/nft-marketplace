@@ -35,6 +35,7 @@ try{
         await sequelize.authenticate();
     }
     console.log('Connection to MySQL database established');
+
 } catch (error) {
     console.error('Unable to connect to database:', error);
 }
