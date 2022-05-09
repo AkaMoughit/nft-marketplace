@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Nft.belongsTo(models.CustomOffer);
       Nft.belongsTo(models.Profile);
+      Nft.belongsTo(models.NftCollection);
       Nft.hasMany(models.NftAttachment);
       Nft.hasMany(models.Listing);
       Nft.belongsToMany(models.Profile, { through: 'FavoriteList' });
-      Nft.belongsToMany(models.Profile, { through: 'Offer' });
       Nft.belongsToMany(models.Profile, { through: 'Activity' });
     }
   }

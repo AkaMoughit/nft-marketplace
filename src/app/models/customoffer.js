@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       CustomOffer.belongsTo(models.Profile);
       CustomOffer.hasMany(models.OfferAttachment);
       CustomOffer.hasMany(models.Nft);
+      CustomOffer.hasMany(models.Comment);
     }
   }
   CustomOffer.init({

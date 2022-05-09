@@ -186,28 +186,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "participent1Id": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Profiles",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "participent1Id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "participent2Id": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Profiles",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "participent2Id",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -837,5 +815,5 @@
     "path": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current.json",
     "backupPath": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current_bak.json",
     "exists": true,
-    "revision": 5
+    "revision": 4
 }

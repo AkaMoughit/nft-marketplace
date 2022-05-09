@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Listing extends Model {
+  class NftCollection extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,19 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Listing.belongsTo(models.Nft);
-      Listing.belongsTo(models.Profile);
-      Listing.hasMany(models.Activity);
-      Listing.belongsToMany(models.Profile, { through: 'Offer' });
+      NftCollection.belongsToMany(models.Profile, { through: 'CollectionFavoriteList' });
+      NftCollection.belongsTo(models.Profile);
+      NftCollection.hasMany(models.Nft);
     }
   }
-  Listing.init({
-    price: DataTypes.DOUBLE,
-    type: DataTypes.STRING,
-    sale_end_date: DataTypes.DATE
+  NftCollection.init({
+    name: DataTypes.STRING,
+    creation_date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Listing',
+    modelName: 'NftCollection',
   });
-  return Listing;
+  return NftCollection;
 };
