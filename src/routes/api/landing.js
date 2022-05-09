@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var mainController = require('../../app/controllers/mainController');
+var mainController = require('../../app/controllers/MainController');
 
 router.get('/', mainController.landingPage);
 

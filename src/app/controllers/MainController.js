@@ -1,10 +1,11 @@
 const path = require('path');
-const userRepository = require('../repositories/userRepository');
+const userRepository = require('../repositories/UserRepository');
 
 exports.welcomePage = function (req, res) {
     userRepository.findByPk(1)
         .then(result => {
-            res.status(200).render('index', { name: result.firstname });
+            console.log(result);
+            res.status(200).render('index', { data: JSON.stringify(result) });
 
         }).catch(error => {
             res.status(404).send("This user is not present in the database.");
