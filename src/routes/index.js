@@ -6,6 +6,8 @@ var nftRouter = require('./nft');
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
 
-router.get('/', mainController.welcomePage);
+router.get(['/', '/index'], mainController.welcomePage);
+router.get('/explore', mainController.explorePage);
+router.get('/auction', mainController.auctionPage)
 
 module.exports = router;

@@ -13,6 +13,14 @@ exports.welcomePage = function (req, res) {
 
 };
 
+exports.explorePage = function (req, res) {
+    res.status(200).render('explore', {});
+}
+
+exports.auctionPage = function (req, res) {
+    res.status(200).render('auction', {});
+}
+
 exports.landingPage = function (req, res) {
     res.send("Welcome to this empty land");
 };
