@@ -107,7 +107,7 @@ module.exports = {
             contract_adress: faker.address.city(0),
             token_id: faker.datatype.uuid(),
             description: faker.lorem.text(),
-            name: faker.datatype.string(),
+            name: faker.name.findName(),
             createdAt: new Date(),
             updatedAt: new Date(),
             ProfileId: profile.id,
