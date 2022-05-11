@@ -6,14 +6,6 @@ class ProfileRepository extends BaseRepository {
         super(Profile);
     }
 
-    listAll() {
-        return this.model.findAll();
-    }
-
-    findByPk(id) {
-        return this.model.findByPk(id);
-    }
-
 }
 
 module.exports = new ProfileRepository(Profile);
