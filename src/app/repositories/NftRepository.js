@@ -9,6 +9,10 @@ class NftRepository extends BaseRepository {
     listAll() {
         return this.model.findAll();
     }
+
+    findByTokenId(tokenId) {
+        return this.model.findOne({ where: { token_id: tokenId }});
+    }
 }
 
 module.exports = new NftRepository(Nft);

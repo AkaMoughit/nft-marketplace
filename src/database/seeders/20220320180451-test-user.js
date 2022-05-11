@@ -108,9 +108,11 @@ module.exports = {
             token_id: faker.datatype.uuid(),
             description: faker.lorem.text(),
             name: faker.name.findName(),
+            //blockchain_type: 'ETHEREUM',
             createdAt: new Date(),
             updatedAt: new Date(),
             ProfileId: profile.id,
+            // Generate randomness
             CustomOfferId: customOfferExist === 1 ? ownedCustomOffers[randomOwnedCustonOfferIndex].id : undefined
           })
           //console.log(ownedCustomOffers[randomOwnedCustonOfferIndex]);

@@ -24,7 +24,7 @@ router.get('/blog-single-2', mainController.blogSingle2Page);
 router.get('/coming-soon', mainController.comingSoonPage);
 router.get('/contact', mainController.contactPage);
 router.get('/forgot-pass', mainController.forgotPassPage);
-router.get('/item-details', mainController.itemDetailsPage);
+router.get('/item-details', nftController.itemDetailsPage);
 router.get('/signin', mainController.signInPage);
 router.get('/signup', mainController.signUpPage);
 router.get('/wallet', mainController.walletPage);

@@ -97,10 +97,6 @@ exports.forgotPassPage = function (req, res) {
     res.status(200).render('forgot-pass', {});
 }
 
-exports.itemDetailsPage = function (req, res) {
-    res.status(200).render('item-details', { nft_id: req.query.nft_id });
-}
-
 exports.signInPage = function (req, res) {
     res.status(200).render('signin', {});
 }

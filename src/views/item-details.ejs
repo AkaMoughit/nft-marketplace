@@ -234,10 +234,7 @@
                                         <div class="details-tab tab-pane fade show active" id="nav-details"
                                             role="tabpanel" aria-labelledby="nav-details-tab">
 
-                                            <p>This is the second batch of Cybertino Genesis NFTs for early adopters and
-                                                is 1 of 5. This Genesis NFT will be
-                                                interactive: hold and wait for future exclusive benefits and early
-                                                access to new drops!</p>
+                                            <p><%- nft.description %></p>
                                             <div class="author-profile d-flex flex-wrap align-items-center gap-15">
                                                 <div class="author-p-thumb">
                                                     <a href="author"><img src="assets/images/seller/02.gif"
@@ -245,7 +242,7 @@
                                                 </div>
                                                 <div class="author-p-info">
                                                     <p class="mb-0">Owner</p>
-                                                    <h6><a href="author">Alex joe</a></h6>
+                                                    <h6><a href="author"><%- nft.owner_name %></a></h6>
                                                 </div>
                                             </div>
                                             <ul class="other-info-list">
@@ -256,7 +253,7 @@
                                                     <div class="item-info-details">
                                                         <div id="cryptoCode" class="crypto-page">
                                                             <input id="cryptoLink"
-                                                                value="0x1dDB2C0897daF134545641545462E71fdD2dbDC0eB3a9Ec"
+                                                                value="<%- nft.contract_address %>"
                                                                 readonly>
                                                             <div id="cryptoCopy" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top" title="Copy Address">
@@ -275,7 +272,7 @@
                                                         <h6>Token ID</h6>
                                                     </div>
                                                     <div class="item-info-details">
-                                                        <p><%- nft_id %></p>
+                                                        <p><%- nft.token_id %></p>
                                                     </div>
 
                                                 </li>
@@ -329,7 +326,7 @@
                     <div class="col-lg-6">
                         <div class="item-buy-part">
                             <div class="nft-item-title">
-                                <h3>#003 da Silly Cat wid baLoon NFT: size 1/50</h3>
+                                <h3><%- nft.name %></h3>
                                 <div class="share-btn">
                                     <div class=" dropstart">
                                         <a class=" dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
