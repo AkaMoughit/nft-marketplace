@@ -26,6 +26,18 @@ module.exports = {
       return ids;
     }
 
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    function getRandomDouble(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.random() * (max - min) + min; //The maximum is exclusive and the minimum is inclusive
+    }
+
     function generateUsers(number) {
       let users = [];
       for(let index = 1; index < number; index++) {
@@ -92,12 +104,6 @@ module.exports = {
 
         for (let index = numberPerProfile * (profile.id - 1) + 1; index <= numberPerProfile * profile.id; index++) {
 
-          function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-          }
-
           let randomOwnedCustonOfferIndex = getRandomInt(0, ownedCustomOffers.length - 1);
           let customOfferExist = getRandomInt(0, 2);
 
@@ -122,6 +128,82 @@ module.exports = {
       return nfts;
     }
 
+    function generateListings(profiles, nfts, number) {
+      let listings = [];
+      let types = ["NORMAL", "AUCTION"];
+
+      for (let i = 0; i < nfts.length; i++) {
+        let listing = {
+          id : i + 1,
+          price : getRandomDouble(0,100),
+          type : types[getRandomInt(0, 2)],
+          sale_end_date : faker.date.future(),
+          createdAt : new Date(),
+          updatedAt : new Date(),
+          NftId : nfts[i].id,
+          ProfileId : nfts[i].ProfileId
+        }
+        listings.push(listing);
+      }
+      return listings;
+    }
+    
+    function generateFavoriteLists(profiles, nfts) {
+      let favoriteLists = [];
+      for (const profile of profiles) {
+        for (let i = getRandomInt(0, nfts.length / 2); i < nfts.length; i += getRandomInt(1, 4)) {
+          let favoriteList = {
+            favorite_date : new Date(),
+            createdAt : new Date(),
+            updatedAt : new Date(),
+            ProfileId : profile.id,
+            NftId : nfts[i].id
+          }
+          favoriteLists.push(favoriteList);
+        }
+      }
+      return favoriteLists;
+    }
+
+    function generateActivities(listings) {
+      let activities = [];
+      let transaction_types = ["PURCHASE","SALE"];
+      for (const listing of listings) {
+        let activity = {
+          transaction_type : transaction_types[getRandomInt(0, 2)],
+          transaction_date : new Date(),
+          createdAt : new Date(),
+          updatedAt : new Date(),
+          ListingId : listing.id,
+          NftId : listing.NftId,
+          ProfileId : listing.ProfileId
+        }
+
+        activities.push(activity);
+      }
+      console.log(activities);
+      return activities;
+    }
+    
+    function generateOffers(profiles, listings) {
+      let offers = [];
+      for (const listing of listings) {
+        for (let i = getRandomInt(0, getRandomInt(0, profiles.length) /2); i < profiles.length; i++) {
+          let offer = {
+            value_offered : getRandomDouble(0.10, listing.price),
+            offer_date : new Date(),
+            createdAt : new Date(),
+            updatedAt : new Date(),
+            ListingId : listing.id,
+            ProfileId : profiles[i].id
+          }
+          offers.push(offer);
+        }
+      }
+      console.log(offers);
+      return offers;
+    }
+
     let users = generateUsers(10);
     await customInsert('Users', users, {});
 
@@ -134,6 +216,17 @@ module.exports = {
     let nfts = generateNfts(profiles, customOffers, 2);
     await customInsert('Nfts',nfts, {});
 
+    let listings = generateListings(profiles, nfts, 10);
+    await queryInterface.bulkInsert('Listings', listings, {});
+
+    let favoriteLists = generateFavoriteLists(profiles, nfts);
+    await queryInterface.bulkInsert('FavoriteLists', favoriteLists, {});
+
+    let activities = generateActivities(listings);
+    await queryInterface.bulkInsert('Activities', activities, {});
+
+    let offers = generateOffers(profiles, listings);
+    await queryInterface.bulkInsert('Offers', offers, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -144,6 +237,10 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
+    await queryInterface.bulkDelete('Offers', null, {});
+    await queryInterface.bulkDelete('Activities', null, {});
+    await queryInterface.bulkDelete('FavoriteLists', null, {});
+    await queryInterface.bulkDelete('Listings', null, {});
     await queryInterface.bulkDelete('Nfts', null, {});
     await queryInterface.bulkDelete('OfferAttachments', null, {});
     await queryInterface.bulkDelete('CustomOffers', null, {});
