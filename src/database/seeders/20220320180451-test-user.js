@@ -133,7 +133,7 @@ module.exports = {
       let types = ["NORMAL", "AUCTION"];
 
       for (let i = 0; i < nfts.length; i++) {
-        let listing = {
+        listings.push({
           id : i + 1,
           price : getRandomDouble(0,100),
           type : types[getRandomInt(0, 2)],
@@ -142,24 +142,22 @@ module.exports = {
           updatedAt : new Date(),
           NftId : nfts[i].id,
           ProfileId : nfts[i].ProfileId
-        }
-        listings.push(listing);
+        });
       }
       return listings;
     }
-    
+
     function generateFavoriteLists(profiles, nfts) {
       let favoriteLists = [];
       for (const profile of profiles) {
         for (let i = getRandomInt(0, nfts.length / 2); i < nfts.length; i += getRandomInt(1, 4)) {
-          let favoriteList = {
+          favoriteLists.push({
             favorite_date : new Date(),
             createdAt : new Date(),
             updatedAt : new Date(),
             ProfileId : profile.id,
             NftId : nfts[i].id
-          }
-          favoriteLists.push(favoriteList);
+          });
         }
       }
       return favoriteLists;
@@ -169,7 +167,7 @@ module.exports = {
       let activities = [];
       let transaction_types = ["PURCHASE","SALE"];
       for (const listing of listings) {
-        let activity = {
+        activities.push({
           transaction_type : transaction_types[getRandomInt(0, 2)],
           transaction_date : new Date(),
           createdAt : new Date(),
@@ -177,32 +175,71 @@ module.exports = {
           ListingId : listing.id,
           NftId : listing.NftId,
           ProfileId : listing.ProfileId
-        }
-
-        activities.push(activity);
+        });
       }
-      console.log(activities);
       return activities;
     }
-    
+
     function generateOffers(profiles, listings) {
       let offers = [];
       for (const listing of listings) {
-        for (let i = getRandomInt(0, getRandomInt(0, profiles.length) /2); i < profiles.length; i++) {
-          let offer = {
+        for (let i = getRandomInt(0, profiles.length /2); i < profiles.length; i++) {
+          offers.push({
             value_offered : getRandomDouble(0.10, listing.price),
             offer_date : new Date(),
             createdAt : new Date(),
             updatedAt : new Date(),
             ListingId : listing.id,
             ProfileId : profiles[i].id
-          }
-          offers.push(offer);
+          });
         }
       }
-      console.log(offers);
       return offers;
     }
+
+    function generateComments(customOffers, profiles) {
+      let comments = [];
+      let j = 1;
+      for (const customOffer of customOffers) {
+        for (let i = getRandomInt(0, profiles.length /2); i < profiles.length; i++) {
+          comments.push({
+            id : j,
+            send_date : new Date(),
+            body : faker.lorem.paragraph(getRandomInt(1, 6)),
+            createdAt : new Date(),
+            updatedAt : new Date(),
+            CustomOfferId : customOffer.id,
+            ProfileId : profiles[i].id,
+            CommentId : null
+          });
+          j++;
+        }
+      }
+      return comments;
+    }
+
+    function generateReplies(comments, profiles) {
+      let replies = [];
+      let j = comments.length + 1;
+      for (let i = getRandomInt(0, comments.length /2); i < comments.length; i++) {
+        for (let k = getRandomInt(0, profiles.length /2); k < profiles.length; k++) {
+          replies.push({
+            id : j,
+            send_date : new Date(),
+            body : faker.lorem.paragraph(getRandomInt(1, 6)),
+            createdAt : new Date(),
+            updatedAt : new Date(),
+            CustomOfferId : comments[i].CustomOfferId,
+            ProfileId : profiles[k].id,
+            CommentId : comments[i].id
+          });
+          j++;
+        }
+      }
+      console.log(replies);
+      return replies;
+    }
+
 
     let users = generateUsers(10);
     await customInsert('Users', users, {});
@@ -227,6 +264,12 @@ module.exports = {
 
     let offers = generateOffers(profiles, listings);
     await queryInterface.bulkInsert('Offers', offers, {});
+
+    let comments = generateComments(customOffers, profiles);
+    await queryInterface.bulkInsert('Comments', comments, {});
+
+    let replies = generateReplies(comments, profiles);
+    await queryInterface.bulkInsert('Comments', replies, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -237,6 +280,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
+    await queryInterface.bulkDelete('Comments', null, {});
     await queryInterface.bulkDelete('Offers', null, {});
     await queryInterface.bulkDelete('Activities', null, {});
     await queryInterface.bulkDelete('FavoriteLists', null, {});
