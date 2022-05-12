@@ -241,7 +241,7 @@ module.exports = {
         }
 
 
-        let users = generateUsers(10);
+        let users = generateUsers(50);
         await customInsert('Users', users, {});
 
         let profiles = generateProfiles(users);
