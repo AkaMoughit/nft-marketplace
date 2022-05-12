@@ -135,7 +135,7 @@ module.exports = {
             for (let i = 0; i < nfts.length; i++) {
                 listings.push({
                     id : i + 1,
-                    price : getRandomDouble(0,100),
+                    price : getRandomDouble(0,100).toFixed(2),
                     type : types[getRandomInt(0, 2)],
                     sale_end_date : faker.date.future(),
                     createdAt : new Date(),

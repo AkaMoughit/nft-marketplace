@@ -349,24 +349,26 @@
                             </div>
                             <div class="item-details-countdown">
                                 <h4>Ends In:</h4>
-                                <ul class="item-countdown-list count-down" data-date="June 05, 2022 21:14:01">
+                                <ul class="item-countdown-list count-down"
+                                        <% let monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"] %>
+                                    data-date="<%- monthNames[nft.sale_end_date.timeEnd.getMonth()]%> <%- nft.sale_end_date.timeEnd.getMonth() %>, <%- nft.sale_end_date.timeEnd.getFullYear() %> <%- nft.sale_end_date.timeEnd.getHours() %>:<%- nft.sale_end_date.timeEnd.getMinutes() %>:<%- nft.sale_end_date.timeEnd.getSeconds() %>">
                                     <li>
-                                        <span class="days">34</span><span class="count-txt">Days</span>
+                                        <span class="days"><%- nft.sale_end_date.days %></span><span class="count-txt">Days</span>
                                     </li>
                                     <li>
-                                        <span class="hours">09</span><span class="count-txt">Hours</span>
+                                        <span class="hours"><%- nft.sale_end_date.hours %></span><span class="count-txt">Hours</span>
                                     </li>
                                     <li>
-                                        <span class="minutes">32</span><span class="count-txt">Mins</span>
+                                        <span class="minutes"><%- nft.sale_end_date.minutes %></span><span class="count-txt">Mins</span>
                                     </li>
                                     <li>
-                                        <span class="seconds">32</span><span class="count-txt">Secs</span>
+                                        <span class="seconds"><%- nft.sale_end_date.seconds %></span><span class="count-txt">Secs</span>
                                     </li>
                                 </ul>
                             </div>
                             <div class="item-price">
                                 <h4>Price</h4>
-                                <p><span><i class="icofont-coins"></i> 2.29 ETH
+                                <p><span><i class="icofont-coins"></i> <%- nft.price %> ETH
                                     </span>($ 6,227.15)</p>
                             </div>
                             <div class="buying-btns d-flex flex-wrap">
@@ -501,8 +503,6 @@
     <!-- scrollToTop start here -->
     <a href="#" class="scrollToTop"><i class="icofont-stylish-up"></i></a>
     <!-- scrollToTop ending here -->
-
-
 
 
     <!-- All Scripts -->
