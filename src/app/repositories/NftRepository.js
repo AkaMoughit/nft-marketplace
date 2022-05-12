@@ -9,23 +9,18 @@ class NftRepository extends BaseRepository {
         this.profileModel = Profile;
     }
 
-    listAll() {
-        return this.model.findAll();
-    }
-
     findByTokenId(tokenId) {
         return this.model.findOne({ where: { token_id: tokenId }});
     }
 
-    findAllNftCards() {
+    findAllNftCards(limit, offset) {
         return new Promise((resolve, reject) => {
             let listNftCards = [];
-            this.findAll()
+            this.model.findAll({ limit: limit, offset: offset })
                 .then(async nfts => {
                     for (let nft of nfts) {
                         let profile = await this.profileModel.findByPk(nft.ProfileId);
                         if (profile == null) reject("Nft without owner");
-
                         listNftCards.push(new NftProfileListingDTO(nft, profile));
                     }
                     resolve(listNftCards);

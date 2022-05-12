@@ -13,8 +13,8 @@ class NftService {
         return this.nftRepository.findNftCardByTokenId(tokenId);
     }
 
-    findAllNftCards() {
-        return this.nftRepository.findAllNftCards();
+    findAllNftCards(limit, offset) {
+        return this.nftRepository.findAllNftCards(limit, offset);
     }
 }
 

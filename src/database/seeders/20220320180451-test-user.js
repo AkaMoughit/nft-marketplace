@@ -59,6 +59,12 @@ module.exports = {
       return profiles;
     }
 
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
     function generateCustomOffers(profiles, numberPerProfile) {
       let customOffers = [];
       for(const profile of profiles) {
@@ -122,6 +128,30 @@ module.exports = {
       return nfts;
     }
 
+    function generateListings(profiles, nfts, number) {
+      let listings = [];
+      let types = ["NORMAL", "AUCTION"];
+
+      for (let i = 0; i < nfts.length; i++) {
+        let listing = {
+          id : undefined,
+          price : faker.datatype.number( {precision: 0.1} ),
+          type : types[getRandomInt(0, 2)],
+          sale_end_date : faker.date.future(),
+          createdAt : new Date(),
+          updatedAt : new Date(),
+          NftId : undefined,
+          ProfileId : undefined
+        }
+        listing.NftId = nfts[i].id;
+        listing.ProfileId = nfts[i].ProfileId;
+        listing.id = i + 1;
+
+        listings.push(listing);
+      }
+      return listings;
+    }
+
     let users = generateUsers(10);
     await customInsert('Users', users, {});
 
@@ -133,6 +163,9 @@ module.exports = {
 
     let nfts = generateNfts(profiles, customOffers, 2);
     await customInsert('Nfts',nfts, {});
+
+    let listings = generateListings(profiles, nfts, 10);
+    await queryInterface.bulkInsert('Listings', listings, {});
 
   },
 
