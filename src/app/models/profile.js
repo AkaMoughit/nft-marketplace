@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     picture_url: DataTypes.STRING,
     banner_url: DataTypes.STRING,
     acc_creation_date: DataTypes.DATE
+    //blockchain_type
   }, {
     sequelize,
     modelName: 'Profile',
