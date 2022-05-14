@@ -1,38 +1,38 @@
 const path = require('path');
-const userRepository = require('../repositories/UserRepository');
+const nftRepository = require('../repositories/NftRepository');
 
 exports.welcomePage = function (req, res) {
-    userRepository.findByPk(1)
-        .then(result => {
-            console.log(result);
-            res.status(200).render('index', { data: JSON.stringify(result) });
-
-        }).catch(error => {
-            res.status(404).send("This user is not present in the database.");
-        });
+    // userRepository.findByPk(1)
+    //     .then(result => {
+    //         console.log(result);
+    //         res.status(200).render('index', { data: JSON.stringify(result) });
+    //
+    //     }).catch(error => {
+    //         res.status(404).send("This user is not present in the database.");
+    //     });
 
 };
 
 exports.welcomePage2 = function (req, res) {
-    userRepository.findByPk(1)
-        .then(result => {
-            console.log(result);
-            res.status(200).render('index-2', { data: JSON.stringify(result) });
-
-        }).catch(error => {
-        res.status(404).send("This user is not present in the database.");
-    });
+    // userRepository.findByPk(1)
+    //     .then(result => {
+    //         console.log(result);
+    //         res.status(200).render('index-2', { data: JSON.stringify(result) });
+    //
+    //     }).catch(error => {
+    //     res.status(404).send("This user is not present in the database.");
+    // });
 
 };
 
 exports.welcomePage3 = function (req, res) {
-    userRepository.findByPk(1)
-        .then(result => {
-            console.log(result);
-            res.status(200).render('index-3', { data: JSON.stringify(result) });
+    let pageNumberElements = 8;
+    nftRepository.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, 0)
+        .then( nftCards => {
+            res.status(200).render('index-3', { nfts: nftCards.rows });
 
         }).catch(error => {
-        res.status(404).send("This user is not present in the database.");
+        res.status(404).render('404', {error: error});
     });
 
 };

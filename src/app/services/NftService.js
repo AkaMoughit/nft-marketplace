@@ -11,11 +11,11 @@ class NftService {
 
     findNftCardByTokenId(tokenId) {
         return this.nftRepository.findNftCardByTokenId(tokenId);
+
     }
 
-    findAllNftCards() {
-        return this.nftRepository.findAllNftCards();
+    findAllNftCardsOrderedByFavoriteCount(limit, offset) {
+        return this.nftRepository.findAllNftCardsOrderedByFavoriteCount(limit, offset);
     }
 }
-
 module.exports = new NftService(nftRepository);
