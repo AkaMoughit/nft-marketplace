@@ -30,7 +30,7 @@
     <title>Enftomark</title>
 </head>
 
-<body>
+<body onload="disableLoadMore(<%- isLastPage %>);">
     <!-- preloader start here -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -305,7 +305,7 @@
                                                     <p class="nft-price">Price: <span class="yellow-color"><%- nft.price %> ETH</span>
                                                     </p>
                                                     <a href="#" class="nft-like"><i class="icofont-heart"></i>
-                                                        230</a>
+                                                        <%- nft.favoriteCount %></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -315,7 +315,7 @@
                         <% }); %>
                     </div>
                     <div class="load-btn mt-5">
-                        <a href="?loadMore" class="default-btn move-bottom">
+                        <a id="loadMoreId" href="?loadMore" class="default-btn move-bottom">
                             <span>Load More</span>
                         </a>
                     </div>
@@ -461,6 +461,7 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
+    <script src="js/utils.js"></script>
 </body>
 
 </html>

@@ -1,8 +1,9 @@
 const BaseRepository = require("./BaseRepository");
-const NftProfileListingDTO = require("../dtos/NftProfileListingDTO");
+const NftProfileListingDTO = require("../dtos/NftCardDTO");
 const Nft = require("../models").Nft;
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
+
 let getDeltaInDHMS = require('../utils/DateHelper');
 
 class NftRepository extends BaseRepository {
@@ -16,30 +17,40 @@ class NftRepository extends BaseRepository {
         return this.model.findOne({ where: { token_id: tokenId }});
     }
 
-    findAllNftCards(limit, offset) {
-        return new Promise((resolve, reject) => {
+    findAllNftCardsOrderedByFavoriteCount(limit, offset) {
+        return new Promise(async (resolve, reject) => {
             let listNftCards = [];
-            this.model.findAll({ limit: limit, offset: offset })
-                .then(async nfts => {
-                    for (let nft of nfts) {
-                        let profile = await this.profileModel.findByPk(nft.ProfileId);
-                        if (profile == null) reject("Nft without owner");
-                        let listing = await this.listingModel.findOne({
-                            where: {
-                                NftId: nft.id,
-                                ProfileId: profile.id
-                            }
-                        });
-                        let nftCardDTO = new NftProfileListingDTO(nft, profile, listing);
-                        let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
-                        nftCardDTO.sale_end_date = deltaInDHMS;
-                        listNftCards.push(nftCardDTO);
-                    }
-                    resolve(listNftCards);
-                })
-                .catch(err => {
-                    reject(err);
+            let nfts;
+            try {
+                nfts = await this.model.findAndCountAll({
+                    limit: limit,
+                    offset: offset,
+                    include: [
+                        this.profileModel,
+                        this.listingModel
+                    ],
+                    attributes: [
+                        "contract_adress",
+                        "token_id",
+                        "description",
+                        "name",
+                        [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
+                    ],
+                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
                 });
+            }catch(err) {
+                reject(err);
+            }
+
+            for (let nft of nfts.rows) {
+
+                let nftCardDTO = new NftProfileListingDTO(nft, nft.Profile, nft.Listings[0], nft.dataValues.favoritesCount);
+                let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
+                nftCardDTO.sale_end_date = deltaInDHMS;
+
+                listNftCards.push(nftCardDTO);
+            }
+            resolve({ count: nfts.count, rows: listNftCards });
         });
     }
 

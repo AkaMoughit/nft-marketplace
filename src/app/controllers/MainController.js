@@ -27,9 +27,9 @@ exports.welcomePage2 = function (req, res) {
 
 exports.welcomePage3 = function (req, res) {
     let pageNumberElements = 8;
-    nftRepository.findAllNftCards(pageNumberElements, 0)
-        .then(listNftDto => {
-            res.status(200).render('index-3', { nfts: listNftDto });
+    nftRepository.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, 0)
+        .then( nftCards => {
+            res.status(200).render('index-3', { nfts: nftCards.rows });
 
         }).catch(error => {
         res.status(404).render('404', {error: error});

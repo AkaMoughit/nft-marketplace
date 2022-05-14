@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Nft.belongsTo(models.NftCollection);
       Nft.hasMany(models.NftAttachment);
       Nft.hasMany(models.Listing);
+      Nft.hasMany(models.FavoriteList)
       Nft.belongsToMany(models.Profile, { through: 'FavoriteList' });
       Nft.belongsToMany(models.Profile, { through: 'Activity' });
     }
