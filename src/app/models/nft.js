@@ -13,18 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Nft.belongsTo(models.CustomOffer);
       Nft.belongsTo(models.Profile, {
+        as: 'creator'
+      });
+      Nft.belongsTo(models.Profile, {
+        as: 'owner',
         foreignKey: {
-          name: "creator_id"
+          name: 'ProfileId'
         }
       });
-      // Nft.belongsTo(models.Profile, {
-      //   foreignKey: {
-      //     name: "owner_id"
-      //   }
-      // });
       Nft.belongsTo(models.NftCollection);
       Nft.hasMany(models.NftAttachment);
-      Nft.hasMany(models.Listing);
+      Nft.hasOne(models.Listing);
       Nft.hasMany(models.FavoriteList)
       Nft.belongsToMany(models.Profile, { through: 'FavoriteList' });
       Nft.belongsToMany(models.Profile, { through: 'Activity' });

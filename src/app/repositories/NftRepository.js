@@ -3,18 +3,37 @@ const NftProfileListingDTO = require("../dtos/NftCardDTO");
 const Nft = require("../models").Nft;
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
+const FavoriteList = require("../models").FavoriteList;
 
 let getDeltaInDHMS = require('../utils/DateHelper');
 
 class NftRepository extends BaseRepository {
-    constructor(Nft, Profile, Listing) {
+    constructor(Nft, Profile, Listing, FavoriteList) {
         super(Nft);
         this.profileModel = Profile;
         this.listingModel = Listing;
+        this.favoriteListModel = FavoriteList;
     }
 
     findByTokenId(tokenId) {
         return this.model.findOne({ where: { token_id: tokenId }});
+    }
+
+    findFavoriteCountByTokenId(tokenId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let nft = await this.findByTokenId(tokenId);
+                let favoriteList = await this.favoriteListModel.findAndCountAll({
+                    where: {
+                        NftId: nft.id
+                    }
+                });
+
+                resolve(favoriteList.count);
+            } catch (err) {
+                reject(err);
+            }
+        });
     }
 
     findAllNftCardsOrderedByFavoriteCount(limit, offset) {
@@ -26,7 +45,7 @@ class NftRepository extends BaseRepository {
                     limit: limit,
                     offset: offset,
                     include: [
-                        this.profileModel,
+                        'owner',
                         this.listingModel
                     ],
                     attributes: [
@@ -44,7 +63,7 @@ class NftRepository extends BaseRepository {
 
             for (let nft of nfts.rows) {
 
-                let nftCardDTO = new NftProfileListingDTO(nft, nft.Profile, nft.Listings[0], nft.dataValues.favoritesCount);
+                let nftCardDTO = new NftProfileListingDTO(nft, nft.owner, nft.Listing, nft.dataValues.favoritesCount);
                 let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
                 nftCardDTO.sale_end_date = deltaInDHMS;
 
@@ -82,4 +101,4 @@ class NftRepository extends BaseRepository {
     }
 }
 
-module.exports = new NftRepository(Nft, Profile, Listing);
+module.exports = new NftRepository(Nft, Profile, Listing, FavoriteList);

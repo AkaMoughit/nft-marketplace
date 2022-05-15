@@ -136,7 +136,7 @@ module.exports = {
                 }
 
                 for(let nft of nfts) {
-                    nft.creator_id = profiles[getRandomInt(0, profiles.length)].id;
+                    nft.creatorId = profiles[getRandomInt(0, profiles.length)].id;
                 }
             }
             return nfts;
