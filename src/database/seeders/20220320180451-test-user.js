@@ -134,6 +134,10 @@ module.exports = {
                     //console.log(ownedCustomOffers[randomOwnedCustonOfferIndex]);
                     ownedCustomOffers.splice(randomOwnedCustonOfferIndex, 1);
                 }
+
+                for(let nft of nfts) {
+                    nft.creator_id = profiles[getRandomInt(0, profiles.length)].id;
+                }
             }
             return nfts;
         }

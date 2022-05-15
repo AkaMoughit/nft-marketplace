@@ -7,7 +7,7 @@ const Sequelize = require("sequelize");
  * createTable() => "Profiles", deps: [Users]
  * createTable() => "NftCollections", deps: [Profiles]
  * createTable() => "CustomOffers", deps: [Profiles]
- * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections]
+ * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections, Profiles]
  * createTable() => "Conversations", deps: [Profiles, Profiles]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Listings", deps: [Nfts, Profiles]
@@ -26,7 +26,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-05-14T18:17:09.133Z",
+  created: "2022-05-15T15:58:58.869Z",
   comment: "",
 };
 
@@ -213,12 +213,13 @@ const migrationCommands = (transaction) => [
           references: { model: "CustomOffers", key: "id" },
           allowNull: true,
         },
-        ProfileId: {
+        creator_id: {
           type: Sequelize.INTEGER,
-          field: "ProfileId",
+          field: "creator_id",
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
+          name: "creator_id",
           allowNull: true,
         },
         NftCollectionId: {
@@ -227,6 +228,14 @@ const migrationCommands = (transaction) => [
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "NftCollections", key: "id" },
+          allowNull: true,
+        },
+        ProfileId: {
+          type: Sequelize.INTEGER,
+          field: "ProfileId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Profiles", key: "id" },
           allowNull: true,
         },
       },

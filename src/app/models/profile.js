@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User);
       Profile.hasMany(models.CustomOffer);
       Profile.hasMany(models.Nft);
+      Profile.hasMany(models.Nft);
       Profile.hasMany(models.Listing);
       Profile.hasMany(models.NftCollection);
       Profile.hasMany(models.Ticket);

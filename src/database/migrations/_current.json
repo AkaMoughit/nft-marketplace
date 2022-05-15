@@ -460,15 +460,16 @@
                     "field": "CustomOfferId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "ProfileId": {
+                "creator_id": {
                     "allowNull": true,
+                    "name": "creator_id",
                     "references": {
                         "model": "Profiles",
                         "key": "id"
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "ProfileId",
+                    "field": "creator_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "NftCollectionId": {
@@ -480,6 +481,17 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "NftCollectionId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
