@@ -264,7 +264,7 @@ module.exports = {
         let customOffers = generateCustomOffers(profiles, 3);
         await customInsert('CustomOffers', customOffers, {});
 
-        let nfts = generateNfts(profiles, customOffers, 2);
+        let nfts = generateNfts(profiles, customOffers, 3);
         await customInsert('Nfts',nfts, {});
 
         let listings = generateListings(profiles, nfts, 10);

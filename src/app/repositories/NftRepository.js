@@ -15,6 +15,23 @@ class NftRepository extends BaseRepository {
         this.favoriteListModel = FavoriteList;
     }
 
+    findByCreatedProfileId(id) {
+        return this.model.findAll({
+            where: {
+                creatorId: id
+            }
+        });
+    }
+
+    findByOwnerProfileId(id) {
+        return this.model.findAll({
+            where: {
+                ProfileId: id
+            }
+        })
+
+    }
+
     findByTokenId(tokenId) {
         return this.model.findOne({ where: { token_id: tokenId }});
     }

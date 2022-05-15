@@ -1,5 +1,5 @@
 class AuthorDTO {
-    constructor(profileAbout, onSaleListings) {
+    constructor(profileAbout, onSaleListings, ownedNfts, createdNfts) {
         this.name = profileAbout.name;
         this.wallet_id = profileAbout.wallet_id;
         this.picture_url = profileAbout.picture_url;
@@ -11,6 +11,8 @@ class AuthorDTO {
         this.birthdate = profileAbout.birthdate;
         this.about = profileAbout.about;
         this.onSaleListings = onSaleListings;
+        this.ownedNfts = ownedNfts;
+        this.createdNfts = createdNfts
     }
 }
 

@@ -10,6 +10,10 @@ class ProfileService {
         this.nftRepository = nftRepository;
     }
 
+    findAllAuthors(limit, offset) {
+        return this.profileRepository.findAll(limit, offset);
+    }
+
     findByProfileId(profileId) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -17,9 +21,10 @@ class ProfileService {
                 if ( profileAbout == null ) {
                     reject("Profile not found");
                 }
+
                 let onSaleListings = await this.profileRepository.findOnSaleByProfile(profileAbout);
 
-                let listNftCards = [];
+                let listOnSaleNftCards = [];
                 for (let onSaleListing of onSaleListings) {
 
                     let nftCardDTO = new NftProfileListingDTO(onSaleListing.Nft, profileAbout, onSaleListing);
@@ -29,10 +34,31 @@ class ProfileService {
                     let favoriteCount = await this.nftRepository.findFavoriteCountByTokenId(nftCardDTO.token_id);
                     nftCardDTO.favoriteCount = favoriteCount;
 
-                    listNftCards.push(nftCardDTO);
+                    listOnSaleNftCards.push(nftCardDTO);
                 }
 
-                resolve(new AuthorDTO(profileAbout, listNftCards));
+                let ownedNfts = await this.nftRepository.findByOwnerProfileId(profileAbout.id);
+
+                let listOwnedNfts = [];
+                for(let ownedNft of ownedNfts) {
+                    let favoriteCount = await this.nftRepository.findFavoriteCountByTokenId(ownedNft.token_id);
+                    let nftCardDTO = new NftProfileListingDTO(ownedNft, profileAbout);
+                    nftCardDTO.favoriteCount = favoriteCount;
+                    listOwnedNfts.push(nftCardDTO);
+                }
+
+                let createdNfts = await this.nftRepository.findByCreatedProfileId(profileAbout.id);
+
+                let listCreatedNfts = [];
+                for(let createdNft of createdNfts) {
+                    let owner = await this.profileRepository.findById(createdNft.ProfileId);
+                    let favoriteCount = await this.nftRepository.findFavoriteCountByTokenId(createdNft.token_id);
+                    let nftCardDTO = new NftProfileListingDTO(createdNft, owner);
+                    nftCardDTO.favoriteCount = favoriteCount;
+                    listCreatedNfts.push(nftCardDTO);
+                }
+
+                resolve(new AuthorDTO(profileAbout, listOnSaleNftCards, listOwnedNfts, listCreatedNfts));
             } catch (err) {
                reject("Profile Not found");
             }
