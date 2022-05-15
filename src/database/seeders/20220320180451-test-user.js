@@ -55,14 +55,24 @@ module.exports = {
 
         function generateProfiles(users) {
             let profiles = [];
+            let blockchain_types = ["ETHEREUM"];
+            let specialities = ["Digital Art", "Photography", "Music"];
+
+
             for(const user of users) {
+                let name = faker.name.findName();
                 profiles.push({
                     id: user.id,
-                    name: faker.name.findName(),
+                    name: name,
                     wallet_id: faker.datatype.uuid(),
                     picture_url: faker.internet.url(),
                     banner_url: faker.internet.url(),
                     acc_creation_date: faker.date.past(),
+                    profile_id: "@" + name.replaceAll(" ", "") + "." + faker.datatype.uuid(),
+                    blockchain_type: blockchain_types[0],
+                    specialize_in: specialities[getRandomInt(0, 3)],
+                    birthdate: faker.date.past(50, new Date(2004, 4, 14)),
+                    about: faker.lorem.text(),
                     createdAt: new Date(),
                     updatedAt: new Date(),
                     UserId: user.id

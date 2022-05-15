@@ -1,6 +1,9 @@
 const router = require('express').Router();
+
 const mainController = require('../app/controllers/MainController');
 const nftController = require('../app/controllers/NftController');
+const profileController = require("../app/controllers/ProfileController")
+
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
 
@@ -15,7 +18,7 @@ router.get('/auction', mainController.auctionPage);
 router.get('/activity', mainController.activityPage);
 router.get('/all-authors', mainController.allAuthorsPage);
 router.get('/all-authors-2', mainController.allAuthors2Page);
-router.get('/author', mainController.authorPage);
+router.get('/author', profileController.authorPage);
 router.get('/blog', mainController.blogPage);
 router.get('/blog-2', mainController.blogPage2);
 router.get('/blog-3', mainController.blogPage3);

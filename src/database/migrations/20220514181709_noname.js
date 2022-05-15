@@ -8,11 +8,11 @@ const Sequelize = require("sequelize");
  * createTable() => "NftCollections", deps: [Profiles]
  * createTable() => "CustomOffers", deps: [Profiles]
  * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections]
- * createTable() => "Conversations", deps: [Profiles, Profiles, Profiles]
+ * createTable() => "Conversations", deps: [Profiles, Profiles]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Listings", deps: [Nfts, Profiles]
  * createTable() => "Messages", deps: [Conversations]
- * createTable() => "FavoriteLists", deps: [Nfts, Profiles]
+ * createTable() => "FavoriteLists", deps: [Profiles, Nfts]
  * createTable() => "NftAttachments", deps: [Nfts]
  * createTable() => "Activities", deps: [Listings, Nfts, Profiles]
  * createTable() => "CollectionFavoriteLists", deps: [NftCollections, Profiles]
@@ -25,8 +25,8 @@ const Sequelize = require("sequelize");
 
 const info = {
   revision: 1,
-  name: "full_migration",
-  created: "2022-05-09T12:57:56.119Z",
+  name: "noname",
+  created: "2022-05-14T18:17:09.133Z",
   comment: "",
 };
 
@@ -77,6 +77,11 @@ const migrationCommands = (transaction) => [
         picture_url: { type: Sequelize.STRING, field: "picture_url" },
         banner_url: { type: Sequelize.STRING, field: "banner_url" },
         acc_creation_date: { type: Sequelize.DATE, field: "acc_creation_date" },
+        profile_id: { type: Sequelize.STRING, field: "profile_id" },
+        blockchain_type: { type: Sequelize.STRING, field: "blockchain_type" },
+        specialize_in: { type: Sequelize.STRING, field: "specialize_in" },
+        birthdate: { type: Sequelize.DATE, field: "birthdate" },
+        about: { type: Sequelize.TEXT, field: "about" },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -267,14 +272,6 @@ const migrationCommands = (transaction) => [
           references: { model: "Profiles", key: "id" },
           allowNull: true,
         },
-        ProfileId: {
-          type: Sequelize.INTEGER,
-          field: "ProfileId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Profiles", key: "id" },
-          allowNull: true,
-        },
       },
       { transaction },
     ],
@@ -428,21 +425,27 @@ const migrationCommands = (transaction) => [
           field: "updatedAt",
           allowNull: false,
         },
-        NftId: {
-          type: Sequelize.INTEGER,
-          field: "NftId",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-          references: { model: "Nfts", key: "id" },
-          primaryKey: true,
-        },
         ProfileId: {
           type: Sequelize.INTEGER,
+          unique: "FavoriteLists_ProfileId_NftId_unique",
+          primaryKey: true,
           field: "ProfileId",
           onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          onDelete: "NO ACTION",
           references: { model: "Profiles", key: "id" },
+          name: "ProfileId",
+          allowNull: false,
+        },
+        NftId: {
+          type: Sequelize.INTEGER,
+          unique: "FavoriteLists_ProfileId_NftId_unique",
           primaryKey: true,
+          field: "NftId",
+          onUpdate: "CASCADE",
+          onDelete: "NO ACTION",
+          references: { model: "Nfts", key: "id" },
+          name: "NftId",
+          allowNull: false,
         },
       },
       { transaction },

@@ -61,10 +61,6 @@ exports.auctionPage = function (req, res) {
     res.status(200).render('auction', {});
 }
 
-exports.authorPage = function (req, res) {
-    res.status(200).render('author', {});
-}
-
 exports.blogPage = function (req, res) {
     res.status(200).render('blog', {});
 }

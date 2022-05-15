@@ -11,8 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      FavoriteList.belongsTo(models.Profile);
-      FavoriteList.belongsTo(models.Nft);
+      FavoriteList.belongsTo(models.Profile, {
+        foreignKey: {
+          name: 'ProfileId',
+          allowNull: false
+        }
+      });
+      FavoriteList.belongsTo(models.Nft, {
+        foreignKey: {
+          name: 'NftId',
+          allowNull: false
+        }
+      });
 
     }
   }
