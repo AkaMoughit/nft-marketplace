@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User);
       Profile.hasMany(models.CustomOffer);
       Profile.hasMany(models.Nft);
+      Profile.hasMany(models.Nft);
       Profile.hasMany(models.Listing);
       Profile.hasMany(models.NftCollection);
       Profile.hasMany(models.Ticket);
@@ -30,8 +31,12 @@ module.exports = (sequelize, DataTypes) => {
     wallet_id: DataTypes.STRING,
     picture_url: DataTypes.STRING,
     banner_url: DataTypes.STRING,
-    acc_creation_date: DataTypes.DATE
-    //blockchain_type
+    acc_creation_date: DataTypes.DATE,
+    profile_id: DataTypes.STRING,
+    blockchain_type: DataTypes.STRING,
+    specialize_in: DataTypes.STRING,
+    birthdate: DataTypes.DATE,
+    about: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Profile',

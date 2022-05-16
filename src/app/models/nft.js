@@ -12,7 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Nft.belongsTo(models.CustomOffer);
-      Nft.belongsTo(models.Profile);
+      Nft.belongsTo(models.Profile, {
+        foreignKey: {
+          name: "creator_id"
+        }
+      });
+      // Nft.belongsTo(models.Profile, {
+      //   foreignKey: {
+      //     name: "owner_id"
+      //   }
+      // });
       Nft.belongsTo(models.NftCollection);
       Nft.hasMany(models.NftAttachment);
       Nft.hasMany(models.Listing);

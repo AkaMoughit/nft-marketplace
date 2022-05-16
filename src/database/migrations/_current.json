@@ -279,26 +279,32 @@
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 },
-                "NftId": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Nfts",
-                        "key": "id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "NftId",
-                    "seqType": "Sequelize.INTEGER"
-                },
                 "ProfileId": {
-                    "primaryKey": true,
+                    "allowNull": false,
+                    "name": "ProfileId",
                     "references": {
                         "model": "Profiles",
                         "key": "id"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "field": "ProfileId",
+                    "primaryKey": true,
+                    "unique": "FavoriteLists_ProfileId_NftId_unique",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "NftId": {
+                    "allowNull": false,
+                    "name": "NftId",
+                    "references": {
+                        "model": "Nfts",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "field": "NftId",
+                    "primaryKey": true,
+                    "unique": "FavoriteLists_ProfileId_NftId_unique",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -454,15 +460,16 @@
                     "field": "CustomOfferId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "ProfileId": {
+                "creator_id": {
                     "allowNull": true,
+                    "name": "creator_id",
                     "references": {
                         "model": "Profiles",
                         "key": "id"
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "ProfileId",
+                    "field": "creator_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "NftCollectionId": {
@@ -474,6 +481,17 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "NftCollectionId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -682,6 +700,26 @@
                     "field": "acc_creation_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "profile_id": {
+                    "field": "profile_id",
+                    "seqType": "Sequelize.STRING"
+                },
+                "blockchain_type": {
+                    "field": "blockchain_type",
+                    "seqType": "Sequelize.STRING"
+                },
+                "specialize_in": {
+                    "field": "specialize_in",
+                    "seqType": "Sequelize.STRING"
+                },
+                "birthdate": {
+                    "field": "birthdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "about": {
+                    "field": "about",
+                    "seqType": "Sequelize.TEXT"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -836,6 +874,6 @@
     },
     "path": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current.json",
     "backupPath": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current_bak.json",
-    "exists": true,
-    "revision": 5
+    "exists": false,
+    "revision": 1
 }

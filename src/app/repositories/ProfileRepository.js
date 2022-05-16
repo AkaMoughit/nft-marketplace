@@ -6,6 +6,14 @@ class ProfileRepository extends BaseRepository {
         super(Profile);
     }
 
+    findByProfileId(profileId) {
+        return this.model.findOne({
+            where: {
+                profile_id: profileId
+            }
+        });
+    }
+
 }
 
 module.exports = new ProfileRepository(Profile);
