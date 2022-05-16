@@ -10,7 +10,7 @@ exports.nftsPage = function(req, res) {
     // else if(req.query.pageIndex > 0) pageIndex = req.query.pageIndex;
     else pageIndex = 1;
 
-    nftService.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, pageNumberElements * (pageIndex - 1))
+    nftService.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, pageNumberElements * (pageIndex - 1), req.query.searchedNft)
         .then(nftCards => {
             let isLastPage = false;
             if (pageIndex >= 0 && pageIndex > Math.floor(nftCards.count / pageNumberElements)){

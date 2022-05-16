@@ -136,7 +136,7 @@ module.exports = {
                 }
 
                 for(let nft of nfts) {
-                    nft.creator_id = profiles[getRandomInt(0, profiles.length)].id;
+                    nft.creatorId = profiles[getRandomInt(0, profiles.length)].id;
                 }
             }
             return nfts;
@@ -308,7 +308,7 @@ module.exports = {
         let customOffers = generateCustomOffers(profiles, 3);
         await customInsert('CustomOffers', customOffers, {});
 
-        let nfts = generateNfts(profiles, customOffers, 2);
+        let nfts = generateNfts(profiles, customOffers, 3);
         await customInsert('Nfts',nfts, {});
 
         let listings = generateListings(profiles, nfts, 100);

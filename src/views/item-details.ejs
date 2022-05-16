@@ -242,7 +242,7 @@
                                                 </div>
                                                 <div class="author-p-info">
                                                     <p class="mb-0">Owner</p>
-                                                    <h6><a href="author"><%- nft.owner_name %></a></h6>
+                                                    <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner_name %></a></h6>
                                                 </div>
                                             </div>
                                             <ul class="other-info-list">
@@ -350,8 +350,8 @@
                             <div class="item-details-countdown">
                                 <h4>Ends In:</h4>
                                 <ul class="item-countdown-list count-down"
-                                        <% let monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"] %>
-                                    data-date="<%- monthNames[nft.sale_end_date.timeEnd.getMonth()]%> <%- nft.sale_end_date.timeEnd.getMonth() %>, <%- nft.sale_end_date.timeEnd.getFullYear() %> <%- nft.sale_end_date.timeEnd.getHours() %>:<%- nft.sale_end_date.timeEnd.getMinutes() %>:<%- nft.sale_end_date.timeEnd.getSeconds() %>">
+                                        <% let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %>
+                                    data-date="<%- monthNames[nft.sale_end_date.timeEnd.getMonth()]%> <%- nft.sale_end_date.timeEnd.getDate() %>, <%- nft.sale_end_date.timeEnd.getFullYear() %> <%- nft.sale_end_date.timeEnd.getHours() %>:<%- nft.sale_end_date.timeEnd.getMinutes() %>:<%- nft.sale_end_date.timeEnd.getSeconds() %>">
                                     <li>
                                         <span class="days"><%- nft.sale_end_date.days %></span><span class="count-txt">Days</span>
                                     </li>

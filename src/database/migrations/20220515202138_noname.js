@@ -7,7 +7,7 @@ const Sequelize = require("sequelize");
  * createTable() => "Profiles", deps: [Users]
  * createTable() => "NftCollections", deps: [Profiles]
  * createTable() => "CustomOffers", deps: [Profiles]
- * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections, Profiles]
+ * createTable() => "Nfts", deps: [CustomOffers, Profiles, Profiles, NftCollections]
  * createTable() => "Conversations", deps: [Profiles, Profiles]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Listings", deps: [Nfts, Profiles]
@@ -26,7 +26,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-05-15T15:58:58.869Z",
+  created: "2022-05-15T20:21:38.392Z",
   comment: "",
 };
 
@@ -213,21 +213,12 @@ const migrationCommands = (transaction) => [
           references: { model: "CustomOffers", key: "id" },
           allowNull: true,
         },
-        creator_id: {
+        creatorId: {
           type: Sequelize.INTEGER,
-          field: "creator_id",
+          field: "creatorId",
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
-          name: "creator_id",
-          allowNull: true,
-        },
-        NftCollectionId: {
-          type: Sequelize.INTEGER,
-          field: "NftCollectionId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "NftCollections", key: "id" },
           allowNull: true,
         },
         ProfileId: {
@@ -236,6 +227,15 @@ const migrationCommands = (transaction) => [
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
+          name: "ProfileId",
+          allowNull: true,
+        },
+        NftCollectionId: {
+          type: Sequelize.INTEGER,
+          field: "NftCollectionId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "NftCollections", key: "id" },
           allowNull: true,
         },
       },

@@ -3,21 +3,59 @@ const NftProfileListingDTO = require("../dtos/NftCardDTO");
 const Nft = require("../models").Nft;
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
+const FavoriteList = require("../models").FavoriteList;
+
+const models = require('../models');
 
 let getDeltaInDHMS = require('../utils/DateHelper');
 
 class NftRepository extends BaseRepository {
-    constructor(Nft, Profile, Listing) {
+    constructor(Nft, Profile, Listing, FavoriteList) {
         super(Nft);
         this.profileModel = Profile;
         this.listingModel = Listing;
+        this.favoriteListModel = FavoriteList;
+    }
+
+    findByCreatedProfileId(id) {
+        return this.model.findAll({
+            where: {
+                creatorId: id
+            }
+        });
+    }
+
+    findByOwnerProfileId(id) {
+        return this.model.findAll({
+            where: {
+                ProfileId: id
+            }
+        })
+
     }
 
     findByTokenId(tokenId) {
         return this.model.findOne({ where: { token_id: tokenId }});
     }
 
-    findAllNftCardsOrderedByFavoriteCount(limit, offset) {
+    findFavoriteCountByTokenId(tokenId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let nft = await this.findByTokenId(tokenId);
+                let favoriteList = await this.favoriteListModel.findAndCountAll({
+                    where: {
+                        NftId: nft.id
+                    }
+                });
+
+                resolve(favoriteList.count);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    findAllNftCardsOrderedByFavoriteCount(limit, offset, name) {
         return new Promise(async (resolve, reject) => {
             let listNftCards = [];
             let nfts;
@@ -25,8 +63,13 @@ class NftRepository extends BaseRepository {
                 nfts = await this.model.findAndCountAll({
                     limit: limit,
                     offset: offset,
+                    where: {
+                        name: {
+                            [models.Sequelize.Op.like]: name==null?"%":"%"+name+"%"
+                        }
+                    },
                     include: [
-                        this.profileModel,
+                        'owner',
                         this.listingModel
                     ],
                     attributes: [
@@ -36,7 +79,7 @@ class NftRepository extends BaseRepository {
                         "name",
                         [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
                     ],
-                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
+                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']],
                 });
             }catch(err) {
                 reject(err);
@@ -44,7 +87,7 @@ class NftRepository extends BaseRepository {
 
             for (let nft of nfts.rows) {
 
-                let nftCardDTO = new NftProfileListingDTO(nft, nft.Profile, nft.Listings[0], nft.dataValues.favoritesCount);
+                let nftCardDTO = new NftProfileListingDTO(nft, nft.owner, nft.Listing, nft.dataValues.favoritesCount);
                 let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
                 nftCardDTO.sale_end_date = deltaInDHMS;
 
@@ -82,4 +125,4 @@ class NftRepository extends BaseRepository {
     }
 }
 
-module.exports = new NftRepository(Nft, Profile, Listing);
+module.exports = new NftRepository(Nft, Profile, Listing, FavoriteList);
