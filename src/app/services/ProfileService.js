@@ -10,8 +10,8 @@ class ProfileService {
         this.nftRepository = nftRepository;
     }
 
-    findAllAuthors(limit, offset) {
-        return this.profileRepository.findAll(limit, offset);
+    findAllAuthors(limit, offset, name=null) {
+        return this.profileRepository.findAll(limit, offset, name);
     }
 
     findByProfileId(profileId) {

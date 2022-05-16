@@ -1,4 +1,5 @@
 const BaseRepository = require("./BaseRepository");
+const models = require("../models");
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing
 const Nft = require("../models").Nft
@@ -18,10 +19,15 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    findAll(limit, offset) {
+    findAll(limit, offset, name) {
         return this.model.findAndCountAll({
             limit: limit,
-            offset: offset
+            offset: offset,
+            where: {
+                name: {
+                    [models.Sequelize.Op.like]: name==null?"%":"%"+name+"%"
+                }
+            }
         });
     }
 

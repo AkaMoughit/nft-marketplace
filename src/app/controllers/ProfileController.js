@@ -20,7 +20,7 @@ exports.allAuthorsPage = function (req, res) {
     // else if(req.query.pageIndex > 0) pageIndex = req.query.pageIndex;
     else pageIndex = 1;
 
-    profileService.findAllAuthors(pageNumberElements, pageNumberElements * (pageIndex - 1))
+    profileService.findAllAuthors(pageNumberElements, pageNumberElements * (pageIndex - 1), req.query.searchedProfile)
         .then(profiles => {
             let isLastPage = false;
             if (pageIndex >= 0 && pageIndex > Math.floor(profiles.count / pageNumberElements)){

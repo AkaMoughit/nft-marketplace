@@ -5,6 +5,8 @@ const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
 const FavoriteList = require("../models").FavoriteList;
 
+const models = require('../models');
+
 let getDeltaInDHMS = require('../utils/DateHelper');
 
 class NftRepository extends BaseRepository {
@@ -53,7 +55,7 @@ class NftRepository extends BaseRepository {
         });
     }
 
-    findAllNftCardsOrderedByFavoriteCount(limit, offset) {
+    findAllNftCardsOrderedByFavoriteCount(limit, offset, name) {
         return new Promise(async (resolve, reject) => {
             let listNftCards = [];
             let nfts;
@@ -61,6 +63,11 @@ class NftRepository extends BaseRepository {
                 nfts = await this.model.findAndCountAll({
                     limit: limit,
                     offset: offset,
+                    where: {
+                        name: {
+                            [models.Sequelize.Op.like]: name==null?"%":"%"+name+"%"
+                        }
+                    },
                     include: [
                         'owner',
                         this.listingModel
@@ -72,7 +79,7 @@ class NftRepository extends BaseRepository {
                         "name",
                         [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
                     ],
-                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
+                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']],
                 });
             }catch(err) {
                 reject(err);
