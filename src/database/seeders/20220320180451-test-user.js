@@ -127,16 +127,12 @@ module.exports = {
                         //blockchain_type: 'ETHEREUM',
                         createdAt: new Date(),
                         updatedAt: new Date(),
-                        ProfileId: profile.id,
+                        CreatorId: profile.id,
                         // Generate randomness
                         CustomOfferId: customOfferExist === 1 ? ownedCustomOffers[randomOwnedCustonOfferIndex].id : undefined
                     })
                     //console.log(ownedCustomOffers[randomOwnedCustonOfferIndex]);
                     ownedCustomOffers.splice(randomOwnedCustonOfferIndex, 1);
-                }
-
-                for(let nft of nfts) {
-                    nft.creatorId = profiles[getRandomInt(0, profiles.length)].id;
                 }
             }
             return nfts;
@@ -147,15 +143,19 @@ module.exports = {
             let types = ["NORMAL", "AUCTION"];
 
             for (let i = 0; i < nfts.length; i++) {
+                let buyerRandomness = getRandomInt(0, 2);
+
                 listings.push({
                     id : i + 1,
                     price : getRandomDouble(0,100).toFixed(2),
                     type : types[getRandomInt(0, 2)],
                     sale_end_date : faker.date.future(),
+                    transaction_date : new Date(),
                     createdAt : new Date(),
                     updatedAt : new Date(),
                     NftId : nfts[i].id,
-                    ProfileId : nfts[i].ProfileId
+                    SellerId : nfts[i].CreatorId,
+                    BuyerId : buyerRandomness === 1? profiles[getRandomInt(0, profiles.length)].id: undefined
                 });
             }
             return listings;
@@ -175,25 +175,6 @@ module.exports = {
                 }
             }
             return favoriteLists;
-        }
-
-        function generateActivities(listings, number) {
-            let activities = [];
-            let transaction_types = ["PURCHASE","SALE"];
-            for (const listing of listings) {
-                if (activities.length <= number) {
-                    activities.push({
-                        transaction_type : transaction_types[getRandomInt(0, 2)],
-                        transaction_date : new Date(),
-                        createdAt : new Date(),
-                        updatedAt : new Date(),
-                        ListingId : listing.id,
-                        NftId : listing.NftId,
-                        ProfileId : listing.ProfileId
-                    });
-                } else {break;}
-            }
-            return activities;
         }
 
         function generateOffers(profiles, listings, number) {
@@ -317,8 +298,8 @@ module.exports = {
         let favoriteLists = generateFavoriteLists(profiles, nfts, 400);
         await queryInterface.bulkInsert('FavoriteLists', favoriteLists, {});
 
-        let activities = generateActivities(listings, 100);
-        await queryInterface.bulkInsert('Activities', activities, {});
+        // let activities = generateActivities(listings, 100);
+        // await queryInterface.bulkInsert('Activities', activities, {});
 
         let offers = generateOffers(profiles, listings, 100);
         await queryInterface.bulkInsert('Offers', offers, {});
@@ -348,11 +329,10 @@ module.exports = {
         await queryInterface.bulkDelete('Conversations', null, {});
         await queryInterface.bulkDelete('Comments', null, {});
         await queryInterface.bulkDelete('Offers', null, {});
-        await queryInterface.bulkDelete('Activities', null, {});
         await queryInterface.bulkDelete('FavoriteLists', null, {});
         await queryInterface.bulkDelete('Listings', null, {});
         await queryInterface.bulkDelete('Nfts', null, {});
-        await queryInterface.bulkDelete('OfferAttachments', null, {});
+        await queryInterface.bulkDelete('Attachments', null, {});
         await queryInterface.bulkDelete('CustomOffers', null, {});
         await queryInterface.bulkDelete('Profiles', null, {});
         await queryInterface.bulkDelete('Users', null, {});
