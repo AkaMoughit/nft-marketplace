@@ -146,7 +146,7 @@ module.exports = {
             let listings = [];
             let types = ["NORMAL", "AUCTION"];
 
-            for (let i = 0; i < nfts.length && listings.length < number; i++) {
+            for (let i = 0; i < nfts.length; i++) {
                 listings.push({
                     id : i + 1,
                     price : getRandomDouble(0,100).toFixed(2),
