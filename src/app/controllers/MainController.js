@@ -37,6 +37,11 @@ exports.welcomePage3 = function (req, res) {
 
 };
 
+exports.testPost = function (req, res) {
+    console.log("Post called");
+    res.status(200).send();
+}
+
 exports.explorePage = function (req, res) {
     res.status(200).render('explore', {});
 }

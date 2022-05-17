@@ -12,15 +12,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Listing.belongsTo(models.Nft);
-      Listing.belongsTo(models.Profile);
-      Listing.hasMany(models.Activity);
+      Listing.belongsTo(models.Profile, {
+        as: 'Seller'
+      });
+      Listing.belongsTo(models.Profile, {
+        as: 'Buyer'
+      });
       Listing.belongsToMany(models.Profile, { through: 'Offer' });
     }
   }
   Listing.init({
     price: DataTypes.DOUBLE,
     type: DataTypes.STRING,
-    sale_end_date: DataTypes.DATE
+    sale_end_date: DataTypes.DATE,
+    transaction_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Listing',

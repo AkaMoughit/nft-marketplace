@@ -13,8 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User);
       Profile.hasMany(models.CustomOffer);
-      //Profile.hasMany(models.Nft);
-      Profile.hasMany(models.Listing);
       Profile.hasMany(models.NftCollection);
       Profile.hasMany(models.Ticket);
       Profile.hasMany(models.Comment);
@@ -22,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       Profile.hasMany(models.FavoriteList);
       Profile.belongsToMany(models.Nft, { through: 'FavoriteList' });
       Profile.belongsToMany(models.Listing, { through: 'Offer' });
-      Profile.belongsToMany(models.Nft, { through: 'Activity' });
       Profile.belongsToMany(models.NftCollection, { through: 'CollectionFavoriteList' });
     }
   }
+
   Profile.init({
     name: DataTypes.STRING,
     wallet_id: DataTypes.STRING,

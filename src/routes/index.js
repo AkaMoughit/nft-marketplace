@@ -10,6 +10,8 @@ const nftRouter = require('./nft');
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
 
+router.post('/testPost', mainController.testPost);
+
 router.get(['/', '/index'], mainController.welcomePage3);
 router.get('/index-2', mainController.welcomePage2);
 router.get('/index-3', mainController.welcomePage);
