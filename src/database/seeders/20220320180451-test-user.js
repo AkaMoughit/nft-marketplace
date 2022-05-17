@@ -150,7 +150,7 @@ module.exports = {
                     price : getRandomDouble(0,100).toFixed(2),
                     type : types[getRandomInt(0, 2)],
                     sale_end_date : faker.date.future(),
-                    transaction_date : new Date(),
+                    transaction_date : buyerRandomness === 1? faker.date.past(): undefined,
                     createdAt : new Date(),
                     updatedAt : new Date(),
                     NftId : nfts[i].id,

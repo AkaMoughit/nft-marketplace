@@ -1,5 +1,6 @@
 const path = require('path');
 const nftRepository = require('../repositories/NftRepository');
+const listingRepository = require('../repositories/ListingRepository');
 
 exports.welcomePage = function (req, res) {
     // userRepository.findByPk(1)
@@ -39,7 +40,12 @@ exports.welcomePage3 = function (req, res) {
 
 exports.testPost = function (req, res) {
     console.log("Post called");
-    res.status(200).send();
+    listingRepository.findAllActiveListings(10, 0)
+        .then(result => {
+            res.status(200).send(result);
+        }).catch(err => {
+            res.status(404).send(err);
+    });
 }
 
 exports.explorePage = function (req, res) {
