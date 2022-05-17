@@ -1,6 +1,7 @@
 const BaseRepository = require("./BaseRepository");
 const NftProfileListingDTO = require("../dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
+const models = require("../models");
 const Listing = require('../models').Listing;
 
 const Op = require('../models').Sequelize.Op;
@@ -10,7 +11,28 @@ class ListingRepository extends BaseRepository {
         super(Listing);
     }
 
-    findAllActiveListings(limit, offset) {
+    findByNftTokenId(tokenId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let listing = await this.model.findOne({
+                    include: [
+                        {
+                            model: models.Nft,
+                            where: {
+                                token_id: tokenId
+                            }
+                        }
+                    ],
+                });
+
+                resolve(listing);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    findAllActiveListings(limit, offset, name) {
         return new Promise(async (resolve, reject) => {
             try {
                 let allActiveListings = await this.model.findAndCountAll({
@@ -18,7 +40,14 @@ class ListingRepository extends BaseRepository {
                     offset: offset,
                     include: [
                         'Seller',
-                        'Nft'
+                        {
+                            model: models.Nft,
+                            where: {
+                                name: {
+                                    [Op.like]: name==null?"%":"%"+name+"%"
+                                }
+                            }
+                        }
                     ],
                     where: {
                         transaction_date: {
@@ -51,7 +80,7 @@ class ListingRepository extends BaseRepository {
                     listNftCards.push(nftCardDTO);
                 }
 
-                resolve(listNftCards);
+                resolve({ count: allActiveListings.count, rows: listNftCards });
             }catch (err) {
                 reject(err);
             }

@@ -28,10 +28,9 @@ exports.welcomePage2 = function (req, res) {
 
 exports.welcomePage3 = function (req, res) {
     let pageNumberElements = 8;
-    nftRepository.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, 0)
-        .then( nftCards => {
-            res.status(200).render('index-3', { nfts: nftCards.rows });
-
+    listingRepository.findAllActiveListings(pageNumberElements, 0)
+        .then( data => {
+            res.status(200).render('index-3', { nfts: data.rows });
         }).catch(error => {
         res.status(404).render('404', {error: error});
     });
@@ -40,9 +39,9 @@ exports.welcomePage3 = function (req, res) {
 
 exports.testPost = function (req, res) {
     console.log("Post called");
-    listingRepository.findAllActiveListings(10, 0)
-        .then(result => {
-            res.status(200).send(result);
+    listingRepository.findAllActiveListings(10, 2, 'en')
+        .then(data => {
+            res.status(200).send(data);
         }).catch(err => {
             res.status(404).send(err);
     });
