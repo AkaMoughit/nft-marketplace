@@ -162,7 +162,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
 
-                                <li><a class="dropdown-item" href="#"> Sign
+                                <li><a class="dropdown-item" href="signout"> Sign
                                         Out <span class="ms-1"><i class="icofont-logout"></i></span></a></li>
                             </ul>
                         </div>
@@ -212,53 +212,23 @@
                 <div class="col-lg-5">
                     <div class="account-wrapper">
                         <h3 class="title">Sign In</h3>
-                        <form class="account-form">
+                        <form class="account-form" method="post" action="/signin">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com">
-                                <label for="floatingInput">Email address</label>
+                                <input type="email" class="form-control" id="email"
+                                    placeholder="name@example.com" name="email" required>
+                                <label for="email">Email address</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword"
-                                    placeholder="Password">
-                                <label for="floatingPassword">Password</label>
+                                <input type="password" class="form-control" id="password"
+                                    placeholder="password" name="password" required>
+                                <label for="password">Password</label>
                             </div>
+                            <br/>
                             <div class="form-group">
-                                <div class="d-flex justify-content-between flex-wrap pt-sm-2">
-                                    <div class="checkgroup">
-                                        <input type="checkbox" name="remember" id="remember">
-                                        <label for="remember">Remember Me</label>
-                                    </div>
-                                    <a href="forgot-pass">Forgot Password?</a>
-                                </div>
+                                <button class="d-block default-btn move-top"><span>Sign in</span></button>
                             </div>
-                            <div class="form-group">
-                                <button class="d-block default-btn move-top"><span>Signin Now</span></button>
-                            </div>
+                            <div> <%- info%></div>
                         </form>
-                        <div class="account-bottom">
-                            <span class="d-block cate pt-10">Don’t Have any Account? <a href="signup"> Sign
-                                    Up</a></span>
-                            <span class="or"><span>or</span></span>
-                            <h5 class="subtitle">Login With Social Media</h5>
-                            <ul class="social-media social-color lab-ul d-flex justify-content-center">
-                                <li>
-                                    <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="pinterest"><i class="icofont-pinterest"></i></a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -286,7 +256,7 @@
                                 </div>
                                 <form action="#">
                                     <input type="email" placeholder="Your Mail Address">
-                                    <button type="submit"> Subscrib now</button>
+                                    <button type="submit"> Subscribe now</button>
                                 </form>
                             </div>
                         </div>

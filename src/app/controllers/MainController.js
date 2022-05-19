@@ -120,11 +120,12 @@ exports.forgotPassPage = function (req, res) {
 }
 
 exports.signInPage = function (req, res) {
-    res.status(200).render('signin', {});
+    res.status(200).render('signin', {info : null});
 }
 
 exports.signUpPage = function (req, res) {
-    res.status(200).render('signup', {});
+    console.log(req.session);
+    res.status(200).render('signup', {info: null});
 }
 
 exports.walletPage = function (req, res) {

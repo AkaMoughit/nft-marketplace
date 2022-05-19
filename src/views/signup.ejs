@@ -161,7 +161,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
 
-                                <li><a class="dropdown-item" href="#"> Sign
+                                <li><a class="dropdown-item" href="signout"> Sign
                                         Out <span class="ms-1"><i class="icofont-logout"></i></span></a></li>
                             </ul>
                         </div>
@@ -211,62 +211,50 @@
                 <div class="col-lg-5">
                     <div class="account-wrapper">
                         <h3 class="title">Sign Up</h3>
-                        <form class="account-form">
+                        <form class="account-form" method="post" action="/signup">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="userIdInput" placeholder="user-id">
-                                <label for="userIdInput">User ID</label>
+                                <input type="text" name="name" class="form-control" id="name"
+                                       placeholder="name" required>
+                                <label for="name">Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com">
-                                <label for="floatingInput">Email address</label>
+                                <input type="text" name="phone_number" class="form-control" id="phone"
+                                       placeholder="phone" required>
+                                <label for="phone">Phone number</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword"
-                                    placeholder="Password">
+                                <input type="date" name="birthdate" class="form-control" id="birthdate"
+                                       placeholder="birthdate" required>
+                                <label for="birthdate">Birthdate</label>
+                            </div>
+                            <p>Specialize in :</p>
+                            <div class="align-content-xl-between">
+                                <input type="radio" id="music" name="specialize_in" value="Music"
+                                       checked>
+                                <label for="music">Music</label>
+                                <input type="radio" id="art" name="specialize_in" value="Digital Art"
+                                       checked>
+                                <label for="art">Digital Art</label>
+                                <input type="radio" id="photo" name="specialize_in" value="Photography"
+                                       checked>
+                                <label for="photo">Photography</label>
+                            </div>
+                            <br/>
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" class="form-control" id="email"
+                                    placeholder="name@example.com" required>
+                                <label for="email">Email address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" name="password" class="form-control" id="floatingPassword"
+                                    placeholder="Password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="confirmPass"
-                                    placeholder="Confirm Password">
-                                <label for="confirmPass">Confirm Password</label>
-                            </div>
                             <div class="form-group">
-                                <div class="d-flex justify-content-between flex-wrap pt-sm-2">
-                                    <div class="checkgroup">
-                                        <input type="checkbox" name="remember" id="remember">
-                                        <label for="remember">Remember Me</label>
-                                    </div>
-                                    <a href="forgot-pass">Forgot Password?</a>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button class="d-block default-btn move-top"><span>Signup Now</span></button>
+                                <button class="d-block default-btn move-top"><span>Sign up</span></button>
                             </div>
                         </form>
-                        <div class="account-bottom">
-                            <span class="d-block cate pt-10">Already Have an Account? <a href="signin"> Sign
-                                    In</a></span>
-                            <span class="or"><span>or</span></span>
-                            <h5 class="subtitle">Signup With Social Media</h5>
-                            <ul class="social-media social-color lab-ul d-flex justify-content-center">
-                                <li>
-                                    <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="pinterest"><i class="icofont-pinterest"></i></a>
-                                </li>
-                            </ul>
-                        </div>
+                        <div><%- info%></div>
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -295,7 +283,7 @@
                                 </div>
                                 <form action="#">
                                     <input type="email" placeholder="Your Mail Address">
-                                    <button type="submit"> Subscrib now</button>
+                                    <button type="submit"> Subscribe now</button>
                                 </form>
                             </div>
                         </div>
