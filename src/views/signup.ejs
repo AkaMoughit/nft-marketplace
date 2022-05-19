@@ -227,18 +227,42 @@
                                        placeholder="birthdate" required>
                                 <label for="birthdate">Birthdate</label>
                             </div>
-                            <p>Specialize in :</p>
-                            <div class="align-content-xl-between">
-                                <input type="radio" id="music" name="specialize_in" value="Music"
-                                       checked>
-                                <label for="music">Music</label>
-                                <input type="radio" id="art" name="specialize_in" value="Digital Art"
-                                       checked>
-                                <label for="art">Digital Art</label>
-                                <input type="radio" id="photo" name="specialize_in" value="Photography"
-                                       checked>
-                                <label for="photo">Photography</label>
+
+
+                            <div class="header__nav-item">
+                                <a class="header__nav-link active home-3" role="button" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">
+                                    Specialize In:
+                                </a>
+                                <ul class="dropdown-menu header__nav-menu" style="color: #0a53be">
+                                    <li onclick="enableRadio(this);" id="musicRadioId" class="drop-down-item  active home-3">
+                                        <input hidden type="radio" id="music" name="specialize_in" value="Music"
+                                               checked>
+                                        <label for="music">Music</label>
+                                    </li>
+                                    <li onclick="enableRadio(this);" id="digitalArtRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="art" name="specialize_in" value="Digital Art"
+                                               checked>
+                                        <label for="art">Digital Art</label>
+                                    </li>
+                                    <li onclick="enableRadio(this);" id="photographyRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="photo" name="specialize_in" value="Photography"
+                                               checked>
+                                        <label for="photo">Photography</label>
+                                    </li>
+                                </ul>
                             </div>
+<!--                            <div class="align-content-xl-between">-->
+<!--                                <input type="radio" id="music" name="specialize_in" value="Music"-->
+<!--                                       checked>-->
+<!--                                <label for="music">Music</label>-->
+<!--                                <input type="radio" id="art" name="specialize_in" value="Digital Art"-->
+<!--                                       checked>-->
+<!--                                <label for="art">Digital Art</label>-->
+<!--                                <input type="radio" id="photo" name="specialize_in" value="Photography"-->
+<!--                                       checked>-->
+<!--                                <label for="photo">Photography</label>-->
+<!--                            </div>-->
                             <br/>
                             <div class="form-floating mb-3">
                                 <input type="email" name="email" class="form-control" id="email"
@@ -403,6 +427,7 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
+    <script src="js/utils.js"></script>
 </body>
 
 </html>

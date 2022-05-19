@@ -4,9 +4,11 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const session = require('express-session');
 const {sessionCfg} = require("../configs/global.config");
+const cookieParser = require("cookie-parser");
 const SessionStore = require('connect-session-sequelize')(session.Store);
 
 module.exports = appMiddlewares = (app, sequelize) => {
+    app.use(cookieParser());
     app.use(cors());
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +27,7 @@ module.exports = appMiddlewares = (app, sequelize) => {
     }));
 
     sessionStore.sync();
+
     app.use(require('../routes'));
     app.use(function(req, res){ res.status(404).render('404', { url: req.originalUrl }); });
 }
