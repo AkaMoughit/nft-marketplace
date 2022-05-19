@@ -6,6 +6,8 @@ const profileController = require("../app/controllers/ProfileController")
 
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
+const authenticationController = require("../app/controllers/AuthenticationController");
+const {isAuth} = require("../app/controllers/AuthenticationController");
 
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
@@ -28,10 +30,13 @@ router.get('/coming-soon', mainController.comingSoonPage);
 router.get('/contact', mainController.contactPage);
 router.get('/forgot-pass', mainController.forgotPassPage);
 router.get('/item-details', nftController.itemDetailsPage);
-router.get('/signin', mainController.signInPage);
-router.get('/signup', mainController.signUpPage);
+router.get('/signin', authenticationController.isNotAuth, mainController.signInPage);
+router.get('/signup', authenticationController.isNotAuth, mainController.signUpPage);
 router.get('/wallet', mainController.walletPage);
 router.get('/404', mainController.errorNotFoundPage);
+router.post('/signup', authenticationController.isNotAuth, authenticationController.register);
+router.post('/signin', authenticationController.isNotAuth, authenticationController.login);
+router.get('/signout', authenticationController.isAuth, authenticationController.signout);
 
 
 module.exports = router;

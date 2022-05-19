@@ -1,6 +1,7 @@
 const profileService = require("../services/ProfileService");
 
 exports.authorPage = function (req, res) {
+    console.log(req.session);
     profileService.findByProfileId(req.query.profileId)
         .then(profile => {
             res.status(200).render('author', { profile: profile });
