@@ -22,7 +22,7 @@ router.get('/blog-3', mainController.blogPage3);
 router.get('/contact', mainController.contactPage);
 // router.get('/all-authors', mainController.allAuthors2Page);
 router.get('/forgot-pass', mainController.forgotPassPage);
-router.get('/item-details', nftController.itemDetailsPage);
+router.get('/item-details', listingController.itemDetailsPage);
 router.get('/signin', authenticationController.isNotAuth, mainController.signInPage);
 router.get('/signup', authenticationController.isNotAuth, mainController.signUpPage);
 router.get('/wallet', mainController.walletPage);

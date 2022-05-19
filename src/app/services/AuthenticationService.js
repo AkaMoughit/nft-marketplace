@@ -31,7 +31,7 @@ class AuthenticationService {
                     let [profile, created] = await this.profileRepository.save(profileTBR)
                     if (created) {
                         console.log("profile created : ", profile.dataValues.name);
-                        resolve("Profile created created successfully");
+                        resolve("Profile created successfully");
                     } else {
                         console.log("profile exists : ", profile.dataValues.name);
                         reject("User not created");
