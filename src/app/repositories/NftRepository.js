@@ -17,6 +17,23 @@ class NftRepository extends BaseRepository {
         this.favoriteListModel = FavoriteList;
     }
 
+    save(nft) {
+        return this.model.save(nft);
+    }
+
+    findByOwnerId(ownerId) {
+        return this.model.findAll({
+            include: [
+                {
+                    model: this.listingModel,
+                    where: {
+                        SellerId: ownerId
+                    }
+                }
+            ]
+        });
+    }
+
     findByCreatedProfileId(id) {
         return this.model.findAll({
             where: {

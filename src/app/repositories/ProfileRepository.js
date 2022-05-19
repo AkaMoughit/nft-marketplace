@@ -11,14 +11,6 @@ class ProfileRepository extends BaseRepository {
         this.nftModel = Nft;
     }
 
-    findById(id) {
-        return this.model.findOne({
-            where: {
-                id: id
-            }
-        });
-    }
-
     findAll(limit, offset, name) {
         return this.model.findAndCountAll({
             limit: limit,

@@ -1,6 +1,6 @@
 var router = require('express').Router();
-var nftController = require('../../app/controllers/NftController');
+var nftController = require('../../app/controllers/ListingController');
 
-router.get('/', nftController.nftsPage);
+router.get('/', nftController.listingPage);
 
 module.exports = router;

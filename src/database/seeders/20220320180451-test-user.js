@@ -1,6 +1,6 @@
 'use strict';
 
-
+const models = require("../../app/models");
 const { faker } = require('@faker-js/faker');
 module.exports = {
     async up (queryInterface, Sequelize) {
@@ -130,9 +130,11 @@ module.exports = {
                         CreatorId: profile.id,
                         // Generate randomness
                         CustomOfferId: customOfferExist === 1 ? ownedCustomOffers[randomOwnedCustonOfferIndex].id : undefined
-                    })
+                    });
                     //console.log(ownedCustomOffers[randomOwnedCustonOfferIndex]);
                     ownedCustomOffers.splice(randomOwnedCustonOfferIndex, 1);
+
+
                 }
             }
             return nfts;
@@ -281,7 +283,7 @@ module.exports = {
 
 
         let users = generateUsers(50);
-        await customInsert('Users', users, {});
+        await models.User.bulkCreate(users, {});
 
         let profiles = generateProfiles(users);
         await customInsert('Profiles', profiles, {});
@@ -290,10 +292,10 @@ module.exports = {
         await customInsert('CustomOffers', customOffers, {});
 
         let nfts = generateNfts(profiles, customOffers, 3);
-        await customInsert('Nfts',nfts, {});
+        await models.Nft.bulkCreate(nfts, {});
 
         let listings = generateListings(profiles, nfts, 100);
-        await queryInterface.bulkInsert('Listings', listings, {});
+        await models.Listing.bulkCreate(listings, {});
 
         let favoriteLists = generateFavoriteLists(profiles, nfts, 400);
         await queryInterface.bulkInsert('FavoriteLists', favoriteLists, {});
@@ -325,6 +327,7 @@ module.exports = {
          * await queryInterface.bulkDelete('People', null, {});
          */
 
+        await queryInterface.bulkDelete('NftOwnerships', null, {});
         await queryInterface.bulkDelete('Messages', null, {});
         await queryInterface.bulkDelete('Conversations', null, {});
         await queryInterface.bulkDelete('Comments', null, {});

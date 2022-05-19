@@ -15,6 +15,7 @@ const Sequelize = require("sequelize");
  * createTable() => "Messages", deps: [Conversations, Profiles]
  * createTable() => "FavoriteLists", deps: [Profiles, Nfts]
  * createTable() => "Listings", deps: [Nfts, Profiles, Profiles]
+ * createTable() => "NftOwnerships", deps: [Nfts, Profiles]
  * createTable() => "Offers", deps: [Listings, Profiles]
  * createTable() => "Tickets", deps: [Profiles]
  * createTable() => "TicketAttachments", deps: [Tickets]
@@ -24,7 +25,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-05-17T20:45:32.221Z",
+  created: "2022-05-19T00:06:10.845Z",
   comment: "",
 };
 
@@ -550,6 +551,49 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
+      "NftOwnerships",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        price: { type: Sequelize.DOUBLE, field: "price" },
+        transaction_date: { type: Sequelize.DATE, field: "transaction_date" },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+        NftId: {
+          type: Sequelize.INTEGER,
+          field: "NftId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Nfts", key: "id" },
+          allowNull: true,
+        },
+        OwnerId: {
+          type: Sequelize.INTEGER,
+          field: "OwnerId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Profiles", key: "id" },
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
       "Offers",
       {
         value_offered: { type: Sequelize.DOUBLE, field: "value_offered" },
@@ -701,6 +745,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["NftCollections", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["NftOwnerships", { transaction }],
   },
   {
     fn: "dropTable",

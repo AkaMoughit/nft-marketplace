@@ -11,7 +11,7 @@ class ListingRepository extends BaseRepository {
         super(Listing);
     }
 
-    findByNftTokenId(tokenId) {
+    findListingByTokenId(tokenId) {
         return new Promise(async (resolve, reject) => {
             try {
                 let listing = await this.model.findOne({
@@ -21,11 +21,24 @@ class ListingRepository extends BaseRepository {
                             where: {
                                 token_id: tokenId
                             }
-                        }
+                        },
+                        'Seller'
                     ],
+                    where: {
+                        transaction_date: {
+                            [Op.is]: null
+                        },
+                        sale_end_date:  {
+                            [Op.gt]: new Date()
+                        }
+                    },
                 });
 
-                resolve(listing);
+                let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues);
+                let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
+                nftCardDTO.sale_end_date = deltaInDHMS;
+
+                resolve(nftCardDTO);
             } catch (err) {
                 reject(err);
             }

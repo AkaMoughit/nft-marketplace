@@ -9,17 +9,12 @@ class ListingService {
         return this.listingRepository.listAll();
     }
 
-    findNftCardByTokenId(tokenId) {
-        return this.listingRepository.findNftCardByTokenId(tokenId);
-
-    }
-
     findAllActiveListings(limit, offset, name=null) {
         return this.listingRepository.findAllActiveListings(limit, offset, name);
     }
 
-    findByNftTokenId(tokenId) {
-        return this.listingRepository.findByNftTokenId(tokenId);
+    findListingByTokenId(tokenId) {
+        return this.listingRepository.findListingByTokenId(tokenId);
     }
 }
 module.exports = new ListingService(listingRepository);

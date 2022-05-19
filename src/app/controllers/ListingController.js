@@ -1,10 +1,8 @@
-const nftService = require("../services/NftService");
 const listingService = require("../services/ListingService");
-const {response} = require("express");
 
 let pageIndex = 1;
 
-exports.nftsPage = function(req, res) {
+exports.listingPage = function(req, res) {
     let pageNumberElements = 16;
 
     if(req.query.loadMore !== undefined) pageIndex++;
@@ -26,7 +24,7 @@ exports.nftsPage = function(req, res) {
 }
 
 exports.itemDetailsPage = function (req, res) {
-    nftService.findNftCardByTokenId(req.query.nft_id)
+    listingService.findListingByTokenId(req.query.nft_id)
         .then(nftDTO => {
             res.status(200).render('item-details', { nft: nftDTO });
         }).catch(err => {
