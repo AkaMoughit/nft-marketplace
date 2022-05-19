@@ -7,7 +7,6 @@ const profileController = require("../app/controllers/ProfileController")
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
 const authenticationController = require("../app/controllers/AuthenticationController");
-const {isAuth} = require("../app/controllers/AuthenticationController");
 
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);

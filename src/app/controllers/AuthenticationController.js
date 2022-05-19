@@ -33,6 +33,8 @@ exports.login = function(req, res) {
             console.log(profile);
             if (profile.UserId > 0) {
                 req.session.isAuth = true;
+
+                res.cookie("context", profile.profile_id, { httpOnly: true });
                 res.redirect("/author?profileId=" + profile.profile_id);
             } else {
                 res.status(404).render('signin', {info : "wrong email or password"});
