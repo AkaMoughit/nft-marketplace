@@ -19,7 +19,7 @@ exports.isNotAuth = function (req, res, next) {
 exports.register = function (req, res) {
     authenticationService.register(req.body)
         .then(info => {
-            res.status(201).render('signup',{info: info});
+            res.status(300).redirect('/signin');
         })
         .catch(err => {
             res.status(404).render('signup',{info: err});
@@ -32,9 +32,7 @@ exports.login = function(req, res) {
         .then(profile => {
             console.log(profile);
             if (profile.UserId > 0) {
-                console.log(req.session);
                 req.session.isAuth = true;
-                console.log(req.session.id);
                 res.redirect("/author?profileId=" + profile.profile_id);
             } else {
                 res.status(404).render('signin', {info : "wrong email or password"});
