@@ -52,7 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       async afterBulkCreate(instances, options) {
         for (const instance of instances) {
           if (instance.BuyerId !== undefined && instance.transaction_date !== undefined) {
-              console.log(instance.BuyerId + "::" + instance.transaction_date);
             await this.models.NftOwnership.update(
                 {
                   OwnerId: instance.BuyerId,

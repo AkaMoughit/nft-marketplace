@@ -9,6 +9,7 @@ class NftCardDTO {
         this.blockchain_type = profile===undefined?null:profile.blockchain_type;
         this.price = listing===undefined?null:listing.price;
         this.sale_end_date = listing===undefined?null:listing.sale_end_date;
+        this.transaction_date = listing===undefined?null:listing.transaction_date;
         this.favoriteCount = favoriteCount===undefined?null:favoriteCount;
     }
 }

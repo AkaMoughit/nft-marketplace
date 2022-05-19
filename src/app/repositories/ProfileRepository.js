@@ -1,14 +1,30 @@
 const BaseRepository = require("./BaseRepository");
 const models = require("../models");
 const Profile = require("../models").Profile;
-const Listing = require("../models").Listing
-const Nft = require("../models").Nft
+const Listing = require("../models").Listing;
+const Nft = require("../models").Nft;
+const NftOwnership = require("../models").NftOwnership
 
 class ProfileRepository extends BaseRepository {
-    constructor(Profile, Listing, Nft) {
+    constructor(Profile, Listing, Nft, NftOwnership) {
         super(Profile);
         this.listingModel = Listing;
         this.nftModel = Nft;
+        this.nftOwnershipModel = NftOwnership;
+    }
+
+    findByOwnedNftPk(ownNftPk) {
+        return this.model.findOne({
+            include: [
+                {
+                    model: this.nftOwnershipModel,
+                    as: 'Owner',
+                    where: {
+                        NftId: ownNftPk
+                    }
+                }
+            ]
+        });
     }
 
     findAll(limit, offset, name) {
@@ -23,7 +39,7 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    findAboutByProfileId(profileId) {
+    findByProfileId(profileId) {
         return this.model.findOne({
             where: {
                 profile_id: profileId
@@ -31,17 +47,6 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    findOnSaleByProfile(profileAbout) {
-        return this.listingModel.findAll({
-            include: [
-                this.nftModel
-            ],
-            where: {
-                ProfileId: profileAbout.id
-            }
-        });
-    }
-
 }
 
-module.exports = new ProfileRepository(Profile, Listing, Nft);
+module.exports = new ProfileRepository(Profile, Listing, Nft, NftOwnership);

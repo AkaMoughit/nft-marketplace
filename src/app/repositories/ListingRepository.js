@@ -24,14 +24,14 @@ class ListingRepository extends BaseRepository {
                         },
                         'Seller'
                     ],
-                    where: {
-                        transaction_date: {
-                            [Op.is]: null
-                        },
-                        sale_end_date:  {
-                            [Op.gt]: new Date()
-                        }
-                    },
+                    // where: {
+                    //     transaction_date: {
+                    //         [Op.is]: null
+                    //     },
+                    //     sale_end_date:  {
+                    //         [Op.gt]: new Date()
+                    //     }
+                    // },
                 });
 
                 let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues);
@@ -82,22 +82,73 @@ class ListingRepository extends BaseRepository {
                     order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
                 });
 
-                let listNftCards = [];
-
-                for (let listing of allActiveListings.rows) {
-
-                    let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount);
-                    let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
-                    nftCardDTO.sale_end_date = deltaInDHMS;
-
-                    listNftCards.push(nftCardDTO);
-                }
+                let listNftCards = this.extractNftCards(allActiveListings);
 
                 resolve({ count: allActiveListings.count, rows: listNftCards });
             }catch (err) {
                 reject(err);
             }
         })
+    }
+    findAllActiveListingsByProfilePk(limit, offset, name, profilePk) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let allActiveListings = await this.model.findAndCountAll({
+                    limit: limit,
+                    offset: offset,
+                    include: [
+                        'Seller',
+                        {
+                            model: models.Nft,
+                            where: {
+                                name: {
+                                    [Op.like]: name==null?"%":"%"+name+"%"
+                                }
+                            }
+                        }
+                    ],
+                    where: {
+                        transaction_date: {
+                            [Op.is]: null
+                        },
+                        sale_end_date:  {
+                            [Op.gt]: new Date()
+                        },
+                        SellerId: profilePk
+                    },
+                    attributes:[
+                        'price',
+                        'type',
+                        'sale_end_date',
+                        'transaction_date',
+                        'NftId',
+                        'SellerId',
+                        [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
+                    ],
+                    order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
+                });
+
+                let listNftCards = this.extractNftCards(allActiveListings);
+
+                resolve({ count: allActiveListings.count, rows: listNftCards });
+            }catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    extractNftCards(allActiveListings) {
+        let listNftCards = [];
+
+        for (let listing of allActiveListings.rows) {
+
+            let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount);
+            let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
+            nftCardDTO.sale_end_date = deltaInDHMS;
+
+            listNftCards.push(nftCardDTO);
+        }
+        return listNftCards;
     }
 }
 

@@ -347,33 +347,61 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="item-details-countdown">
-                                <h4>Ends In:</h4>
-                                <ul class="item-countdown-list count-down"
-                                        <% let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %>
-                                    data-date="<%- monthNames[nft.sale_end_date.timeEnd.getMonth()]%> <%- nft.sale_end_date.timeEnd.getDate() %>, <%- nft.sale_end_date.timeEnd.getFullYear() %> <%- nft.sale_end_date.timeEnd.getHours() %>:<%- nft.sale_end_date.timeEnd.getMinutes() %>:<%- nft.sale_end_date.timeEnd.getSeconds() %>">
-                                    <li>
-                                        <span class="days"><%- nft.sale_end_date.days %></span><span class="count-txt">Days</span>
-                                    </li>
-                                    <li>
-                                        <span class="hours"><%- nft.sale_end_date.hours %></span><span class="count-txt">Hours</span>
-                                    </li>
-                                    <li>
-                                        <span class="minutes"><%- nft.sale_end_date.minutes %></span><span class="count-txt">Mins</span>
-                                    </li>
-                                    <li>
-                                        <span class="seconds"><%- nft.sale_end_date.seconds %></span><span class="count-txt">Secs</span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <% var sale_end_date = nft.sale_end_date; %>
+                            <% var transaction_date = nft.transaction_date; %>
+                            <% if(transaction_date != undefined || sale_end_date.timeEnd < new Date().getTime()) { %>
+                                <div class="item-details-countdown">
+                                    <h4>Ends In:</h4>
+                                    <ul class="item-countdown-list count-down">
+                                        <li>
+                                            <span class="days">--</span><span class="count-txt">Days</span>
+                                        </li>
+                                        <li>
+                                            <span class="hours">--</span><span class="count-txt">Hours</span>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">--</span><span class="count-txt">Mins</span>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">--</span><span class="count-txt">Secs</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <% } else { %>
+                                <div class="item-details-countdown">
+                                    <h4>Ends In:</h4>
+                                    <ul class="item-countdown-list count-down"
+                                            <% let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %>
+                                        data-date="<%- monthNames[nft.sale_end_date.timeEnd.getMonth()]%> <%- nft.sale_end_date.timeEnd.getDate() %>, <%- nft.sale_end_date.timeEnd.getFullYear() %> <%- nft.sale_end_date.timeEnd.getHours() %>:<%- nft.sale_end_date.timeEnd.getMinutes() %>:<%- nft.sale_end_date.timeEnd.getSeconds() %>">
+                                        <li>
+                                            <span class="days"><%- nft.sale_end_date.days %></span><span class="count-txt">Days</span>
+                                        </li>
+                                        <li>
+                                            <span class="hours"><%- nft.sale_end_date.hours %></span><span class="count-txt">Hours</span>
+                                        </li>
+                                        <li>
+                                            <span class="minutes"><%- nft.sale_end_date.minutes %></span><span class="count-txt">Mins</span>
+                                        </li>
+                                        <li>
+                                            <span class="seconds"><%- nft.sale_end_date.seconds %></span><span class="count-txt">Secs</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <% } %>
                             <div class="item-price">
                                 <h4>Price</h4>
                                 <p><span><i class="icofont-coins"></i> <%- nft.price %> ETH
                                     </span>($ 6,227.15)</p>
                             </div>
                             <div class="buying-btns d-flex flex-wrap">
-                                <a href="wallet" class="default-btn move-right"><span>Buy Now</span> </a>
-                                <a href="wallet" class="default-btn move-right"><span>Place a Bid</span> </a>
+                                <% if(transaction_date != undefined) { %>
+                                    <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
+                                        <span>No longer available!</span>
+                                    </div>
+                                <% } else { %>
+                                    <a href="wallet" class="default-btn move-right"><span>Buy Now</span> </a>
+                                    <a href="wallet" class="default-btn move-right"><span>Place a Bid</span> </a>
+                                <% } %>
                             </div>
                         </div>
                     </div>

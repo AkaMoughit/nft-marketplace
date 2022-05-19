@@ -12,9 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       NftOwnership.belongsTo(models.Nft);
-      NftOwnership.belongsTo(models.Profile, {
-        as: 'Owner'
-      });
+      NftOwnership.belongsTo(models.Profile);
     }
   }
   NftOwnership.init({

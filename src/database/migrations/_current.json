@@ -588,8 +588,20 @@
                     "field": "NftId",
                     "seqType": "Sequelize.INTEGER"
                 },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "OwnerId": {
                     "allowNull": true,
+                    "name": "OwnerId",
                     "references": {
                         "model": "Profiles",
                         "key": "id"

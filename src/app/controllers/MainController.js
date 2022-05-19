@@ -24,43 +24,43 @@ exports.testPost = async function (req, res) {
     //         res.status(404).send(err);
     // });
 
-    // await nftRepository.model.build({
-    //     id: 99997,
-    //     creation_date: faker.date.past(),
-    //     contract_adress: faker.address.city(0),
-    //     token_id: faker.datatype.uuid(),
-    //     description: faker.lorem.text(),
-    //     name: faker.name.findName(),
-    //     //blockchain_type: 'ETHEREUM',
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //     CreatorId: 1
-    // }).save();
-    //
-    // await listingRepository.model.build({
-    //     id: 99999,
-    //     price: 69,
-    //     type: 'NORMAL',
-    //     sale_end_date: new Date(),
-    //     createdAt: new Date(),
-    //     updatedAt: new Date(),
-    //     NftId: 99997,
-    //     SellerId: 1
-    // }).save();
+    await nftRepository.model.build({
+        id: 99997,
+        creation_date: faker.date.past(),
+        contract_adress: faker.address.city(0),
+        token_id: faker.datatype.uuid(),
+        description: faker.lorem.text(),
+        name: faker.name.findName(),
+        //blockchain_type: 'ETHEREUM',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        CreatorId: 1
+    }).save();
 
-    let result = await listingRepository.model.update(
-        {
-            BuyerId: 1,
-            transaction_date: new Date()
-        },
-        {
-            where: {
-                NftId: 147
-            },
-            individualHooks: true
-        });
+    await listingRepository.model.build({
+        id: 99999,
+        price: 69,
+        type: 'NORMAL',
+        sale_end_date: faker.date.past(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        NftId: 99997,
+        SellerId: 1
+    }).save();
 
-    res.status(200).send(result);
+    // let result = await listingRepository.model.update(
+    //     {
+    //         BuyerId: 1,
+    //         transaction_date: new Date()
+    //     },
+    //     {
+    //         where: {
+    //             NftId: 99997
+    //         },
+    //         individualHooks: true
+    //     });
+
+    res.status(200).send();
 }
 
 exports.explorePage = function (req, res) {
