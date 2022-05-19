@@ -4,34 +4,44 @@ const Nft = require("../models").Nft;
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
 const FavoriteList = require("../models").FavoriteList;
+const NftOwnership = require("../models").NftOwnership;
 
 const models = require('../models');
 
 let getDeltaInDHMS = require('../utils/DateHelper');
 
 class NftRepository extends BaseRepository {
-    constructor(Nft, Profile, Listing, FavoriteList) {
+    constructor(Nft, Profile, Listing, FavoriteList, NftOwnership) {
         super(Nft);
         this.profileModel = Profile;
         this.listingModel = Listing;
         this.favoriteListModel = FavoriteList;
+        this.NftOwnership = NftOwnership;
     }
 
-    findByCreatedProfileId(id) {
+    save(nft) {
+        return this.model.save(nft);
+    }
+
+    findAllByOwnerPk(ownerId) {
         return this.model.findAll({
-            where: {
-                creatorId: id
-            }
+            include: [
+                {
+                    model: this.NftOwnership,
+                    where: {
+                        OwnerId: ownerId
+                    }
+                }
+            ]
         });
     }
 
-    findByOwnerProfileId(id) {
+    findByCreatorPk(creatorPk) {
         return this.model.findAll({
             where: {
-                ProfileId: id
+                creatorId: creatorPk
             }
-        })
-
+        });
     }
 
     findByTokenId(tokenId) {
@@ -125,4 +135,4 @@ class NftRepository extends BaseRepository {
     }
 }
 
-module.exports = new NftRepository(Nft, Profile, Listing, FavoriteList);
+module.exports = new NftRepository(Nft, Profile, Listing, FavoriteList, NftOwnership);

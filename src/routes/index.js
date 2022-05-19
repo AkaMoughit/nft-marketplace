@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const mainController = require('../app/controllers/MainController');
-const nftController = require('../app/controllers/NftController');
+const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController")
 
 const apiRouter = require('./api');
@@ -10,28 +10,32 @@ const nftRouter = require('./nft');
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
 
-router.get(['/', '/index'], mainController.welcomePage3);
-router.get('/index-2', mainController.welcomePage2);
-router.get('/index-3', mainController.welcomePage);
-router.get('/explore', nftController.nftsPage);
-router.get('/auction', mainController.auctionPage);
+router.post('/testPost', mainController.testPost);
+
+router.get('/404', mainController.errorNotFoundPage);
+router.get('/signin', mainController.signInPage);
+router.get('/signup', mainController.signUpPage);
+router.get(['/', '/index'], mainController.welcomePage);
+router.get('/wallet', mainController.walletPage);
 router.get('/activity', mainController.activityPage);
-router.get('/all-authors-2', profileController.allAuthorsPage);
-router.get('/all-authors', mainController.allAuthors2Page);
-router.get('/author', profileController.authorPage);
 router.get('/blog', mainController.blogPage);
 router.get('/blog-2', mainController.blogPage2);
 router.get('/blog-3', mainController.blogPage3);
-router.get('/blog-single', mainController.blogSinglePage);
-router.get('/blog-single-2', mainController.blogSingle2Page);
-router.get('/coming-soon', mainController.comingSoonPage);
 router.get('/contact', mainController.contactPage);
+// router.get('/all-authors', mainController.allAuthors2Page);
 router.get('/forgot-pass', mainController.forgotPassPage);
-router.get('/item-details', nftController.itemDetailsPage);
-router.get('/signin', mainController.signInPage);
-router.get('/signup', mainController.signUpPage);
-router.get('/wallet', mainController.walletPage);
-router.get('/404', mainController.errorNotFoundPage);
 
+router.get('/item-details', listingController.itemDetailsPage);
+router.get('/explore', listingController.listingPage);
+
+router.get('/all-authors-2', profileController.allAuthorsPage);
+router.get('/author', profileController.authorPage);
+
+// router.get('/blog-single', mainController.blogSinglePage);
+// router.get('/blog-single-2', mainController.blogSingle2Page);
+// router.get('/coming-soon', mainController.comingSoonPage);
+// router.get('/index-2', mainController.welcomePage2);
+// router.get('/index-3', mainController.welcomePage);
+// router.get('/auction', mainController.auctionPage);
 
 module.exports = router;

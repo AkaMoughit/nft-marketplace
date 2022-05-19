@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class OfferAttachment extends Model {
+  class NftOwnership extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,15 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      OfferAttachment.belongsTo(models.CustomOffer);
+      NftOwnership.belongsTo(models.Nft);
+      NftOwnership.belongsTo(models.Profile);
     }
   }
-  OfferAttachment.init({
-    name: DataTypes.STRING,
-    attachment_url: DataTypes.STRING
+  NftOwnership.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    price: DataTypes.DOUBLE,
+    transaction_date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'OfferAttachment',
+    modelName: 'NftOwnership',
   });
-  return OfferAttachment;
+  return NftOwnership;
 };

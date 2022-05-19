@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       CustomOffer.belongsTo(models.Profile);
-      CustomOffer.hasMany(models.OfferAttachment);
-      CustomOffer.hasMany(models.Nft);
+      CustomOffer.hasMany(models.Attachment);
+      CustomOffer.hasOne(models.Nft);
       CustomOffer.hasMany(models.Comment);
     }
   }

@@ -1,41 +1,67 @@
 const path = require('path');
 const nftRepository = require('../repositories/NftRepository');
+const listingRepository = require('../repositories/ListingRepository');
+const {faker} = require("@faker-js/faker");
 
 exports.welcomePage = function (req, res) {
-    // userRepository.findByPk(1)
-    //     .then(result => {
-    //         console.log(result);
-    //         res.status(200).render('index', { data: JSON.stringify(result) });
-    //
-    //     }).catch(error => {
-    //         res.status(404).send("This user is not present in the database.");
-    //     });
-
-};
-
-exports.welcomePage2 = function (req, res) {
-    // userRepository.findByPk(1)
-    //     .then(result => {
-    //         console.log(result);
-    //         res.status(200).render('index-2', { data: JSON.stringify(result) });
-    //
-    //     }).catch(error => {
-    //     res.status(404).send("This user is not present in the database.");
-    // });
-
-};
-
-exports.welcomePage3 = function (req, res) {
     let pageNumberElements = 8;
-    nftRepository.findAllNftCardsOrderedByFavoriteCount(pageNumberElements, 0)
-        .then( nftCards => {
-            res.status(200).render('index-3', { nfts: nftCards.rows });
-
+    listingRepository.findAllActiveListings(pageNumberElements, 0)
+        .then( data => {
+            res.status(200).render('index-3', { nfts: data.rows });
         }).catch(error => {
         res.status(404).render('404', {error: error});
     });
 
 };
+
+exports.testPost = async function (req, res) {
+    console.log("Post called");
+    // listingRepository.findListingByTokenId("176bf0d1-00fc-4e72-bbd4-af7152041f63")
+    //     .then(data => {
+    //         res.status(200).send(data);
+    //     }).catch(err => {
+    //         console.log(err);
+    //         res.status(404).send(err);
+    // });
+
+    await nftRepository.model.build({
+        id: 99997,
+        creation_date: faker.date.past(),
+        contract_adress: faker.address.city(0),
+        token_id: faker.datatype.uuid(),
+        description: faker.lorem.text(),
+        name: faker.name.findName(),
+        //blockchain_type: 'ETHEREUM',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        CreatorId: 1
+    }).save();
+
+    await listingRepository.model.build({
+        id: 99999,
+        price: 69,
+        type: 'NORMAL',
+        sale_end_date: faker.date.past(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        NftId: 99997,
+        SellerId: 1
+    }).save();
+
+    // let result = await listingRepository.model.update(
+    //     {
+    //         BuyerId: 1,
+    //         transaction_date: new Date()
+    //     },
+    //     {
+    //         where: {
+    //             NftId: 99997
+    //         },
+    //         individualHooks: true
+    //     });
+
+    res.status(200).send();
+}
 
 exports.explorePage = function (req, res) {
     res.status(200).render('explore', {});

@@ -10,23 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.models = models;
       // define association here
       Nft.belongsTo(models.CustomOffer);
       Nft.belongsTo(models.Profile, {
-        as: 'creator'
-      });
-      Nft.belongsTo(models.Profile, {
-        as: 'owner',
+        as: 'Creator',
         foreignKey: {
-          name: 'ProfileId'
+          name: 'CreatorId'
         }
       });
       Nft.belongsTo(models.NftCollection);
-      Nft.hasMany(models.NftAttachment);
-      Nft.hasOne(models.Listing);
-      Nft.hasMany(models.FavoriteList)
+      Nft.hasOne(models.NftOwnership);
+      Nft.hasMany(models.Attachment);
+      Nft.hasMany(models.Listing);
+      Nft.hasMany(models.FavoriteList);
       Nft.belongsToMany(models.Profile, { through: 'FavoriteList' });
-      Nft.belongsToMany(models.Profile, { through: 'Activity' });
     }
   }
   Nft.init({
@@ -38,6 +36,33 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Nft',
+    hooks: {
+      async afterSave(instance, options) {
+        let nftOwnership = this.models.NftOwnership.build({
+          NftId: instance.id,
+          OwnerId: instance.CreatorId,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+
+        await nftOwnership.save();
+        console.log("nft ownership added");
+      },
+
+      async afterBulkCreate(instances, options) {
+        for (const instance of instances) {
+          let nftOwnership = this.models.NftOwnership.build({
+            NftId: instance.id,
+            OwnerId: instance.CreatorId,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          });
+
+          await nftOwnership.save();
+        }
+        console.log("nft ownerships added");
+      }
+    }
   });
   return Nft;
 };
