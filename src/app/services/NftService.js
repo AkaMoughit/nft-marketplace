@@ -14,8 +14,8 @@ class NftService {
 
     }
 
-    findAllNftCardsOrderedByFavoriteCount(limit, offset) {
-        return this.nftRepository.findAllNftCardsOrderedByFavoriteCount(limit, offset);
+    findAllNftCardsOrderedByFavoriteCount(limit, offset, name=null) {
+        return this.nftRepository.findAllNftCardsOrderedByFavoriteCount(limit, offset, name);
     }
 }
 module.exports = new NftService(nftRepository);

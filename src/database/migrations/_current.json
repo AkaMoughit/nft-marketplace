@@ -1,15 +1,22 @@
 {
     "tables": {
-        "Activities": {
-            "tableName": "Activities",
+        "Attachments": {
+            "tableName": "Attachments",
             "schema": {
-                "transaction_type": {
-                    "field": "transaction_type",
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "reference_table": {
+                    "field": "reference_table",
                     "seqType": "Sequelize.STRING"
                 },
-                "transaction_date": {
-                    "field": "transaction_date",
-                    "seqType": "Sequelize.DATE"
+                "attachment_url": {
+                    "field": "attachment_url",
+                    "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -21,37 +28,26 @@
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 },
-                "ListingId": {
+                "CustomOfferId": {
                     "allowNull": true,
                     "references": {
-                        "model": "Listings",
+                        "model": "CustomOffers",
                         "key": "id"
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "ListingId",
+                    "field": "CustomOfferId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "NftId": {
-                    "primaryKey": true,
+                    "allowNull": true,
                     "references": {
                         "model": "Nfts",
                         "key": "id"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "NftId",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "ProfileId": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Profiles",
-                        "key": "id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "ProfileId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -332,6 +328,10 @@
                     "field": "sale_end_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "transaction_date": {
+                    "field": "transaction_date",
+                    "seqType": "Sequelize.DATE"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -353,7 +353,7 @@
                     "field": "NftId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "ProfileId": {
+                "SellerId": {
                     "allowNull": true,
                     "references": {
                         "model": "Profiles",
@@ -361,7 +361,18 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "ProfileId",
+                    "field": "SellerId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "BuyerId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "BuyerId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -404,6 +415,17 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "ConversationId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -460,16 +482,16 @@
                     "field": "CustomOfferId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "creator_id": {
+                "CreatorId": {
                     "allowNull": true,
-                    "name": "creator_id",
+                    "name": "CreatorId",
                     "references": {
                         "model": "Profiles",
                         "key": "id"
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "creator_id",
+                    "field": "CreatorId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "NftCollectionId": {
@@ -481,59 +503,6 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "NftCollectionId",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "ProfileId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Profiles",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "ProfileId",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
-        },
-        "NftAttachments": {
-            "tableName": "NftAttachments",
-            "schema": {
-                "id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "field": "name",
-                    "seqType": "Sequelize.STRING"
-                },
-                "attachment_url": {
-                    "field": "attachment_url",
-                    "seqType": "Sequelize.STRING"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "NftId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Nfts",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "NftId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -581,6 +550,70 @@
             },
             "indexes": []
         },
+        "NftOwnerships": {
+            "tableName": "NftOwnerships",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "price": {
+                    "field": "price",
+                    "seqType": "Sequelize.DOUBLE"
+                },
+                "transaction_date": {
+                    "field": "transaction_date",
+                    "seqType": "Sequelize.DATE"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "NftId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Nfts",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "NftId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "OwnerId": {
+                    "allowNull": true,
+                    "name": "OwnerId",
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "OwnerId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Offers": {
             "tableName": "Offers",
             "schema": {
@@ -623,48 +656,6 @@
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "field": "ProfileId",
-                    "seqType": "Sequelize.INTEGER"
-                }
-            },
-            "indexes": []
-        },
-        "OfferAttachments": {
-            "tableName": "OfferAttachments",
-            "schema": {
-                "id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "field": "name",
-                    "seqType": "Sequelize.STRING"
-                },
-                "attachment_url": {
-                    "field": "attachment_url",
-                    "seqType": "Sequelize.STRING"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "CustomOfferId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "CustomOffers",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "CustomOfferId",
                     "seqType": "Sequelize.INTEGER"
                 }
             },

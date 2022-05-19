@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Message.belongsTo(models.Conversation);
+      Message.belongsTo(models.Profile);
     }
   }
   Message.init({

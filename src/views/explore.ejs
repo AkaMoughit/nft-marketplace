@@ -237,7 +237,7 @@
                     <div class="form-floating nft-search-input">
                         <input type="text" class="form-control" id="nftSearch" placeholder="Search NFT">
                         <label for="nftSearch">Search NFT</label>
-                        <button type="button"> <i class="icofont-search-1"></i></button>
+                        <button id="searchButton" onclick="searchNft()" type="button"> <i class="icofont-search-1"></i></button>
                     </div>
                 </div>
             </div>
@@ -253,9 +253,9 @@
                                             <div class="author-part">
                                                 <ul class="author-list d-flex">
                                                     <li class="single-author d-flex align-items-center">
-                                                        <a href="author" class="veryfied"><img loading="lazy"
+                                                        <a href="author?profileId=<%- nft.owner_profile_id %>" class="veryfied"><img loading="lazy"
                                                                                                src="assets/images/seller/04.png" alt="author-img"></a>
-                                                        <h6><a href="author"><%- nft.owner_name %></a></h6>
+                                                        <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner_name %></a></h6>
                                                     </li>
                                                 </ul>
                                             </div>
