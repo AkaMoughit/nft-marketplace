@@ -25,7 +25,7 @@ exports.testPost = async function (req, res) {
     // });
 
     await nftRepository.model.build({
-        id: 99997,
+        id: 99993,
         creation_date: faker.date.past(),
         contract_adress: faker.address.city(0),
         token_id: faker.datatype.uuid(),
@@ -34,18 +34,18 @@ exports.testPost = async function (req, res) {
         //blockchain_type: 'ETHEREUM',
         createdAt: new Date(),
         updatedAt: new Date(),
-        CreatorId: 1
+        CreatorId: 54
     }).save();
 
     await listingRepository.model.build({
-        id: 99999,
+        id: 99994,
         price: 69,
         type: 'NORMAL',
         sale_end_date: faker.date.past(),
         createdAt: new Date(),
         updatedAt: new Date(),
-        NftId: 99997,
-        SellerId: 1
+        NftId: 99993,
+        SellerId: 54
     }).save();
 
     // let result = await listingRepository.model.update(
