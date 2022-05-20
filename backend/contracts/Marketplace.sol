@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
+import "hardhat/console.sol";
+
 contract Marketplace is ReentrancyGuard {
     address payable public immutable feeAccount;
     uint public immutable feePercent;
@@ -21,10 +23,19 @@ contract Marketplace is ReentrancyGuard {
 
     event Offered(
         uint itemId,
-        IERC721 indexed nft,
+        address indexed nft,
         uint tokenId,
         uint price,
         address indexed seller
+    );
+
+    event Bought(
+        uint itemId,
+        address indexed nft,
+        uint tokenId,
+        uint price,
+        address indexed seller,
+        address indexed buyer
     );
 
     mapping(uint => Item) public items;
@@ -52,7 +63,7 @@ contract Marketplace is ReentrancyGuard {
 
         emit Offered(
             itemCount,
-            _nft,
+            address(_nft),
             _tokenId,
             _price,
             msg.sender
@@ -60,10 +71,35 @@ contract Marketplace is ReentrancyGuard {
     }
 
     function purchaseItem(uint _itemId) external payable nonReentrant {
+        uint _totalPrice = getTotalPrice(_itemId);
+        Item storage item = items[_itemId];
+        require(_itemId > 0 && _itemId <= itemCount, "Item doesn't exist");
 
+        require(msg.value >= _totalPrice, "Insufficient funds");
+        require(!item.sold, "Item already sold");
+
+        item.seller.transfer(items[_itemId].price);
+        feeAccount.transfer(_totalPrice - item.price);
+
+        item.sold = true;
+
+        item.nft.transferFrom(address(this), msg.sender, item.tokenId);
+
+        emit Bought(
+            _itemId,
+            address(item.nft),
+            item.tokenId,
+            item.price,
+            item.seller,
+            msg.sender
+        );
     }
 
     function getTotalPrice(uint _itemId) view public returns(uint) {
-        return(item[_itemId].price * (100 + feePercent) / 100);
+        return(items[_itemId].price * (100 + feePercent) / 100);
+    }
+
+    function getPrice(uint _itemId) view public returns(uint) {
+        return(items[_itemId].price);
     }
 }
