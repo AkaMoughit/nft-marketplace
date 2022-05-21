@@ -8,7 +8,9 @@ const {request} = require("express");
 
 exports.welcomePage = async function (req, res) {
 
-    // const items = await req.app.locals.marketplace.items(1);
+    const items = await req.app.locals.marketplaceContract.itemCount();
+
+    console.log(items);
 
     let pageNumberElements = 8;
     listingRepository.findAllActiveListings(pageNumberElements, 0)

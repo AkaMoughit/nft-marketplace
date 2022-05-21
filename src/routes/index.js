@@ -2,12 +2,11 @@ const router = require('express').Router();
 
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
-const profileController = require("../app/controllers/ProfileController")
+const profileController = require("../app/controllers/ProfileController");
 const authenticationController = require("../app/controllers/AuthenticationController");
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
-
 
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
