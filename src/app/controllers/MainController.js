@@ -6,13 +6,22 @@ const listingRepository = require('../repositories/ListingRepository');
 const {faker} = require("@faker-js/faker");
 const {request} = require("express");
 
-exports.welcomePage = function (req, res) {
+exports.welcomePage = async function (req, res) {
+
+    // const items = await req.app.locals.marketplace.items(1);
+
     let pageNumberElements = 8;
     listingRepository.findAllActiveListings(pageNumberElements, 0)
-        .then( data => {
-            res.status(200).render('index', { nfts: data.rows, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile } });
+        .then(data => {
+            res.status(200).render('index', {
+                nfts: data.rows,
+                sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
+            });
         }).catch(error => {
-        res.status(404).render('404', {error: error, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+        res.status(404).render('404', {
+            error: error,
+            sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
+        });
     });
 };
 
@@ -62,29 +71,29 @@ exports.testPost = async function (req, res) {
     //         res.status(404).send(err);
     // });
 
-    await nftRepository.model.build({
-        id: 99993,
-        creation_date: faker.date.past(),
-        contract_adress: faker.address.city(0),
-        token_id: faker.datatype.uuid(),
-        description: faker.lorem.text(),
-        name: faker.name.findName(),
-        //blockchain_type: 'ETHEREUM',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        CreatorId: 54
-    }).save();
-
-    await listingRepository.model.build({
-        id: 99994,
-        price: 69,
-        type: 'NORMAL',
-        sale_end_date: faker.date.past(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        NftId: 99993,
-        SellerId: 54
-    }).save();
+    // await nftRepository.model.build({
+    //     id: 99993,
+    //     creation_date: faker.date.past(),
+    //     contract_adress: faker.address.city(0),
+    //     token_id: faker.datatype.uuid(),
+    //     description: faker.lorem.text(),
+    //     name: faker.name.findName(),
+    //     //blockchain_type: 'ETHEREUM',
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //     CreatorId: 54
+    // }).save();
+    //
+    // await listingRepository.model.build({
+    //     id: 99994,
+    //     price: 69,
+    //     type: 'NORMAL',
+    //     sale_end_date: faker.date.past(),
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //     NftId: 99993,
+    //     SellerId: 54
+    // }).save();
 
     // let result = await listingRepository.model.update(
     //     {

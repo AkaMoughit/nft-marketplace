@@ -3,17 +3,21 @@ const router = require('express').Router();
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController")
+const authenticationController = require("../app/controllers/AuthenticationController");
+
+const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
+const web3handlers = require("../app/handlers/Web3Handlers");
+
 
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
-const authenticationController = require("../app/controllers/AuthenticationController");
 
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
 
-router.post('/testPost', mainController.testPost);
+router.post('/testPost', web3handlers.web3Handler, mainController.testPost);
 
-router.get(['/', '/index'], mainController.welcomePage);
+router.get(['/', '/index'], web3handlers.web3Handler, mainController.welcomePage);
 router.get('/activity', mainController.activityPage);
 router.get('/blog', mainController.blogPage);
 router.get('/blog-2', mainController.blogPage2);
@@ -21,13 +25,13 @@ router.get('/blog-3', mainController.blogPage3);
 router.get('/contact', mainController.contactPage);
 router.get('/forgot-pass', mainController.forgotPassPage);
 router.get('/item-details', listingController.itemDetailsPage);
-router.get('/signin', authenticationController.isNotAuth, mainController.signInPage);
-router.get('/signup', authenticationController.isNotAuth, mainController.signUpPage);
-router.get('/wallet', mainController.walletPage);
+router.get('/signin', authenticationHandlers.isNotAuth, mainController.signInPage);
+router.get('/signup', authenticationHandlers.isNotAuth, mainController.signUpPage);
+router.get('/wallet', authenticationHandlers.isAuth, mainController.walletPage);
 router.get('/404', mainController.errorNotFoundPage);
-router.post('/signup', authenticationController.isNotAuth, authenticationController.register);
-router.post('/signin', authenticationController.isNotAuth, authenticationController.login);
-router.get('/signout', authenticationController.isAuth, authenticationController.signout);
+router.post('/signup', authenticationHandlers.isNotAuth, authenticationController.register);
+router.post('/signin', authenticationHandlers.isNotAuth, authenticationController.login);
+router.get('/signout', authenticationHandlers.isAuth, authenticationController.signout);
 router.get('/explore', listingController.listingPage);
 
 router.get('/all-authors', profileController.allAuthorsPage);

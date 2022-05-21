@@ -2,9 +2,22 @@
 
 const { ethers } = require('ethers');
 
-const { MarketplaceAddress } = require('../contracts/Marketplace-address.json');
-const { MarketplaceAbi } = require('../contracts/Marketplace.json').abi;
+const MarketplaceAddress = require('../contracts/Marketplace-address.json');
+const Marketplace = require('../contracts/Marketplace.json');
 
-exports.web3Handler = function (req, res, next) {
+const NftAddress = require('../contracts/NFT-address.json');
+const Nft = require('../contracts/NFT.json');
 
+
+
+exports.web3Handler = async function (req, res, next) {
+
+    console.log(req.body);
+    let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, req.body.signer);
+    // req.app.locals.nft = new ethers.Contract(NftAddress, Nft.abi);
+
+    // const itemCount = await marketplaceContract.itemCount();
+
+    req.app.locals.loading = false;
+    next();
 }
