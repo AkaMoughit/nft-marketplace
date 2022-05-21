@@ -1,3 +1,5 @@
+'use strict'
+
 const listingRepository = require("../repositories/ListingRepository");
 
 class ListingService {

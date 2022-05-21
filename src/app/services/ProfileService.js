@@ -1,3 +1,5 @@
+'use strict'
+
 const profileRepository = require("../repositories/ProfileRepository");
 const nftRepository = require("../repositories/NftRepository");
 const listingRepository = require("../repositories/ListingRepository");

@@ -1,3 +1,5 @@
+'use strict'
+
 class AuthorDTO {
     constructor(profileAbout, onSaleListings, ownedNfts, createdNfts) {
         this.name = profileAbout === undefined
