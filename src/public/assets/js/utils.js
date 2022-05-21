@@ -1,4 +1,4 @@
-import {ethers} from "./ethers.js";
+
 
 function disableLoadMore(isLastPage) {
     let element = document.getElementById("loadMoreId");
@@ -55,6 +55,7 @@ function enableRadio(element) {
 }
 
 function testSendSigner() {
+    import {ethers} from "ethers";
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
     $.ajax({
@@ -105,18 +106,3 @@ function enableHomeElement(element) {
     //         break;
     // }
 }
-
-
-    $(".testSendSigner").on("click", function() {
-        var provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        $.ajax({
-            url: 'http://localhost:3000/testPost',
-            type: 'post',
-            data: provider.getSigner(),
-            success: function (res) {
-                console.log(res);
-            }
-        });
-
-    });
