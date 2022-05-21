@@ -50,7 +50,6 @@ class AuthenticationService {
     }
 
     login(reqBody) {
-        console.log("request body : ", reqBody);
         return new Promise(async (resolve, reject) => {
             this.userRepository.findByEmail(reqBody.email)
                 .then(async user => {

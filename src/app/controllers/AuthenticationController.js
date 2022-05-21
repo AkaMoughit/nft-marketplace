@@ -32,12 +32,12 @@ exports.register = function (req, res) {
 exports.login = function(req, res) {
     authenticationService.login(req.body)
         .then(profile => {
-            console.log(profile);
             if (profile.UserId > 0) {
                 req.session.isAuth = true;
                 req.session.profile = profile;
 
                 res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
+                req.session.profileId = profile.id
 
                 // redirect is disgusting
                 res.status(303).redirect("/author?profileId=" + profile.profile_id);

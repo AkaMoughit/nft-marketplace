@@ -1,10 +1,29 @@
 'use strict'
 
 const nftRepository = require("../repositories/NftRepository");
+const {reject} = require("bcrypt/promises");
+
 
 class NftService {
     constructor(nftRepository) {
         this.nftRepository = nftRepository;
+    }
+
+    save(nftTBR, profile_id, filePath) {
+        return new Promise( async (resolve, reject) => {
+                    this.nftRepository.save(nftTBR, profile_id, filePath)
+                        .then(promise => {
+                            if (promise) {
+                                resolve("created");
+                            } else {
+                                resolve("not created");
+                            }
+                        })
+                        .catch(err => {
+                           console.log(err);
+                           reject("error")
+                        })
+        });
     }
 
     listAll() {

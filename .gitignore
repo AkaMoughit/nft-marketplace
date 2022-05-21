@@ -2,11 +2,10 @@
 node_modules/
 .idea
 .vscode
-node_modules
-.env
 coverage
 coverage.json
 typechain
+uploads/
 
 #Hardhat files
 cache
