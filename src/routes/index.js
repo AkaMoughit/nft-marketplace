@@ -19,7 +19,6 @@ router.get('/blog', mainController.blogPage);
 router.get('/blog-2', mainController.blogPage2);
 router.get('/blog-3', mainController.blogPage3);
 router.get('/contact', mainController.contactPage);
-// router.get('/all-authors', mainController.allAuthors2Page);
 router.get('/forgot-pass', mainController.forgotPassPage);
 router.get('/item-details', listingController.itemDetailsPage);
 router.get('/signin', authenticationController.isNotAuth, mainController.signInPage);
@@ -31,14 +30,11 @@ router.post('/signin', authenticationController.isNotAuth, authenticationControl
 router.get('/signout', authenticationController.isAuth, authenticationController.signout);
 router.get('/explore', listingController.listingPage);
 
-router.get('/all-authors-2', profileController.allAuthorsPage);
+router.get('/all-authors', profileController.allAuthorsPage);
 router.get('/author', profileController.authorPage);
+router.get('/auction', mainController.auctionPage);
 
 // router.get('/blog-single', mainController.blogSinglePage);
 // router.get('/blog-single-2', mainController.blogSingle2Page);
-// router.get('/coming-soon', mainController.comingSoonPage);
-// router.get('/index-2', mainController.welcomePage2);
-// router.get('/index-3', mainController.welcomePage);
-// router.get('/auction', mainController.auctionPage);
 
 module.exports = router;

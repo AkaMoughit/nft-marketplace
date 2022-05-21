@@ -1,3 +1,5 @@
+'use strict'
+
 class UserRegistrationDTO {
     constructor(name, phone, email, password) {
         this.name = name;

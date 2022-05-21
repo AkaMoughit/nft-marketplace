@@ -1,3 +1,4 @@
+'use strict'
 
 module.exports = function getDeltaInDHMS(dateEnd, dateBegin) {
     let deltaInSeconds = Math.abs(dateEnd.getTime() - dateBegin.getTime()) / 1000;

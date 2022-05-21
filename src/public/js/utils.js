@@ -51,3 +51,42 @@ function enableRadio(element) {
             break;
     }
 }
+
+function enableHomeElement(element) {
+    // let musicRadio = document.getElementById("musicRadioId");
+    // let photographyRadio = document.getElementById("photographyRadioId");
+    // let digitalArtRadio = document.getElementById("digitalArtRadioId");
+    //
+    // switch (element) {
+    //     case musicRadio:
+    //         photographyRadio.classList.remove("active");
+    //         photographyRadio.classList.remove("home-3");
+    //
+    //         digitalArtRadio.classList.remove("active");
+    //         digitalArtRadio.classList.remove("home-3");
+    //
+    //         element.classList.add("active");
+    //         element.classList.add("home-3");
+    //         break;
+    //     case photographyRadio:
+    //         musicRadio.classList.remove("active");
+    //         musicRadio.classList.remove("home-3");
+    //
+    //         digitalArtRadio.classList.remove("active");
+    //         digitalArtRadio.classList.remove("home-3");
+    //
+    //         element.classList.add("active");
+    //         element.classList.add("home-3");
+    //         break;
+    //     case digitalArtRadio:
+    //         photographyRadio.classList.remove("active");
+    //         photographyRadio.classList.remove("home-3");
+    //
+    //         musicRadio.classList.remove("active");
+    //         musicRadio.classList.remove("home-3");
+    //
+    //         element.classList.add("active");
+    //         element.classList.add("home-3");
+    //         break;
+    // }
+}

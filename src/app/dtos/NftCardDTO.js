@@ -1,3 +1,5 @@
+'use strict'
+
 class NftCardDTO {
     constructor(nft, profile, listing, favoriteCount) {
         this.owner_profile_id = profile === undefined

@@ -1,18 +1,56 @@
+'use strict'
+
 const path = require('path');
 const nftRepository = require('../repositories/NftRepository');
 const listingRepository = require('../repositories/ListingRepository');
 const {faker} = require("@faker-js/faker");
+const {request} = require("express");
 
 exports.welcomePage = function (req, res) {
     let pageNumberElements = 8;
     listingRepository.findAllActiveListings(pageNumberElements, 0)
         .then( data => {
-            res.status(200).render('index-3', { nfts: data.rows });
+            res.status(200).render('index', { nfts: data.rows, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile } });
         }).catch(error => {
-        res.status(404).render('404', {error: error});
+        res.status(404).render('404', {error: error, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
     });
-
 };
+
+exports.signInPage = function (req, res) {
+    res.status(200).render('signin', {info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}});
+}
+
+exports.signUpPage = function (req, res) {
+    res.status(200).render('signup', {info: null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.errorNotFoundPage = function (req, res) {
+    res.status(200).render('404', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.comingSoonPage = function (req, res) {
+    res.status(200).render('coming-soon', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.contactPage = function (req, res) {
+    res.status(200).render('contact', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.forgotPassPage = function (req, res) {
+    res.status(200).render('forgot-pass', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.auctionPage = function (req, res) {
+    res.status(200).render('coming-soon', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.activityPage = function (req, res) {
+    res.status(200).render('activity', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.walletPage = function (req, res) {
+    res.status(200).render('wallet', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
 
 exports.testPost = async function (req, res) {
     console.log("Post called");
@@ -63,30 +101,6 @@ exports.testPost = async function (req, res) {
     res.status(200).send();
 }
 
-exports.explorePage = function (req, res) {
-    res.status(200).render('explore', {});
-}
-
-exports.auctionPage = function (req, res) {
-    res.status(200).render('auction', {});
-}
-
-exports.activityPage = function (req, res) {
-    res.status(200).render('activity', {});
-}
-
-exports.allAuthorsPage = function (req, res) {
-    res.status(200).render('all-authors', {});
-}
-
-exports.allAuthors2Page = function (req, res) {
-    res.status(200).render('all-authors-2', {});
-}
-
-exports.auctionPage = function (req, res) {
-    res.status(200).render('auction', {});
-}
-
 exports.blogPage = function (req, res) {
     res.status(200).render('blog', {});
 }
@@ -105,33 +119,4 @@ exports.blogSinglePage = function (req, res) {
 
 exports.blogSingle2Page = function (req, res) {
     res.status(200).render('blog-single-2', {});
-}
-
-exports.comingSoonPage = function (req, res) {
-    res.status(200).render('coming-soon', {});
-}
-
-exports.contactPage = function (req, res) {
-    res.status(200).render('contact', {});
-}
-
-exports.forgotPassPage = function (req, res) {
-    res.status(200).render('forgot-pass', {});
-}
-
-exports.signInPage = function (req, res) {
-    res.status(200).render('signin', {info : null});
-}
-
-exports.signUpPage = function (req, res) {
-    console.log(req.session);
-    res.status(200).render('signup', {info: null});
-}
-
-exports.walletPage = function (req, res) {
-    res.status(200).render('wallet', {});
-}
-
-exports.errorNotFoundPage = function (req, res) {
-    res.status(200).render('404', {});
 }

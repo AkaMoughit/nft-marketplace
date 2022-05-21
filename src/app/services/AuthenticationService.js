@@ -1,3 +1,5 @@
+'use strict'
+
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
 const session = require('express-session');

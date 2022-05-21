@@ -1,15 +1,22 @@
+'use strict'
+
 const profileService = require("../services/ProfileService");
 const nftService = require("../services/NftService");
 
 exports.authorPage = function (req, res) {
-    const context = req.cookies["context"];
-    res.clearCookie("context", { httpOnly: true });
+    let sessionData;
+    req.cookies["sessionData"]==undefined
+        ? sessionData = { isAuth: req.session.isAuth, profile: req.session.profile}
+        : sessionData=req.cookies["sessionData"];
+
+    res.clearCookie("sessionData", { httpOnly: true });
+
     profileService.findByProfileId(req.query.profileId)
         .then(profile => {
-            res.status(200).render('author', { profile: profile });
+            res.status(200).render('author', { profile: profile, sessionData: sessionData });
         })
         .catch(err => {
-            res.status(404).render('404', { error: err });
+            res.status(404).render('404', { error: err, sessionData: sessionData });
         });
 }
 
@@ -30,8 +37,8 @@ exports.allAuthorsPage = function (req, res) {
                 pageIndex = Math.floor(profiles.count / pageNumberElements);
             }
 
-            res.status(200).render('all-authors-2', { profiles: profiles.rows, isLastPage: isLastPage });
+            res.status(200).render('all-authors', { profiles: profiles.rows, isLastPage: isLastPage, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
         }).catch(err => {
-            res.status(404).render('404', {error: err});
+            res.status(404).render('404', {error: err, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
     });
 }
