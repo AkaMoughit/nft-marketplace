@@ -3,8 +3,8 @@
 const profileRepository = require("../repositories/ProfileRepository");
 const nftRepository = require("../repositories/NftRepository");
 const listingRepository = require("../repositories/ListingRepository");
-const AuthorDTO = require("../dtos/AuthorDTO");
-const NftProfileListingDTO = require("../dtos/NftCardDTO");
+const AuthorDTO = require("../models/dtos/AuthorDTO");
+const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 
 class ProfileService {
