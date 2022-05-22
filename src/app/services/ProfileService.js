@@ -49,6 +49,7 @@ class ProfileService {
                 let authorDTO = new AuthorDTO(profile, activeListings, ownedNftCards, listCreatedNfts);
                 resolve(authorDTO);
             } catch (err) {
+                console.log(err);
                reject("Error fetching user");
             }
         });

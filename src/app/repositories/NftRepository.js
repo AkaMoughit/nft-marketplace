@@ -5,6 +5,9 @@ const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
 const FavoriteList = require("../models").FavoriteList;
 const NftOwnership = require("../models").NftOwnership;
+const Attachment = require("../models").Attachment;
+const { v4: uuidv4 } = require('uuid');
+const uploadHelper = require('../utils/UploadHelper');
 
 const models = require('../models');
 
@@ -17,10 +20,67 @@ class NftRepository extends BaseRepository {
         this.listingModel = Listing;
         this.favoriteListModel = FavoriteList;
         this.NftOwnership = NftOwnership;
+        this.attachment = Attachment;
     }
 
-    save(nft) {
-        return this.model.save(nft);
+    //TO-DO : transaction commits and rollbacks
+    save(nftTBR, profile_id, file) {
+        const address = uuidv4();
+        const token_id = uuidv4();
+        return new Promise(async (resolve, reject) => {
+            try {
+                const fileHash = await uploadHelper.uploadFileToIpfs(file.path);
+
+                const url = "ipfs.io/ipfs/" + fileHash;
+                const nft = await this.model.create({
+                    name : nftTBR.name,
+                    description : nftTBR.description,
+                    contract_adress : address,
+                    token_id : token_id,
+                    creation_date : new Date(),
+                    createdAt : new Date(),
+                    updatedAt : new Date(),
+                    CreatorId : profile_id
+                });
+                if (nft != null) {
+                    console.log("nft saved");
+                    const listing = await this.listingModel.create({
+                        price : nftTBR.price,
+                        type : nftTBR.listingType,
+                        NftId : nft.id,
+                        SellerId : profile_id,
+                        createdAt : new Date(),
+                        updatedAt : new Date()
+                    });
+                    if (listing != null) {
+                        console.log("listing saved");
+                        const attachment = this.attachment.create({
+                            reference_table : "nfts",
+                            attachment_url : url,
+                            NftId : nft.id,
+                            createdAt : new Date(),
+                            updatedAt : new Date()
+                        })
+                        if (attachment != null) {
+                            console.log("attachment saved");
+                            resolve(true);
+                        } else {
+                            console.log("attachment not saved");
+                            resolve(false);
+                        }
+                    } else {
+                        console.log("listing not saved");
+                        resolve(false);
+                    }
+                } else {
+                    console.log("nft not saved");
+                    resolve(false);
+                }
+            } catch (err) {
+                console.log(err);
+                reject(false);
+            }
+        });
     }
 
     findAllByOwnerPk(ownerId) {
