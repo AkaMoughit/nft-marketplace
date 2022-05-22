@@ -1,5 +1,6 @@
 import {ethers} from "./ethers.js";
 
+
 function disableLoadMore(isLastPage) {
     let element = document.getElementById("loadMoreId");
     if (isLastPage) element.style.cssText = "pointer-events: none;";
@@ -56,7 +57,6 @@ function enableRadio(element) {
 
 function testSendSigner() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-
     $.ajax({
         url: 'http://localhost:3000/testPost',
         type: 'post',
@@ -107,13 +107,21 @@ function enableHomeElement(element) {
 }
 
 
-    $(".testSendSigner").on("click", function() {
+    $(".testSendSigner").on("click", async function () {
+        let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+
         var provider = new ethers.providers.Web3Provider(window.ethereum);
 
+        const signer = provider.getSigner();
+
+        let Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
+        let MarketplaceAddress = await (await fetch("../contracts/Marketplace-address.json")).json();
+
+        let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, signer);
+
         $.ajax({
-            url: 'http://localhost:3000/testPost',
-            type: 'post',
-            data: provider.getSigner(),
+            url: 'http://localhost:3000/',
+            type: 'get',
             success: function (res) {
                 console.log(res);
             }
