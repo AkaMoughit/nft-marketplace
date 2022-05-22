@@ -26,7 +26,6 @@ exports.register = function (req, res) {
         .catch(err => {
             res.status(404).render('signup',{info: err, sessionData: { isAuth: false, profile: {}}});
         });
-
 }
 
 exports.login = function(req, res) {
@@ -37,7 +36,6 @@ exports.login = function(req, res) {
                 req.session.profile = profile;
 
                 res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
-                req.session.profileId = profile.id
 
                 // redirect is disgusting
                 res.status(303).redirect("/author?profileId=" + profile.profile_id);

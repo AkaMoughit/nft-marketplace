@@ -23,14 +23,13 @@ class NftRepository extends BaseRepository {
         this.attachment = Attachment;
     }
 
-    save(nftTBR, profile_id, filePath) {
+    //TO-DO : transaction commits and rollbacks
+    save(nftTBR, profile_id, file) {
         const address = uuidv4();
         const token_id = uuidv4();
-        console.log(address)
-        console.log(token_id)
         return new Promise(async (resolve, reject) => {
             try {
-                const fileHash = await uploadHelper.uploadFileToIpfs(filePath);
+                const fileHash = await uploadHelper.uploadFileToIpfs(file.path);
 
                 const url = "ipfs.io/ipfs/" + fileHash;
                 const nft = await this.model.create({
@@ -64,7 +63,6 @@ class NftRepository extends BaseRepository {
                         })
                         if (attachment != null) {
                             console.log("attachment saved");
-                            console.log("all went well");
                             resolve(true);
                         } else {
                             console.log("attachment not saved");
@@ -82,7 +80,6 @@ class NftRepository extends BaseRepository {
                 console.log(err);
                 reject(false);
             }
-
         });
     }
 

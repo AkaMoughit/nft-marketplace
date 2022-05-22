@@ -1,16 +1,13 @@
 const nftService = require('../services/NftService');
 
 exports.create = function (req, res) {
-    nftService.save(req.body, req.session.profileId, req.file.path)
+    nftService.save(req.body, req.session.profile.id, req.file)
         .then(promise => {
-            if (promise === "created") {
-                console.log("nft created");
-            } else {
-                console.log("nft not created");
-            }
+                console.log(promise);
+                res.status(303).redirect("/author?profileId=" + req.session.profile.profile_id);
         })
         .catch(err => {
             console.log(err);
+            res.status(303).redirect("/author?profileId=" + req.session.profile.profile_id);
         })
-    return res.render("all-authors", {})
 }

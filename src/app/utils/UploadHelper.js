@@ -14,8 +14,6 @@ exports.uploadFileToIpfs = function (filePath) {
 
             const files = await client.add(data)
 
-            console.log(files);
-
             resolve(files.path)
         } catch (err) {
             console.log(err);

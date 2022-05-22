@@ -10,7 +10,17 @@ global.appRoot = path.resolve(__dirname);
 app.set('views', path.join(global.appRoot, 'src/views'));
 app.set('view engine', 'ejs');
 
-appMiddlewares(app, dbConnect());
+appMiddlewares(app, () => {
+    try{
+        const a = async () => {
+            await sequelize.authenticate();
+        }
+        console.log('Connection to MySQL database established');
+        return sequelize;
+    } catch (error) {
+        console.error('Unable to connect to database:', error);
+    }
+});
 
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`);
