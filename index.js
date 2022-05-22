@@ -14,6 +14,10 @@ app.locals.loading = true;
 
 appMiddlewares(app, dbConnect());
 
+app.use(function(req, res){
+    res.status(404).render('404', { url: req.originalUrl, sessionData: {isAuth: false, profile: {}} });
+});
+
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`);
 })

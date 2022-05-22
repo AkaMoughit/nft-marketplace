@@ -29,5 +29,4 @@ module.exports = appMiddlewares = (app, sequelize) => {
     sessionStore.sync();
 
     app.use(require('../routes'));
-    app.use(function(req, res){ res.status(404).render('404', { url: req.originalUrl }); });
 }
