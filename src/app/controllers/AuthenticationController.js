@@ -2,29 +2,13 @@
 
 const authenticationService = require('../services/AuthenticationService')
 
-exports.isAuth = function (req, res, next) {
-    if (req.session.isAuth) {
-        next();
-    } else {
-        res.status(303).redirect("/signin");
-    }
-}
-
-exports.isNotAuth = function (req, res, next) {
-    if (!req.session.isAuth) {
-        next();
-    } else {
-        res.status(303).redirect("/");
-    }
-}
-
 exports.register = function (req, res) {
     authenticationService.register(req.body)
         .then(info => {
             res.status(303).redirect('/signin');
         })
         .catch(err => {
-            res.status(404).render('signup',{info: err, sessionData: { isAuth: false, profile: {}}});
+            res.status(500).render('signup',{info: err, sessionData: { isAuth: false, profile: {}}});
         });
 }
 
@@ -44,7 +28,7 @@ exports.login = function(req, res) {
                 req.session.profile = {};
 
                 res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
-                res.status(404).render('signin', {info : "wrong email or password", sessionData: { isAuth: false, profile: {}}});
+                res.status(401).render('signin', {info : "wrong email or password", sessionData: { isAuth: false, profile: {}}});
             }
         })
         .catch(
@@ -53,7 +37,7 @@ exports.login = function(req, res) {
                 req.session.profile = {};
 
                 console.log(err);
-                res.status(404).render('signin', {info : "An error has occurred", sessionData: { isAuth: false, profile: {}}});
+                res.status(500).render('signin', {info : "An error has occurred", sessionData: { isAuth: false, profile: {}}});
             }
         )
 }

@@ -5,6 +5,7 @@ const express = require("express");
 const session = require('express-session');
 const {sessionCfg} = require("../configs/global.config");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const SessionStore = require('connect-session-sequelize')(session.Store);
 
 module.exports = appMiddlewares = (app, sequelize) => {
@@ -13,7 +14,7 @@ module.exports = appMiddlewares = (app, sequelize) => {
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
-    app.use(express.static('./src/public'));
+    app.use(express.static(path.join(global.appRoot, '/src/client/public')));
 
     var sessionStore = new SessionStore({
         db: sequelize,
@@ -29,5 +30,4 @@ module.exports = appMiddlewares = (app, sequelize) => {
     sessionStore.sync();
 
     app.use(require('../routes'));
-    app.use(function(req, res){ res.status(404).render('404', { url: req.originalUrl }); });
 }

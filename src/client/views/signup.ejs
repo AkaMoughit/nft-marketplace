@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="author" content="codexcoder">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Meta tags for Social Media(Better SEO) -->
+    <!-- <meta property="og:title" content=""> -->
+    <!-- <meta property="og:type" content=""> -->
+    <!-- <meta property="og:url" content=""> -->
+    <!-- <meta property="og:image" content=""> -->
+
+    <!-- site favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- ====== All css file ========= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css//icofont.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/lightcase.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
+
+
+    <!-- site title -->
+    <title>Enftomark</title>
+</head>
+
+<body>
+    <!-- preloader start here -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- preloader ending here -->
+
+    <!-- ===============// header section start here \\================= -->
+    <%- include('./header.ejs') %>
+    <!-- ===============//header section end here \\================= -->
+
+
+
+    <!-- ==========Page Header Section Start Here========== -->
+    <section class="page-header-section style-1">
+        <div class="container">
+            <div class="page-header-content">
+                <div class="page-header-inner">
+                    <div class="page-title">
+                        <h2>Sign Up Page </h2>
+                    </div>
+                    <ol class="breadcrumb">
+                        <li><a href="index">Home</a></li>
+                        <li class="active">Sign Up </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ==========Page Header Section Ends Here========== -->
+
+
+    <!-- ==========login Section start Here========== -->
+    <div class="login-section padding-top padding-bottom">
+        <div class=" container">
+            <div class="row g-5 align-items-center flex-md-row-reverse">
+                <div class="col-lg-5">
+                    <div class="account-wrapper">
+                        <h3 class="title">Sign Up</h3>
+                        <form class="account-form" method="post" action="/signup">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="name" class="form-control" id="name"
+                                       placeholder="name" required>
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="phone_number" class="form-control" id="phone"
+                                       placeholder="phone" required>
+                                <label for="phone">Phone number</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="birthdate" class="form-control" id="birthdate"
+                                       placeholder="birthdate" required>
+                                <label for="birthdate">Birthdate</label>
+                            </div>
+
+
+                            <div class="header__nav-item">
+                                <a class="header__nav-link active home-3" role="button" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">
+                                    Specialize In:
+                                </a>
+                                <ul class="dropdown-menu header__nav-menu" style="color: #0a53be">
+                                    <li id="musicRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="music" name="specialize_in" value="Music"
+                                               checked>
+                                        <label for="music">Music</label>
+                                    </li>
+                                    <li id="digitalArtRadioId" class="drop-down-item active home-3">
+                                        <input hidden type="radio" id="art" name="specialize_in" value="Digital Art"
+                                               checked>
+                                        <label for="art">Digital Art</label>
+                                    </li>
+                                    <li id="photographyRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="photo" name="specialize_in" value="Photography"
+                                               checked>
+                                        <label for="photo">Photography</label>
+                                    </li>
+                                </ul>
+                            </div>
+<!--                            <div class="align-content-xl-between">-->
+<!--                                <input type="radio" id="music" name="specialize_in" value="Music"-->
+<!--                                       checked>-->
+<!--                                <label for="music">Music</label>-->
+<!--                                <input type="radio" id="art" name="specialize_in" value="Digital Art"-->
+<!--                                       checked>-->
+<!--                                <label for="art">Digital Art</label>-->
+<!--                                <input type="radio" id="photo" name="specialize_in" value="Photography"-->
+<!--                                       checked>-->
+<!--                                <label for="photo">Photography</label>-->
+<!--                            </div>-->
+                            <br/>
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" class="form-control" id="email"
+                                    placeholder="name@example.com" required>
+                                <label for="email">Email address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" name="password" class="form-control" id="floatingPassword"
+                                    placeholder="Password" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="form-group">
+                                <button class="d-block default-btn move-top"><span>Sign up</span></button>
+                            </div>
+                        </form>
+                        <div><%- info%></div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="account-img">
+                        <img src="assets/images/account/01.png" alt="shape-image">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ==========Login Section ends Here========== -->
+
+
+
+    <!-- ===============//footer section start here \\================= -->
+    <footer class="footer-section">
+        <div class="footer-top" style="background-image: url(assets/images/footer/bg.jpg);">
+            <div class="footer-newsletter">
+                <div class="container">
+                    <div class="row g-4 align-items-center justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="newsletter-part">
+                                <div class="ft-header">
+                                    <h4>Get The Latest Rarible Updates</h4>
+                                </div>
+                                <form action="#">
+                                    <input type="email" placeholder="Your Mail Address">
+                                    <button type="submit"> Subscribe now</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="social-part ps-lg-5">
+                                <div class="ft-header">
+                                    <h4>Join the Community</h4>
+                                </div>
+                                <ul class="social-list d-flex flex-wrap align-items-center mb-0">
+                                    <li class="social-link"><a href="#"><i class="icofont-twitter"></i></a></li>
+                                    <li class="social-link"><a href="#"><i class="icofont-twitch"></i></a></li>
+                                    <li class="social-link"><a href="#"><i class="icofont-reddit"></i></a></li>
+                                    <li class="social-link"><a href="#"><i class="icofont-instagram"></i></a></li>
+                                    <li class="social-link"><a href="#"><i class="icofont-dribble"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="footer-links padding-top padding-bottom">
+                <div class="container">
+                    <div class="row g-5 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-5">
+                        <div class="col">
+                            <div class="footer-link-item">
+                                <h5>About</h5>
+                                <ul class="footer-link-list">
+                                    <li><a href="#" class="footer-link">Explore</a></li>
+                                    <li><a href="#" class="footer-link">How it works</a></li>
+                                    <li><a href="#" class="footer-link">Support</a></li>
+                                    <li><a href="#" class="footer-link">Become a partner</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="footer-link-item">
+                                <h5>NFT Marketplace</h5>
+                                <ul class="footer-link-list">
+                                    <li><a href="#" class="footer-link">Sell your assets</a></li>
+                                    <li><a href="#" class="footer-link">FAQ</a></li>
+                                    <li><a href="#" class="footer-link">Support</a></li>
+                                    <li><a href="#" class="footer-link">Privacy/Policy</a></li>
+                                    <li><a href="#" class="footer-link">Your purchases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="footer-link-item">
+                                <h5>Company</h5>
+                                <ul class="footer-link-list">
+                                    <li><a href="#" class="footer-link">About</a></li>
+                                    <li><a href="#" class="footer-link">Mission & Team</a></li>
+                                    <li><a href="#" class="footer-link">Our Blog</a></li>
+                                    <li><a href="#" class="footer-link">Services</a></li>
+                                    <li><a href="#" class="footer-link">We're Hiring</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="footer-link-item">
+                                <h5>NFT Marketplace</h5>
+                                <ul class="footer-link-list">
+                                    <li><a href="#" class="footer-link">Sell your assets</a></li>
+                                    <li><a href="#" class="footer-link">FAQ</a></li>
+                                    <li><a href="#" class="footer-link">Support</a></li>
+                                    <li><a href="#" class="footer-link">Privacy/Policy</a></li>
+                                    <li><a href="#" class="footer-link">Your purchases</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="footer-link-item">
+                                <h5>Comunity</h5>
+                                <ul class="footer-link-list">
+                                    <li><a href="#" class="footer-link">NFT Token</a></li>
+                                    <li><a href="#" class="footer-link">Discusion</a></li>
+                                    <li><a href="#" class="footer-link">Voting</a></li>
+                                    <li><a href="#" class="footer-link">Suggest Feature</a></li>
+                                    <li><a href="#" class="footer-link">Language</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="text-center py-4 mb-0">All rights reserved &copy; Enftomark || Design By: <a
+                        href="https://themeforest.net/user/codexcoder">codexcoder</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- ===============//footer section end here \\================= -->
+
+
+
+    <!-- scrollToTop start here -->
+    <a href="#" class="scrollToTop"><i class="icofont-stylish-up"></i></a>
+    <!-- scrollToTop ending here -->
+
+
+
+
+    <!-- All Scripts -->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/lightcase.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/countdown.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <script type="module" src="assets/js/utils.js"></script>
+</body>
+
+</html>

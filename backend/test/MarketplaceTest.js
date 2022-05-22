@@ -16,6 +16,7 @@ describe('Marketplace', function () {
     beforeEach(async function() {
         Marketplace = await ethers.getContractFactory("Marketplace");
         [deployer, addr1, addr2, addr3] = await ethers.getSigners();
+        console.log(deployer.address);
         marketplace = await Marketplace.deploy(feePercent);
         await marketplace.deployed();
 

@@ -1,5 +1,5 @@
 const BaseRepository = require("./BaseRepository");
-const NftProfileListingDTO = require("../dtos/NftCardDTO");
+const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const Nft = require("../models").Nft;
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
