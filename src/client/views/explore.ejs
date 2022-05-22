@@ -24,13 +24,13 @@
     <link rel="stylesheet" href="assets/css/lightcase.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="stylesheet" href="assets/css/disableButton.css">
 
 
     <!-- site title -->
     <title>Enftomark</title>
 </head>
-
-<body onload="disableLoadMore(<%- isLastPage %>);">
+<body id="exploreBody" data-load="<%- isLastPage.toString() %>">
     <!-- preloader start here -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -101,7 +101,7 @@
                     <div class="form-floating nft-search-input">
                         <input type="text" class="form-control" id="nftSearch" placeholder="Search NFT">
                         <label for="nftSearch">Search NFT</label>
-                        <button id="searchButton" onclick="searchNft()" type="button"> <i class="icofont-search-1"></i></button>
+                        <button id="nftSearchButton" type="button"> <i class="icofont-search-1"></i></button>
                     </div>
                 </div>
             </div>
@@ -179,7 +179,7 @@
                         <% }); %>
                     </div>
                     <div class="load-btn mt-5">
-                        <a id="loadMoreId" href="?loadMore" class="default-btn move-bottom">
+                        <a id="loadMoreNftId" href="?loadMore" class="default-btn move-bottom">
                             <span>Load More</span>
                         </a>
                     </div>
@@ -325,7 +325,7 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
-    <script type="module" src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>

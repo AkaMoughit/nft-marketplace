@@ -30,7 +30,7 @@
     <title>Enftomark</title>
 </head>
 
-<body onload="disableLoadMore(<%- isLastPage %>);">
+<body>
     <!-- preloader start here -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -54,11 +54,11 @@
             <div class="page-header-content">
                 <div class="page-header-inner">
                     <div class="page-title">
-                        <h2> All of our Authors</h2>
+                        <h2>Sign Up Page </h2>
                     </div>
                     <ol class="breadcrumb">
                         <li><a href="index">Home</a></li>
-                        <li class="active">All-authors</li>
+                        <li class="active">Sign Up </li>
                     </ol>
                 </div>
             </div>
@@ -67,77 +67,93 @@
     <!-- ==========Page Header Section Ends Here========== -->
 
 
-    <!-- ==========explore Section start Here========== -->
-    <section class="explore-section padding-top padding-bottom">
-        <div class="container">
-            <div class="section-header">
-                <div class="nft-filter d-flex flex-wrap justify-content-center gap-15">
-                    <div class="form-floating">
-                        <select class="form-select" id="catSelect" aria-label="Floating label select example">
-                            <option selected>By Rating</option>
-                            <option value="1">By views</option>
-                            <option value="2">By Popularity</option>
-                            <option value="3">New Author</option>
-                            <option value="3">Top Seller</option>
-                        </select>
-                        <label for="catSelect">Filter</label>
-                    </div>
-                    <div class="form-floating">
-                        <select class="form-select" id="sortSelect" aria-label="Floating label select example">
-                            <option selected>All Authors</option>
-                            <option value="1">Varified</option>
-                            <option value="2">Unvarified</option>
-                            <option value="3">Recenly joined</option>
-                            <option value="3">Seller</option>
-                            <option value="3">Collector </option>
-                        </select>
-                        <label for="sortSelect">Author Type</label>
-                    </div>
-                </div>
-                <div class="nft-search">
-                    <div class="form-floating nft-search-input">
-                        <input type="text" class="form-control" id="profileSearch" placeholder="Search Author">
-                        <label for="nftSearch">Search Author</label>
-                        <button type="button" onclick="searchProfile()"> <i class="icofont-search-1"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="section-wrapper">
-                <div class="explore-wrapper">
-                    <div class="row justify-content-center gx-4 gy-3">
-                        <% profiles.forEach(profile => { %>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="nft-item style-2">
-                                    <div class="nft-inner">
-                                        <div class="nft-thumb">
-                                            <img loading="lazy" src="assets/images/nft-item/style-2/01.jpg" alt="nft-img">
-                                        </div>
-                                        <div class="nft-content">
-                                            <div class="author-thumb">
-                                                <a href="/author?profileId=<%- profile.profile_id %>" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/04.png" alt="author-img"></a>
-                                            </div>
-                                            <div class="author-details">
-                                                <h5><a href="/author?profileId=<%- profile.profile_id %>"><%- profile.name %></a> </h5>
-                                                <p class="nft-price yellow-color"><%- profile.specialize_in %></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <!-- ==========login Section start Here========== -->
+    <div class="login-section padding-top padding-bottom">
+        <div class=" container">
+            <div class="row g-5 align-items-center flex-md-row-reverse">
+                <div class="col-lg-5">
+                    <div class="account-wrapper">
+                        <h3 class="title">Sign Up</h3>
+                        <form class="account-form" method="post" action="/signup">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="name" class="form-control" id="name"
+                                       placeholder="name" required>
+                                <label for="name">Name</label>
                             </div>
-                        <% }); %>
-                    </div>
-                    <div class="load-btn mt-5">
-                        <a id="loadMoreId" href="?loadMore" class="default-btn move-bottom">
-                            <span>Load More</span>
-                        </a>
-                    </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="phone_number" class="form-control" id="phone"
+                                       placeholder="phone" required>
+                                <label for="phone">Phone number</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="birthdate" class="form-control" id="birthdate"
+                                       placeholder="birthdate" required>
+                                <label for="birthdate">Birthdate</label>
+                            </div>
 
+
+                            <div class="header__nav-item">
+                                <a class="header__nav-link active home-3" role="button" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">
+                                    Specialize In:
+                                </a>
+                                <ul class="dropdown-menu header__nav-menu" style="color: #0a53be">
+                                    <li id="musicRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="music" name="specialize_in" value="Music"
+                                               checked>
+                                        <label for="music">Music</label>
+                                    </li>
+                                    <li id="digitalArtRadioId" class="drop-down-item active home-3">
+                                        <input hidden type="radio" id="art" name="specialize_in" value="Digital Art"
+                                               checked>
+                                        <label for="art">Digital Art</label>
+                                    </li>
+                                    <li id="photographyRadioId" class="drop-down-item">
+                                        <input hidden type="radio" id="photo" name="specialize_in" value="Photography"
+                                               checked>
+                                        <label for="photo">Photography</label>
+                                    </li>
+                                </ul>
+                            </div>
+<!--                            <div class="align-content-xl-between">-->
+<!--                                <input type="radio" id="music" name="specialize_in" value="Music"-->
+<!--                                       checked>-->
+<!--                                <label for="music">Music</label>-->
+<!--                                <input type="radio" id="art" name="specialize_in" value="Digital Art"-->
+<!--                                       checked>-->
+<!--                                <label for="art">Digital Art</label>-->
+<!--                                <input type="radio" id="photo" name="specialize_in" value="Photography"-->
+<!--                                       checked>-->
+<!--                                <label for="photo">Photography</label>-->
+<!--                            </div>-->
+                            <br/>
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" class="form-control" id="email"
+                                    placeholder="name@example.com" required>
+                                <label for="email">Email address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" name="password" class="form-control" id="floatingPassword"
+                                    placeholder="Password" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="form-group">
+                                <button class="d-block default-btn move-top"><span>Sign up</span></button>
+                            </div>
+                        </form>
+                        <div><%- info%></div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="account-img">
+                        <img src="assets/images/account/01.png" alt="shape-image">
+                    </div>
                 </div>
             </div>
+
         </div>
-    </section>
-    <!-- ==========explore Section ends Here========== -->
+    </div>
+    <!-- ==========Login Section ends Here========== -->
 
 
 
@@ -154,7 +170,7 @@
                                 </div>
                                 <form action="#">
                                     <input type="email" placeholder="Your Mail Address">
-                                    <button type="submit"> Subscrib now</button>
+                                    <button type="submit"> Subscribe now</button>
                                 </form>
                             </div>
                         </div>
