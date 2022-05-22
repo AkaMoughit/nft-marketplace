@@ -9,6 +9,7 @@ async function deployMain(storeData) {
     const nft = await NFT.deploy();
 
     storeData(nft, "/app/contracts", "NFT");
+    storeData(nft, "/client/public/contracts", "NFT");
 
     console.log("NFT contract address: ", nft.address);
     console.log("Account balance: ", (await deployer.getBalance()).toString());

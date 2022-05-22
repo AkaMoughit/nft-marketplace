@@ -11,6 +11,7 @@ async function deployMarketplace(storeData) {
     const marketplace = await Marketplace.deploy(1);
 
     storeData(marketplace, "/app/contracts", "Marketplace");
+    storeData(marketplace, "/client/public/contracts", "Marketplace");
 
     console.log("Marketplace contract address: ", marketplace.address);
     console.log("Account balance: ", (await deployer.getBalance()).toString());
