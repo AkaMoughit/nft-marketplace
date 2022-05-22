@@ -10,7 +10,6 @@ exports.register = function (req, res) {
         .catch(err => {
             res.status(500).render('signup',{info: err, sessionData: { isAuth: false, profile: {}}});
         });
-
 }
 
 exports.login = function(req, res) {

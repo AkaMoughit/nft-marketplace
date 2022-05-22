@@ -1,9 +1,13 @@
 const router = require('express').Router();
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController");
+
 const authenticationController = require("../app/controllers/AuthenticationController");
+const nftController = require('../app/controllers/NftController');
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
@@ -36,6 +40,7 @@ router.get('/explore', listingController.listingPage);
 router.get('/all-authors', profileController.allAuthorsPage);
 router.get('/author', profileController.authorPage);
 router.get('/auction', mainController.auctionPage);
+router.post('/create-nft',upload.single('file'), nftController.create)
 
 // router.get('/blog-single', mainController.blogSinglePage);
 // router.get('/blog-single-2', mainController.blogSingle2Page);
