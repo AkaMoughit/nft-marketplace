@@ -38,5 +38,22 @@ describe("NFT", function () {
             expect(await nft.balanceOf(addr2.address)).to.equal(1);
             expect(await nft.tokenURI(2)).to.equal(URI);
         });
+        it("Should emit Minted event", async function() {
+            await expect(nft.connect(addr1).mint(URI))
+                .to.emit(nft, 'Minted')
+                .withArgs(
+                    1,
+                    addr1.address,
+                    URI
+                );
+
+            await expect(nft.connect(addr1).mint(URI))
+                .to.emit(nft, 'Minted')
+                .withArgs(
+                    2,
+                    addr1.address,
+                    URI
+                );
+        });
     });
 });

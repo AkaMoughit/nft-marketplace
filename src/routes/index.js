@@ -30,7 +30,7 @@ router.get('/forgot-pass', mainController.forgotPassPage);
 router.get('/item-details', listingController.itemDetailsPage);
 router.get('/signin', authenticationHandlers.isNotAuth, mainController.signInPage);
 router.get('/signup', authenticationHandlers.isNotAuth, mainController.signUpPage);
-router.get('/wallet', authenticationHandlers.isAuth, mainController.walletPage);
+router.get('/wallet', web3handlers.web3Handler, authenticationHandlers.isAuth, mainController.walletPage);
 router.get('/404', mainController.errorNotFoundPage);
 router.post('/signup', authenticationHandlers.isNotAuth, authenticationController.register);
 router.post('/signin', authenticationHandlers.isNotAuth, authenticationController.login);

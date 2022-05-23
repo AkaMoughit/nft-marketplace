@@ -11,14 +11,8 @@ const Nft = require('../contracts/NFT.json');
 
 exports.web3Handler = async function (req, res, next) {
 
-    console.log(req.body.data);
-
-
-    const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
-    let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, provider);
-
-    req.app.locals.marketplaceContract = marketplaceContract;
-    req.app.locals.loading = false;
+    // req.app.locals.marketplaceContract = marketplaceContract;
+    // req.app.locals.loading = false;
 
     next();
 }

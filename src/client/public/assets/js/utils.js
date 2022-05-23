@@ -31,25 +31,3 @@ $("#digitalArtRadioId").on('click', () => {
 
     $("#digitalArtRadioId").addClass("active home-3");
 });
-
-$(".testSendSigner").on("click", async () => {
-    let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
-
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    const signer = provider.getSigner();
-
-    let Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
-    let MarketplaceAddress = await (await fetch("../contracts/Marketplace-address.json")).json();
-
-    let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, signer);
-
-    $.ajax({
-        url: 'http://localhost:3000/',
-        type: 'get',
-        success: function (res) {
-            window.location.href = "index";
-        }
-    });
-
-});
