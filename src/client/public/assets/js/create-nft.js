@@ -75,15 +75,18 @@ $("#create-nft-button").on('click', async () => {
             return;
         }
 
+        const files = $('#upload-file').prop('files');
+        let filePath;
+
+        if(files.length > 0) {
+            filePath = (await uploadFileToIpfs(files[0])).filePath;
+        } else {
+            console.log("No file uploaded");
+            return;
+        }
+
         try {
-            const files = $('#upload-file').prop('files');
-            let imagePath;
-
-            if(files.length > 0) {
-                imagePath = (await uploadFileToIpfs(files[0])).filePath;
-            }
-
-            const uri = (await uploadDataToIpfs({imagePath, name, desc, listingType})).dataPath;
+            const uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
             console.log(uri);
             await mintAndList(uri, price);
         } catch (err) {
