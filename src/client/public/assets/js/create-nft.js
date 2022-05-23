@@ -52,6 +52,12 @@ async function mintAndList(uri, price) {
 }
 
 $("#create-nft-button").on('click', async () => {
+
+    let auth = $("#create-nft-button").data('auth');
+    if(!auth){
+        location.href = '/signin';
+        return;
+    }
     if(window.ethereum) {
         const accounts = await provider.listAccounts();
 
@@ -86,5 +92,4 @@ $("#create-nft-button").on('click', async () => {
     } else {
         console.log("Metamask not installed");
     }
-
 });

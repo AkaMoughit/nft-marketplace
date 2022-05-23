@@ -45,6 +45,7 @@ exports.loadingHandler = async function (req, res, next) {
         }
 
         req.app.locals.marketplaceContract = marketplaceContract;
+        req.app.locals.nftContract = nftContract;
         req.app.locals.isFirstLoading = false;
         // console.log(items);
     }
