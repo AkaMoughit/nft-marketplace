@@ -3,6 +3,13 @@
 const authenticationService = require('../services/AuthenticationService')
 
 exports.register = function (req, res) {
+    let errorMsg = res.locals.nameMsg || res.locals.phoneMsg || res.locals.birthdateMsg || res.locals.emailMsg
+        || res.locals.passwordMsg
+    if (errorMsg) {
+        return res.status(400).render('signup',{
+            info: errorMsg,
+            sessionData: { isAuth: false, profile: {}}});
+    }
     authenticationService.register(req.body)
         .then(info => {
             res.status(303).redirect('/signin');
@@ -13,6 +20,9 @@ exports.register = function (req, res) {
 }
 
 exports.login = function(req, res) {
+    if (res.locals.emailMsg || res.locals.passwordMsg) {
+        return res.status(400).render('signin', {info : res.locals.emailMsg || res.locals.passwordMsg, sessionData: { isAuth: false, profile: {}}});
+    }
     authenticationService.login(req.body)
         .then(profile => {
             if (profile.UserId > 0) {

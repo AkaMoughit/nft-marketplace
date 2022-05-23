@@ -42,7 +42,7 @@ class NftRepository extends BaseRepository {
                     updatedAt : new Date(),
                     CreatorId : profile_id
                 });
-                if (nft != null) {
+                if (nft) {
                     console.log("nft saved");
                     const listing = await this.listingModel.create({
                         price : nftTBR.price,
@@ -52,7 +52,7 @@ class NftRepository extends BaseRepository {
                         createdAt : new Date(),
                         updatedAt : new Date()
                     });
-                    if (listing != null) {
+                    if (listing) {
                         console.log("listing saved");
                         const attachment = this.attachment.create({
                             reference_table : "nfts",
@@ -61,7 +61,7 @@ class NftRepository extends BaseRepository {
                             createdAt : new Date(),
                             updatedAt : new Date()
                         })
-                        if (attachment != null) {
+                        if (attachment) {
                             console.log("attachment saved");
                             resolve(true);
                         } else {
@@ -77,6 +77,7 @@ class NftRepository extends BaseRepository {
                     resolve(false);
                 }
             } catch (err) {
+                console.log("url error caught")
                 console.log(err);
                 reject(false);
             }

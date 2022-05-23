@@ -54,7 +54,7 @@ class AuthenticationService {
             this.userRepository.findByEmail(reqBody.email)
                 .then(async user => {
                     try {
-                        if (await bcrypt.compare(reqBody.password, user.password)) {
+                        if (user && await bcrypt.compare(reqBody.password, user.password)) {
                             console.log("user found ", user.dataValues.email);
                             this.profileRepository.findByuserId(user.id)
                                 .then(profile => {

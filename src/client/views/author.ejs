@@ -287,7 +287,7 @@
                                                                                     <div class="file-btn"><i
                                                                                             class="icofont-upload-alt"></i>
                                                                                         Upload a file</div>
-                                                                                    <input type="file" name="file">
+                                                                                    <input type="file" name="file" required>
                                                                                 </div>
                                                                             </div>
                                                                             <!-- item name input -->
@@ -296,7 +296,7 @@
                                                                                 <input type="text" class="form-control"
                                                                                     id="itemNameInput"
                                                                                     placeholder="Item Name"
-                                                                                    name="name">
+                                                                                    name="name" required>
                                                                                 <label for="itemNameInput">Item
                                                                                     Name</label>
                                                                             </div>
@@ -306,7 +306,8 @@
                                                                                 <textarea class="form-control"
                                                                                           id="itemDesc"
                                                                                           name="description"
-                                                                                          placeholder="Item Description"></textarea>
+                                                                                          placeholder="Item Description" required>
+                                                                                </textarea>
                                                                                 <label for="itemDesc">Item
                                                                                     Description</label>
                                                                             </div>
@@ -315,7 +316,7 @@
                                                                                 <select class="form-select"
                                                                                         id="listingType"
                                                                                         name="listingType"
-                                                                                        aria-label="Floating label select">
+                                                                                        aria-label="Floating label select" required>
                                                                                     <option value="NORMAL" id="listingType" selected>
                                                                                         Normal
                                                                                     </option>
@@ -332,7 +333,7 @@
                                                                                 <input type="text" class="form-control"
                                                                                        id="priceInput"
                                                                                        placeholder="Price"
-                                                                                       name="price">
+                                                                                       name="price" required>
                                                                                 <label for="priceInput">Price</label>
                                                                             </div>
                                                                             <!-- item-category -->
@@ -460,8 +461,7 @@
 <!--                                                                            </div>-->
                                                                             <!-- submit button -->
                                                                             <div class="submit-btn-field text-center">
-                                                                                <button type="submit">Create
-                                                                                    Item</button>
+                                                                                <button type="submit">Create NFT</button>
                                                                             </div>
                                                                         </form>
                                                                     </div>

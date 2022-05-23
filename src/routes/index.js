@@ -5,12 +5,15 @@ const upload = multer({ dest: 'uploads/' })
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController");
-
 const authenticationController = require("../app/controllers/AuthenticationController");
 const nftController = require('../app/controllers/NftController');
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
+
+const signinValidator = require('../app/validators/SigninValidator');
+const signupValidator = require('../app/validators/SignupValidator');
+const nftCreationValidator = require('../app/validators/NftCreationValidator');
 
 const apiRouter = require('./api');
 const nftRouter = require('./nft');
@@ -32,15 +35,19 @@ router.get('/signin', authenticationHandlers.isNotAuth, mainController.signInPag
 router.get('/signup', authenticationHandlers.isNotAuth, mainController.signUpPage);
 router.get('/wallet', authenticationHandlers.isAuth, mainController.walletPage);
 router.get('/404', mainController.errorNotFoundPage);
-router.post('/signup', authenticationHandlers.isNotAuth, authenticationController.register);
-router.post('/signin', authenticationHandlers.isNotAuth, authenticationController.login);
+router.post('/signup', signupValidator.schema,
+    signupValidator.validate, authenticationHandlers.isNotAuth, authenticationController.register);
+router.post('/signin', signinValidator.schema,
+            signinValidator.validate, authenticationHandlers.isNotAuth, authenticationController.login);
 router.get('/signout', authenticationHandlers.isAuth, authenticationController.signout);
 router.get('/explore', listingController.listingPage);
 
 router.get('/all-authors', profileController.allAuthorsPage);
 router.get('/author', profileController.authorPage);
 router.get('/auction', mainController.auctionPage);
-router.post('/create-nft',upload.single('file'), nftController.create)
+router.post('/create-nft',upload.single('file'),
+    nftCreationValidator.schema,
+    nftCreationValidator.validate, nftController.create)
 
 // router.get('/blog-single', mainController.blogSinglePage);
 // router.get('/blog-single-2', mainController.blogSingle2Page);
