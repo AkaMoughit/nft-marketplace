@@ -10,10 +10,12 @@
             <form action="#" class="header__search">
                 <input type="text" placeholder="Search items, collections, and creators">
                 <button type="button"><i class="icofont-search-2"></i></button>
-                <button type="button" class="close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <button type="button" class="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path
-                                d="M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
-                    </svg></button>
+                                d="M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/>
+                    </svg>
+                </button>
             </form>
             <div class="header__menu ms-auto">
                 <ul class="header__nav mb-0">
@@ -23,11 +25,16 @@
 
                         <ul class="dropdown-menu header__nav-menu">
                             <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#">Landing</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#cathegoryId">Cathegories</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#sellerId">Sellers</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#nftId">NFTs</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#orderId">Orders</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#gigId">Gigs</a></li>
+                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#cathegoryId">Cathegories</a>
+                            </li>
+                            <li><a onclick="enableHomeElement()" class="drop-down-item"
+                                   href="/index#sellerId">Sellers</a></li>
+                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#nftId">NFTs</a>
+                            </li>
+                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#orderId">Orders</a>
+                            </li>
+                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#gigId">Gigs</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="header__nav-item">
@@ -69,11 +76,13 @@
                     </li>
                     <li class="header__nav-item">
                         <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10"><svg
+                           aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">
+                            <svg
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path
-                                        d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z" />
-                            </svg></a>
+                                        d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"/>
+                            </svg>
+                        </a>
 
                         <ul class="dropdown-menu header__nav-menu">
                             <li><a class="drop-down-item" href="contact">Contact </a></li>
@@ -92,18 +101,19 @@
                     <div class="dropdown">
                         <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" data-bs-offset="-100,10">
-                            <span data-blast="bgColor"><i class="icofont-user"></i></span> <span
-                                    class="d-none d-md-inline">
+                            <span data-blast="bgColor"><i class="icofont-user"></i></span>
+                            <span class="d-none d-md-inline">
                                 <% if(sessionData.isAuth) { %>
                                     <%- sessionData.profile.name %>
-                                <%}%>
+                                <% } %>
                             </span>
                         </a>
 
                         <ul class="dropdown-menu">
 
                             <% if(sessionData.isAuth) { %>
-                                <li><a class="dropdown-item" href="author?profileId=<%- sessionData.profile.profile_id %>"><span class="me-1"><i
+                                <li><a class="dropdown-item"
+                                       href="author?profileId=<%- sessionData.profile.profile_id %>"><span class="me-1"><i
                                                     class="icofont-options"></i></span>
                                         Profile</a>
                                 </li>
