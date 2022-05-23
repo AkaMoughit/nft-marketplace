@@ -4,12 +4,13 @@ const profileService = require("../services/ProfileService");
 const nftService = require("../services/NftService");
 
 exports.authorPage = function (req, res) {
-    let sessionData;
-    req.cookies["sessionData"]==undefined
-        ? sessionData = { isAuth: req.session.isAuth, profile: req.session.profile}
-        : sessionData=req.cookies["sessionData"];
-
-    res.clearCookie("sessionData", { httpOnly: true });
+    let sessionData
+    if(req.session.isAuth === undefined) {
+        sessionData = req.cookies["sessionData"];
+        res.clearCookie("sessionData");
+    } else {
+        sessionData = {isAuth: req.session.isAuth, profile: req.session.profile};
+    }
 
     profileService.findByProfileId(req.query.profileId)
         .then(profile => {

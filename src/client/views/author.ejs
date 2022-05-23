@@ -223,14 +223,16 @@
                                             <article>
                                                 <div class="activity-tab">
                                                     <ul class="nav nav-pills mb-30 px-2" id="pills-tab" role="tablist">
-                                                        <li class="nav-item" role="presentation">
-                                                            <button class="nav-link" id="pills-personal-tab"
-                                                                data-bs-toggle="pill" data-bs-target="#pills-personal"
-                                                                type="button" role="tab" aria-controls="pills-personal"
-                                                                aria-selected="false">
-                                                                <i class="icofont-flask"></i>
-                                                                Create NFT</button>
-                                                        </li>
+                                                        <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                                                            <li class="nav-item" role="presentation">
+                                                                <button class="nav-link" id="pills-personal-tab"
+                                                                        data-bs-toggle="pill" data-bs-target="#pills-personal"
+                                                                        type="button" role="tab" aria-controls="pills-personal"
+                                                                        aria-selected="false">
+                                                                    <i class="icofont-flask"></i>
+                                                                    Create NFT</button>
+                                                            </li>
+                                                        <% } %>
                                                         <li class="nav-item" role="presentation">
                                                             <button class="nav-link active" id="pills-mentions-tab"
                                                                 data-bs-toggle="pill" data-bs-target="#pills-mentions"
@@ -275,116 +277,118 @@
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <!-- create item -->
-                                                                    <div class="create-nft py-5 px-4">
-                                                                        <section class="create-nft-form">
-                                                                            <!-- upload field -->
-                                                                            <div class="upload-item mb-30">
-                                                                                <p>PNG, JPG, JPEG, MP3, MPEG</p>
-                                                                                <div class="custom-upload">
-                                                                                    <div class="file-btn"><i
-                                                                                            class="icofont-upload-alt"></i>
-                                                                                        Upload a file</div>
-                                                                                    <input class="custom-upload" id="upload-file" type="file" name="file">
+                                                                    <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                                                                        <div class="create-nft py-5 px-4">
+                                                                            <section class="create-nft-form">
+                                                                                <!-- upload field -->
+                                                                                <div class="upload-item mb-30">
+                                                                                    <p>PNG, JPG, JPEG, MP3, MPEG</p>
+                                                                                    <div class="custom-upload">
+                                                                                        <div class="file-btn"><i
+                                                                                                    class="icofont-upload-alt"></i>
+                                                                                            Upload a file</div>
+                                                                                        <input class="custom-upload" id="upload-file" type="file" name="file">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <!-- item name input -->
-                                                                            <div
-                                                                                class="form-floating item-name-field mb-3">
-                                                                                <input type="text" class="form-control"
-                                                                                    id="itemNameInput"
-                                                                                    placeholder="Item Name"
-                                                                                    name="name">
-                                                                                <label for="itemNameInput">Item
-                                                                                    Name</label>
-                                                                            </div>
-                                                                            <!-- item-description -->
-                                                                            <div
-                                                                                class="form-floating item-desc-field mb-30">
+                                                                                <!-- item name input -->
+                                                                                <div
+                                                                                        class="form-floating item-name-field mb-3">
+                                                                                    <input type="text" class="form-control"
+                                                                                           id="itemNameInput"
+                                                                                           placeholder="Item Name"
+                                                                                           name="name">
+                                                                                    <label for="itemNameInput">Item
+                                                                                        Name</label>
+                                                                                </div>
+                                                                                <!-- item-description -->
+                                                                                <div
+                                                                                        class="form-floating item-desc-field mb-30">
                                                                                 <textarea class="form-control"
                                                                                           id="itemDesc"
                                                                                           name="description"
                                                                                           placeholder="Item Description"></textarea>
-                                                                                <label for="itemDesc">Item
-                                                                                    Description</label>
-                                                                            </div>
-                                                                            <!-- Listing Type -->
-                                                                            <div class="form-floating">
-                                                                                <select class="form-select"
-                                                                                        id="listingType"
-                                                                                        name="listingType"
-                                                                                        aria-label="Floating label select">
-                                                                                    <option value="NORMAL" id="listingType" selected>
-                                                                                        Normal
-                                                                                    </option>
-                                                                                    <option value="AUCTION" id="listingType" >
-                                                                                        Auction
-                                                                                    </option>
-                                                                                </select>
-                                                                                <label for="listingType">Listing type</label>
-                                                                            </div>
-                                                                            <!-- Price -->
-                                                                            <br>
-                                                                            <div
-                                                                                    class="form-floating item-name-field mb-3">
-                                                                                <input type="text" class="form-control"
-                                                                                       id="priceInput"
-                                                                                       placeholder="Price"
-                                                                                       name="price">
-                                                                                <label for="priceInput">Price</label>
-                                                                            </div>
-                                                                            <div class="item-category-field mb-30">
-                                                                                <h4>Select Item Catergory</h4>
-                                                                                <ul
-                                                                                    class="item-cat-list d-flex flex-wrap">
-                                                                                    <li class="item-cat-btn active">
+                                                                                    <label for="itemDesc">Item
+                                                                                        Description</label>
+                                                                                </div>
+                                                                                <!-- Listing Type -->
+                                                                                <div class="form-floating">
+                                                                                    <select class="form-select"
+                                                                                            id="listingType"
+                                                                                            name="listingType"
+                                                                                            aria-label="Floating label select">
+                                                                                        <option value="NORMAL" id="listingType" selected>
+                                                                                            Normal
+                                                                                        </option>
+                                                                                        <option value="AUCTION" id="listingType" >
+                                                                                            Auction
+                                                                                        </option>
+                                                                                    </select>
+                                                                                    <label for="listingType">Listing type</label>
+                                                                                </div>
+                                                                                <!-- Price -->
+                                                                                <br>
+                                                                                <div
+                                                                                        class="form-floating item-name-field mb-3">
+                                                                                    <input type="text" class="form-control"
+                                                                                           id="priceInput"
+                                                                                           placeholder="Price"
+                                                                                           name="price">
+                                                                                    <label for="priceInput">Price</label>
+                                                                                </div>
+                                                                                <div class="item-category-field mb-30">
+                                                                                    <h4>Select Item Catergory</h4>
+                                                                                    <ul
+                                                                                            class="item-cat-list d-flex flex-wrap">
+                                                                                        <li class="item-cat-btn active">
                                                                                         <span><i
-                                                                                                class="icofont-vector-path"></i></span>
-                                                                                        Art
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                                    class="icofont-vector-path"></i></span>
+                                                                                            Art
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-penalty-card"></i></span>
-                                                                                        Trading Cards
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                                    class="icofont-penalty-card"></i></span>
+                                                                                            Trading Cards
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-ui-game"></i></span>
-                                                                                        Gaming
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                                    class="icofont-ui-game"></i></span>
+                                                                                            Gaming
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-music-disk"></i></span>
-                                                                                        Music
-                                                                                    </li>
+                                                                                                    class="icofont-music-disk"></i></span>
+                                                                                            Music
+                                                                                        </li>
 
-                                                                                    <li class="item-cat-btn">
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-twitter"></i></span>
-                                                                                        Tweets
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                                    class="icofont-twitter"></i></span>
+                                                                                            Tweets
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-bill"></i></span>
-                                                                                        Rare Item
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                                    class="icofont-bill"></i></span>
+                                                                                            Rare Item
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span>
                                                                                             <i class="icofont-box"></i>
                                                                                         </span> Collectibles
-                                                                                    </li>
-                                                                                    <li class="item-cat-btn">
+                                                                                        </li>
+                                                                                        <li class="item-cat-btn">
                                                                                         <span><i
-                                                                                                class="icofont-gift"></i></span>
-                                                                                        NFT
-                                                                                        Gifts
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="submit-btn-field text-center">
-                                                                                <button id="create-nft-button">Create Item and list it</button>
-                                                                            </div>
-                                                                        </section>
-                                                                    </div>
+                                                                                                    class="icofont-gift"></i></span>
+                                                                                            NFT
+                                                                                            Gifts
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div class="submit-btn-field text-center">
+                                                                                    <button data-auth="<%- sessionData.isAuth %>" id="create-nft-button">Create Item and list it</button>
+                                                                                </div>
+                                                                            </section>
+                                                                        </div>
+                                                                    <% } %>
                                                                 </div>
                                                             </div>
 

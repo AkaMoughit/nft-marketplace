@@ -33,8 +33,8 @@ exports.uploadFile = async function (req, res) {
 
 exports.welcomePage = async function (req, res) {
 
+    // You can access the contract by simply grabbing it from the app.locals variable
     // const items = await req.app.locals.marketplaceContract.itemCount();
-    //
     // console.log(items);
 
     let pageNumberElements = 8;

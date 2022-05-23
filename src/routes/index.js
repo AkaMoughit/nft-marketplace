@@ -46,7 +46,7 @@ router.get('/author', web3handlers.loadingHandler, profileController.authorPage)
 router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
 router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'), nftController.create);
 
-// router.get('/blog-single', mainController.blogSinglePage);
-// router.get('/blog-single-2', mainController.blogSingle2Page);
+router.get('/blog-single', mainController.blogSinglePage);
+router.get('/blog-single-2', mainController.blogSingle2Page);
 
 module.exports = router;

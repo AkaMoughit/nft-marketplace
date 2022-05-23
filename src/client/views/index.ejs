@@ -63,7 +63,11 @@
                             <div class="banner-btns d-flex flex-wrap">
                                 <a data-blast="bgColor" href="explore"
                                     class="default-btn move-top"><span>Explore</span> </a>
-                                <a style="cursor: pointer" id="create-nft" class="default-btn move-right">Create</a>
+                                <% if(sessionData.isAuth) { %>
+                                    <a style="cursor: pointer" href="/author?profileId=<%- sessionData.profile.profile_id %>" class="default-btn move-right">Create</a>
+                                <% } else { %>
+                                    <a style="cursor: pointer" href="/signin" class="default-btn move-right">Create</a>
+                                <% } %>
                             </div>
                         </div>
                     </div>
