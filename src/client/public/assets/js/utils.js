@@ -1,4 +1,3 @@
-import {ethers} from "./ethers.js";
 
 $(window).on('load', () => {
     if($("#exploreBody").data("load")) {

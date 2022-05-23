@@ -9,14 +9,14 @@ $(document).ready(async () => {
 
     if(accounts.length > 0) {
         const balance = await provider.getBalance(accounts[0]);
-        $(".account-balance").text(fromWei(balance));
+        $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
     }
 
     setInterval(async () => {
         const accounts = await provider.listAccounts();
         if(accounts.length > 0) {
             const balance = await provider.getBalance(accounts[0]);
-            $(".account-balance").text(fromWei(balance));
+            $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
         } else {
             $(".account-balance").text("");
         }
