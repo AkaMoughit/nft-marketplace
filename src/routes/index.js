@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
@@ -18,29 +19,32 @@ const nftRouter = require('./nft');
 router.use('/api', apiRouter);
 router.use('/nft', nftRouter);
 
-router.post('/testPost', web3handlers.web3Handler, mainController.testPost);
+router.post('/testPost', web3handlers.loadingHandler, mainController.testPost);
 
-router.get(['/', '/index'], web3handlers.web3Handler, mainController.welcomePage);
-router.get('/activity', mainController.activityPage);
-router.get('/blog', mainController.blogPage);
-router.get('/blog-2', mainController.blogPage2);
-router.get('/blog-3', mainController.blogPage3);
-router.get('/contact', mainController.contactPage);
-router.get('/forgot-pass', mainController.forgotPassPage);
-router.get('/item-details', listingController.itemDetailsPage);
-router.get('/signin', authenticationHandlers.isNotAuth, mainController.signInPage);
-router.get('/signup', authenticationHandlers.isNotAuth, mainController.signUpPage);
-router.get('/wallet', web3handlers.web3Handler, authenticationHandlers.isAuth, mainController.walletPage);
-router.get('/404', mainController.errorNotFoundPage);
+router.post('/uploadFile', upload.single('file'), mainController.uploadFile);
+router.post('/uploadData', mainController.uploadData);
+
+router.get(['/', '/index'], web3handlers.loadingHandler, web3handlers.loadingHandler, mainController.welcomePage);
+router.get('/activity', web3handlers.loadingHandler, mainController.activityPage);
+router.get('/blog', web3handlers.loadingHandler, mainController.blogPage);
+router.get('/blog-2', web3handlers.loadingHandler, mainController.blogPage2);
+router.get('/blog-3', web3handlers.loadingHandler, mainController.blogPage3);
+router.get('/contact', web3handlers.loadingHandler, mainController.contactPage);
+router.get('/forgot-pass', web3handlers.loadingHandler, mainController.forgotPassPage);
+router.get('/item-details', web3handlers.loadingHandler, listingController.itemDetailsPage);
+router.get('/signin', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signInPage);
+router.get('/signup', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signUpPage);
+router.get('/wallet', web3handlers.loadingHandler, authenticationHandlers.isAuth, mainController.walletPage);
+router.get('/404', web3handlers.loadingHandler, mainController.errorNotFoundPage);
 router.post('/signup', authenticationHandlers.isNotAuth, authenticationController.register);
 router.post('/signin', authenticationHandlers.isNotAuth, authenticationController.login);
-router.get('/signout', authenticationHandlers.isAuth, authenticationController.signout);
-router.get('/explore', listingController.listingPage);
+router.get('/signout', web3handlers.loadingHandler, authenticationHandlers.isAuth, authenticationController.signout);
+router.get('/explore', web3handlers.loadingHandler, listingController.listingPage);
 
-router.get('/all-authors', profileController.allAuthorsPage);
-router.get('/author', profileController.authorPage);
-router.get('/auction', mainController.auctionPage);
-router.post('/create-nft',upload.single('file'), nftController.create)
+router.get('/all-authors', web3handlers.loadingHandler, profileController.allAuthorsPage);
+router.get('/author', web3handlers.loadingHandler, profileController.authorPage);
+router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
+router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'), nftController.create);
 
 // router.get('/blog-single', mainController.blogSinglePage);
 // router.get('/blog-single-2', mainController.blogSingle2Page);

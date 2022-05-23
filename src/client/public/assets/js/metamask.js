@@ -4,23 +4,32 @@ const toWei = (number) => ethers.utils.parseEther(number.toString());
 const fromWei = (number) => ethers.utils.formatEther(number);
 
 $(document).ready(async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const accounts = await provider.listAccounts();
-
-    if(accounts.length > 0) {
-        const balance = await provider.getBalance(accounts[0]);
-        $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
-    }
-
-    setInterval(async () => {
+    if(window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
         const accounts = await provider.listAccounts();
+
         if(accounts.length > 0) {
             const balance = await provider.getBalance(accounts[0]);
             $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
-        } else {
-            $(".account-balance").text("");
         }
+
+        window.ethereum.on('chainChanged', (_chainId) => {
+            window.location.reload();
+        });
+
+        setInterval(async () => {
+            const accounts = await provider.listAccounts();
+            if(accounts.length > 0) {
+                const balance = await provider.getBalance(accounts[0]);
+                $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
+            } else {
+                $(".account-balance").text("");
+            }
         }, 1000);
+    } else {
+        console.log("Metamask not installed");
+    }
+
 });
 
 $(".metamask-connection").on('click', async () => {
@@ -36,7 +45,7 @@ $(".metamask-connection").on('click', async () => {
             console.log(e.message);
         }
 
-        window.ethereum.on('chainChanged', () => {
+        window.ethereum.on('chainChanged', (_chainId) => {
             window.location.reload();
         });
 
@@ -65,31 +74,4 @@ $(".metamask-connection").on('click', async () => {
     } else {
         console.log("Metamask not installed, please install metamask via your browser extensions");
     }
-});
-
-$("#create-nft").on('click', async () => {
-
-    var provider = new ethers.providers.Web3Provider(window.ethereum);
-    const accounts = await provider.listAccounts();
-
-    if(accounts.length === 0) {
-        let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
-    }
-
-    // Prototype on how to create an nft
-    const signer = provider.getSigner();
-
-    let Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
-    let MarketplaceAddress = await (await fetch("../contracts/Marketplace-address.json")).json();
-
-    let Nft = await (await fetch("../contracts/NFT.json")).json();
-    let NftAddress = await (await fetch("../contracts/NFT-address.json")).json();
-
-    let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, signer);
-    let nftContract = new ethers.Contract(NftAddress, Nft.abi, signer);
-
-    await nftContract.mint("URI HERE TEST");
-
-    await nftContract.setApprovalForAll(marketplaceContract.address, true);
-    await marketplaceContract.makeItem(nftContract.address, (await nftContract.tokenCount()).toString(), toWei(2));
 });

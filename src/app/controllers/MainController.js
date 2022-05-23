@@ -6,6 +6,31 @@ const listingRepository = require('../repositories/ListingRepository');
 const {faker} = require("@faker-js/faker");
 const {request} = require("express");
 
+const {uploadFileToIpfs, uploadDataToIpfs} = require("../utils/UploadHelper");
+
+exports.uploadData = async function (req, res) {
+    if(typeof req.body != 'undefined') {
+        try {
+            let result = await uploadDataToIpfs(req.body);
+            res.status(200).send({dataPath: 'https://ipfs.infura.io/ipfs/' + result});
+        } catch (err) {
+            res.status(500).send(err);
+        }
+    }
+}
+
+exports.uploadFile = async function (req, res) {
+    if (typeof req.file !== 'undefined') {
+        try {
+            let result = await uploadFileToIpfs(req.file);
+            res.status(200).send({filePath: 'https://ipfs.infura.io/ipfs/' + result});
+        } catch (err) {
+            console.log("ipfs error uploading file: ", err);
+            res.status(500).send(err);
+        }
+    }
+}
+
 exports.welcomePage = async function (req, res) {
 
     // const items = await req.app.locals.marketplaceContract.itemCount();
