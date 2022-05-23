@@ -24,6 +24,7 @@ const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
 let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, provider);
 let nftContract = new ethers.Contract(NftAddress, Nft.abi, provider);
 
+// Contract event handlers, to be synchronized with db
 nftContract.on('Minted', (a, b, c) => {
     console.log(a.toString(), b, c);
 });
