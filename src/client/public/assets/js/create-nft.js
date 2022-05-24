@@ -46,7 +46,12 @@ async function mintAndList(uri, price) {
 
         await (await nftContract.setApprovalForAll(marketplaceContract.address, true)).wait();
         await (await marketplaceContract.makeItem(nftContract.address, tokenCount, toWei(price))).wait();
+
+        $("#popup").html(`Operation finished successfully.<br/>Your token ID: ${tokenCount}`);
+        $("#popup-trigger").click();
     } catch (e) {
+        $("#popup").text("Error while performing transaction");
+        $("#popup-trigger").click();
         console.log(e);
     }
 }
@@ -71,6 +76,8 @@ $("#create-nft-button").on('click', async () => {
         const price = $('#priceInput').val();
 
         if(!name || !desc || !listingType || !price || isNaN(price)) {
+            $("#popup").text("Some fields are empty or invalid");
+            $("#popup-trigger").click();
             console.log("Some fields are empty or invalid");
             return;
         }
@@ -81,6 +88,8 @@ $("#create-nft-button").on('click', async () => {
         if(files.length > 0) {
             filePath = (await uploadFileToIpfs(files[0])).filePath;
         } else {
+            $("#popup").text("No file uploaded");
+            $("#popup-trigger").click();
             console.log("No file uploaded");
             return;
         }
@@ -90,9 +99,29 @@ $("#create-nft-button").on('click', async () => {
             console.log(uri);
             await mintAndList(uri, price);
         } catch (err) {
+            $("#popup").text("IPFS error while uploading nft details");
+            $("#popup-trigger").click();
             console.log("IPFS error while uploading nft details")
         }
     } else {
+        $("#popup").text("Metamask not installed");
+        $("#popup-trigger").click();
         console.log("Metamask not installed");
+    }
+});
+
+$("#upload-field").on("change", () => {
+    const files = $('#upload-file').prop('files');
+    if(files.length > 0) {
+        let preview = $("#image-preview");
+        if(preview.length) {
+            preview.attr("src", URL.createObjectURL(files[0]));
+            $("#upload-field").append(preview);
+        } else {
+            preview = document.createElement("img");
+            preview.setAttribute("id", "image-preview");
+            preview.setAttribute("src", URL.createObjectURL(files[0]));
+            $("#upload-field").append(preview);
+        }
     }
 });

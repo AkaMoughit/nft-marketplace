@@ -7,12 +7,14 @@ const app = express();
 global.appRoot = path.resolve(__dirname);
 
 const appMiddlewares = require('./src/middlewares/global');
+const Watcher = require("watcher");
 
 app.set('views', path.join(global.appRoot, 'src/client/views'));
 app.set('view engine', 'ejs');
 app.locals.loading = true;
 
 appMiddlewares(app, dbConnect());
+const watcher = new Watcher('src/client/scss');
 
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`);
