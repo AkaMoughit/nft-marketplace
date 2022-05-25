@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="assets/css/lightcase.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/popup.css">
 
 
     <!-- site title -->
@@ -292,16 +294,15 @@
                                                                     <div class="create-nft py-5 px-4">
                                                                         <section class="create-nft-form">
                                                                             <!-- upload field -->
-                                                                            <div class="upload-item mb-30">
+                                                                            <div id="upload-field" class="upload-item mb-30">
                                                                                 <p>PNG, JPG, JPEG, MP3, MPEG</p>
                                                                                 <div class="custom-upload">
-                                                                                    <div class="file-btn"><i
-                                                                                                class="icofont-upload-alt"></i>
+                                                                                    <div class="file-btn">
+                                                                                        <i class="icofont-upload-alt"></i>
                                                                                         Upload a file
+                                                                                        <input class="custom-upload"
+                                                                                               id="upload-file" type="file"/>
                                                                                     </div>
-                                                                                    <input class="custom-upload"
-                                                                                           id="upload-file" type="file"
-                                                                                           name="file">
                                                                                 </div>
                                                                             </div>
                                                                             <!-- item name input -->
@@ -400,12 +401,14 @@
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
-                                                                            <div class="submit-btn-field text-center">
+                                                                            <div id="inline-popups" class="submit-btn-field text-center">
+                                                                                <a hidden id="popup-trigger" href="#popup" data-effect="mfp-zoom-in"></a>
                                                                                 <button data-auth="<%- sessionData.isAuth %>"
                                                                                         id="create-nft-button">Create
                                                                                     Item and list it
                                                                                 </button>
                                                                             </div>
+                                                                            <div id="popup" class="blue-popup mfp-with-anim mfp-hide"></div>
                                                                         </section>
                                                                     </div>
                                                                 <% } %>
@@ -2928,6 +2931,8 @@
 <script src="assets/js/functions.js"></script>
 <script type="module" src="assets/js/metamask.js"></script>
 <script type="module" src="assets/js/create-nft.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script src="assets/js/popup.js"></script>
 </body>
 
 </html>

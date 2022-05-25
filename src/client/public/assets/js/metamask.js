@@ -10,7 +10,7 @@ $(document).ready(async () => {
 
         if(accounts.length > 0) {
             const balance = await provider.getBalance(accounts[0]);
-            $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
+            $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4) + ' ETH');
         }
 
         window.ethereum.on('chainChanged', (_chainId) => {
@@ -21,12 +21,14 @@ $(document).ready(async () => {
             const accounts = await provider.listAccounts();
             if(accounts.length > 0) {
                 const balance = await provider.getBalance(accounts[0]);
-                $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4));
+                $(".account-balance").text(parseFloat(fromWei(balance)).toFixed(4) + ' ETH');
             } else {
                 $(".account-balance").text("");
             }
         }, 1000);
     } else {
+        $("#popup").text("Metamask not installed");
+        $("#popup-trigger").click();
         console.log("Metamask not installed");
     }
 
@@ -64,14 +66,20 @@ $(".metamask-connection").on('click', async () => {
         });
 
         window.ethereum.on('connect', (info) => {
+            $("#popup").text(`Connected to network ${info}`);
+            $("#popup-trigger").click();
             console.log(`Connected to network ${info}`);
         });
 
         window.ethereum.on('disconnect', (error) => {
+            $("#popup").text(`Disconnected from network ${error}`);
+            $("#popup-trigger").click();
            console.log(`Disconnected from network ${error}`);
         });
 
     } else {
+        $("#popup").text("Metamask not installed, please install metamask via your browser extensions");
+        $("#popup-trigger").click();
         console.log("Metamask not installed, please install metamask via your browser extensions");
     }
 });
