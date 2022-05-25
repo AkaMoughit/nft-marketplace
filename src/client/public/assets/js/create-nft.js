@@ -86,7 +86,16 @@ $("#create-nft-button").on('click', async () => {
         let filePath;
 
         if(files.length > 0) {
-            filePath = (await uploadFileToIpfs(files[0])).filePath;
+            try {
+                console.log("File uploading...");
+                filePath = (await uploadFileToIpfs(files[0])).filePath;
+                console.log("finished uploading");
+            } catch (err) {
+                console.log(err);
+                $("#popup").text("IPFS error while uploading nft details");
+                $("#popup-trigger").click();
+                console.log("IPFS error while uploading nft details")
+            }
         } else {
             $("#popup").text("No file uploaded");
             $("#popup-trigger").click();
@@ -94,14 +103,25 @@ $("#create-nft-button").on('click', async () => {
             return;
         }
 
-        try {
-            const uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
-            console.log(uri);
-            await mintAndList(uri, price);
+        let uri;
+        try{
+            console.log("File uploading...");
+            uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
         } catch (err) {
+            console.log(err);
             $("#popup").text("IPFS error while uploading nft details");
             $("#popup-trigger").click();
             console.log("IPFS error while uploading nft details")
+        }
+        console.log("finished uploading");
+        console.log(uri);
+        try{
+            if(typeof uri == 'undefined') throw new Error("files not uploaded");
+            await mintAndList(uri, price);
+        } catch (err) {
+            $("#popup").text("Error while performing transaction");
+            $("#popup-trigger").click();
+            console.log("Error while performing transaction")
         }
     } else {
         $("#popup").text("Metamask not installed");
