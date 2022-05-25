@@ -19,13 +19,14 @@ const Sequelize = require("sequelize");
  * createTable() => "Offers", deps: [Listings, Profiles]
  * createTable() => "Tickets", deps: [Profiles]
  * createTable() => "TicketAttachments", deps: [Tickets]
+ * createTable() => "Wallets", deps: [Profiles]
  *
  */
 
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-05-19T13:39:14.912Z",
+  created: "2022-05-25T18:54:44.909Z",
   comment: "",
 };
 
@@ -42,9 +43,23 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        email: { type: Sequelize.STRING, field: "email" },
-        password: { type: Sequelize.STRING, field: "password" },
-        phone_number: { type: Sequelize.STRING, field: "phone_number" },
+        email: {
+          type: Sequelize.STRING,
+          field: "email",
+          unique: true,
+          allowNull: false,
+        },
+        password: {
+          type: Sequelize.STRING,
+          field: "password",
+          allowNull: false,
+        },
+        phone_number: {
+          type: Sequelize.STRING,
+          field: "phone_number",
+          unique: true,
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -71,15 +86,49 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        name: { type: Sequelize.STRING, field: "name" },
-        wallet_id: { type: Sequelize.STRING, field: "wallet_id" },
-        picture_url: { type: Sequelize.STRING, field: "picture_url" },
-        banner_url: { type: Sequelize.STRING, field: "banner_url" },
-        acc_creation_date: { type: Sequelize.DATE, field: "acc_creation_date" },
-        profile_id: { type: Sequelize.STRING, field: "profile_id" },
-        blockchain_type: { type: Sequelize.STRING, field: "blockchain_type" },
-        specialize_in: { type: Sequelize.STRING, field: "specialize_in" },
-        birthdate: { type: Sequelize.DATE, field: "birthdate" },
+        name: { type: Sequelize.STRING, field: "name", allowNull: false },
+        wallet_id: {
+          type: Sequelize.STRING,
+          field: "wallet_id",
+          unique: true,
+          allowNull: true,
+        },
+        picture_url: {
+          type: Sequelize.STRING,
+          field: "picture_url",
+          allowNull: true,
+        },
+        banner_url: {
+          type: Sequelize.STRING,
+          field: "banner_url",
+          allowNull: true,
+        },
+        acc_creation_date: {
+          type: Sequelize.DATE,
+          field: "acc_creation_date",
+          allowNull: false,
+        },
+        profile_id: {
+          type: Sequelize.STRING,
+          field: "profile_id",
+          unique: true,
+          allowNull: false,
+        },
+        blockchain_type: {
+          type: Sequelize.STRING,
+          field: "blockchain_type",
+          allowNull: false,
+        },
+        specialize_in: {
+          type: Sequelize.STRING,
+          field: "specialize_in",
+          allowNull: false,
+        },
+        birthdate: {
+          type: Sequelize.DATE,
+          field: "birthdate",
+          allowNull: false,
+        },
         about: { type: Sequelize.TEXT, field: "about" },
         createdAt: {
           type: Sequelize.DATE,
@@ -115,10 +164,18 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        title: { type: Sequelize.STRING, field: "title" },
-        body: { type: Sequelize.TEXT, field: "body" },
-        value_offered: { type: Sequelize.DOUBLE, field: "value_offered" },
-        creation_date: { type: Sequelize.DATE, field: "creation_date" },
+        title: { type: Sequelize.STRING, field: "title", allowNull: false },
+        body: { type: Sequelize.TEXT, field: "body", allowNull: false },
+        value_offered: {
+          type: Sequelize.DOUBLE,
+          field: "value_offered",
+          allowNull: false,
+        },
+        creation_date: {
+          type: Sequelize.DATE,
+          field: "creation_date",
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -268,11 +325,29 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        creation_date: { type: Sequelize.DATE, field: "creation_date" },
-        contract_adress: { type: Sequelize.STRING, field: "contract_adress" },
-        token_id: { type: Sequelize.STRING, field: "token_id" },
-        description: { type: Sequelize.TEXT, field: "description" },
-        name: { type: Sequelize.STRING, field: "name" },
+        creation_date: {
+          type: Sequelize.DATE,
+          field: "creation_date",
+          allowNull: false,
+        },
+        contract_adress: {
+          type: Sequelize.STRING,
+          field: "contract_adress",
+          unique: true,
+          allowNull: false,
+        },
+        token_id: {
+          type: Sequelize.STRING,
+          field: "token_id",
+          unique: true,
+          allowNull: false,
+        },
+        description: {
+          type: Sequelize.TEXT,
+          field: "description",
+          allowNull: false,
+        },
+        name: { type: Sequelize.STRING, field: "name", allowNull: false },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -376,8 +451,16 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        reference_table: { type: Sequelize.STRING, field: "reference_table" },
-        attachment_url: { type: Sequelize.STRING, field: "attachment_url" },
+        reference_table: {
+          type: Sequelize.STRING,
+          field: "reference_table",
+          allowNull: false,
+        },
+        attachment_url: {
+          type: Sequelize.STRING,
+          field: "attachment_url",
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -420,8 +503,12 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        send_date: { type: Sequelize.DATE, field: "send_date" },
-        body: { type: Sequelize.TEXT, field: "body" },
+        send_date: {
+          type: Sequelize.DATE,
+          field: "send_date",
+          allowNull: false,
+        },
+        body: { type: Sequelize.TEXT, field: "body", allowNull: false },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -506,8 +593,8 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        price: { type: Sequelize.DOUBLE, field: "price" },
-        type: { type: Sequelize.STRING, field: "type" },
+        price: { type: Sequelize.DOUBLE, field: "price", allowNull: false },
+        type: { type: Sequelize.STRING, field: "type", allowNull: false },
         sale_end_date: { type: Sequelize.DATE, field: "sale_end_date" },
         transaction_date: { type: Sequelize.DATE, field: "transaction_date" },
         createdAt: {
@@ -605,8 +692,16 @@ const migrationCommands = (transaction) => [
     params: [
       "Offers",
       {
-        value_offered: { type: Sequelize.DOUBLE, field: "value_offered" },
-        offer_date: { type: Sequelize.DATE, field: "offer_date" },
+        value_offered: {
+          type: Sequelize.DOUBLE,
+          field: "value_offered",
+          allowNull: false,
+        },
+        offer_date: {
+          type: Sequelize.DATE,
+          field: "offer_date",
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -712,6 +807,41 @@ const migrationCommands = (transaction) => [
       { transaction },
     ],
   },
+  {
+    fn: "createTable",
+    params: [
+      "Wallets",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        wallet_id: { type: Sequelize.STRING, field: "wallet_id" },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+        ProfileId: {
+          type: Sequelize.INTEGER,
+          field: "ProfileId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Profiles", key: "id" },
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
 ];
 
 const rollbackCommands = (transaction) => [
@@ -778,6 +908,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["Users", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["Wallets", { transaction }],
   },
 ];
 

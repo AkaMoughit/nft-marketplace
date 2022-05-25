@@ -1,13 +1,7 @@
 'use strict'
 
 const { ethers } = require('ethers');
-
-const MarketplaceAddress = require('../contracts/Marketplace-address.json');
-const Marketplace = require('../contracts/Marketplace.json');
-
-const NftAddress = require('../contracts/NFT-address.json');
-const Nft = require('../contracts/NFT.json');
-
+const SmartContractHelper = require("../utils/SmartContractHelper");
 
 exports.loadingHandler = async function (req, res, next) {
 
@@ -16,12 +10,13 @@ exports.loadingHandler = async function (req, res, next) {
     }
 
     if(req.app.locals.isFirstLoading) {
-        const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
-        let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, provider);
-        let nftContract = new ethers.Contract(NftAddress, Nft.abi, provider);
+        const provider = new ethers.providers.JsonRpcProvider(SmartContractHelper.rpcUrl);
+        let marketplaceContract = new ethers.Contract(SmartContractHelper.marketplaceAddress, SmartContractHelper.marketplaceContract.abi, provider);
+        let nftContract = new ethers.Contract(SmartContractHelper.nftAddress, SmartContractHelper.nftContract.abi, provider);
 
         nftContract.on('Minted', (a, b, c) => {
             if(!req.app.locals.isFirstLoading) {
+                console.log(req.session.profile.profile_id);
                 console.log(a.toString(), b, c);
             }
         });

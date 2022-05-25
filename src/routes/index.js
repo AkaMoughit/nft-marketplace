@@ -24,8 +24,8 @@ router.use('/nft', nftRouter);
 
 router.post('/testPost', web3handlers.loadingHandler, mainController.testPost);
 
-router.post('/uploadFile', upload.single('file'), mainController.uploadFile);
-router.post('/uploadData', mainController.uploadData);
+router.post('/uploadFile', authenticationHandlers.isAuth, upload.single('file'), nftController.uploadFile);
+router.post('/uploadData', authenticationHandlers.isAuth, nftController.uploadData);
 
 router.get(['/', '/index'], web3handlers.loadingHandler, web3handlers.loadingHandler, mainController.welcomePage);
 router.get('/activity', web3handlers.loadingHandler, mainController.activityPage);

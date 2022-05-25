@@ -19,8 +19,9 @@ class AuthenticationService {
                 password: reqBody.password,
                 phone_number: reqBody.phone_number
             }
+            const transaction = await this.userRepository.model.sequelize.transaction();
             try {
-                let [user, created] = await this.userRepository.save(userTBR);
+                let [user, created] = await this.userRepository.save(userTBR, transaction);
                 if (created) {
                     console.log("user created : ", user.dataValues.id);
                     const profileTBR = {
@@ -30,20 +31,23 @@ class AuthenticationService {
                         birthdate: reqBody.birthdate,
                         specialize_in: reqBody.specialize_in
                     }
-                    let [profile, created] = await this.profileRepository.save(profileTBR)
+                    let [profile, created] = await this.profileRepository.save(profileTBR, transaction)
                     if (created) {
                         console.log("profile created : ", profile.dataValues.name);
                         resolve("Profile created successfully");
                     } else {
                         console.log("profile exists : ", profile.dataValues.name);
+                        await transaction.rollback();
                         reject("User not created");
                     }
                 } else {
                     console.log("email not available : " + user.dataValues.email);
+                    await transaction.rollback();
                     reject("A profile with this email already exists");
                 }
             } catch (err) {
                 console.log('error user creation : ' + err);
+                await transaction.rollback();
                 reject("An error has occurred");
             }
         });

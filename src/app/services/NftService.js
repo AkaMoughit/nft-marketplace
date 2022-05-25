@@ -18,7 +18,7 @@ class NftService {
                     if (promise) {
                         resolve("NFT created");
                     } else {
-                        resolve("NFT not created");
+                        reject("NFT not created");
                     }
                 })
                 .catch(err => {
@@ -26,7 +26,7 @@ class NftService {
                     reject("An error has occurred")
                 })
             } else {
-                resolve("File format not supported");
+                reject("File format not supported");
             }
         });
     }

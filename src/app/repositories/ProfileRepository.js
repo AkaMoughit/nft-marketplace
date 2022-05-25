@@ -55,7 +55,7 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    save(profile) {
+    save(profile, transaction) {
         return this.model.findOrCreate({
             where: {
                 profile_id : profile.profile_id,
@@ -70,7 +70,8 @@ class ProfileRepository extends BaseRepository {
                 updatedAt : new Date(),
                 profile_id : profile.profile_id,
                 UserId : profile.UserId
-            }
+            },
+            transaction: transaction
         });
     }
 
