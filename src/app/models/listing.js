@@ -23,8 +23,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Listing.init({
-    price: DataTypes.DOUBLE,
-    type: DataTypes.STRING,
+    price: {
+        type: DataTypes.DOUBLE,
+        allowNull : false,
+        validate: {
+            notNull: true,
+            min: 0.0001
+        }
+    },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: true,
+            isIn: [['NORMAL', 'AUCTION']]
+        }
+    },
     sale_end_date: DataTypes.DATE,
     transaction_date: DataTypes.DATE
   }, {

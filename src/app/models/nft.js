@@ -28,11 +28,44 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Nft.init({
-    creation_date: DataTypes.DATE,
-    contract_adress: DataTypes.STRING,
-    token_id: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    name: DataTypes.STRING
+    creation_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    contract_adress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: true
+      }
+    },
+
+    token_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: true
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
   }, {
     sequelize,
     modelName: 'Nft',

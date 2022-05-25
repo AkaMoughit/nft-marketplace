@@ -15,8 +15,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Offer.init({
-    value_offered: DataTypes.DOUBLE,
-    offer_date: DataTypes.DATE
+    value_offered: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      validate: {
+        min: 0.0001,
+        notNull: true
+      }
+    },
+    offer_date: {
+    type: DataTypes.DATE,
+        allowNull: false,
+      validate: {
+      notNull: true
+      }
+    },
   }, {
     sequelize,
     modelName: 'Offer',

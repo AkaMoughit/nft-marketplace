@@ -16,8 +16,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Message.init({
-    send_date: DataTypes.DATE,
-    body: DataTypes.TEXT
+    send_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    body: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Message',
