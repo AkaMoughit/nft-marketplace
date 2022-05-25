@@ -32,6 +32,7 @@ class NftRepository extends BaseRepository {
                 const fileHash = await uploadHelper.uploadFileToIpfs(file.path);
 
                 const url = "ipfs.io/ipfs/" + fileHash;
+
                 const nft = await this.model.create({
                     name : nftTBR.name,
                     description : nftTBR.description,
@@ -54,7 +55,7 @@ class NftRepository extends BaseRepository {
                     });
                     if (listing) {
                         console.log("listing saved");
-                        const attachment = this.attachment.create({
+                        const attachment = await this.attachment.create({
                             reference_table : "nfts",
                             attachment_url : url,
                             NftId : nft.id,
@@ -77,7 +78,6 @@ class NftRepository extends BaseRepository {
                     resolve(false);
                 }
             } catch (err) {
-                console.log("url error caught")
                 console.log(err);
                 reject(false);
             }
