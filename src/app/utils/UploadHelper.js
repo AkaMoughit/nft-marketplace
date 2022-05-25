@@ -37,3 +37,13 @@ exports.uploadDataToIpfs = function (data) {
         }
     })
 }
+
+exports.downloadDataFromIpfs = async function (path) {
+    const client = await create({
+        host: "ipfs.infura.io",
+        port: 5001,
+        protocol: "https"
+    })
+    let data = await client.cat(path)
+    return data;
+}

@@ -2,6 +2,7 @@
 
 const { ethers } = require('ethers');
 const SmartContractHelper = require("../utils/SmartContractHelper");
+const {downloadDataFromIpfs} = require("../utils/UploadHelper");
 
 exports.loadingHandler = async function (req, res, next) {
 
@@ -9,15 +10,15 @@ exports.loadingHandler = async function (req, res, next) {
         req.app.locals.isFirstLoading = true;
     }
 
-    if(req.app.locals.isFirs                                                                                qqwftLoading) {
+    if(req.app.locals.isFirstLoading) {
         const provider = new ethers.providers.JsonRpcProvider(SmartContractHelper.rpcUrl);
         let marketplaceContract = new ethers.Contract(SmartContractHelper.marketplaceAddress, SmartContractHelper.marketplaceContract.abi, provider);
         let nftContract = new ethers.Contract(SmartContractHelper.nftAddress, SmartContractHelper.nftContract.abi, provider);
 
-        nftContract.on('Minted', (a, b, c) => {
-            if(!req.app.locals.isFirstLoading) {
-                console.log(req.session.profile.profile_id);
-                console.log(a.toString(), b, c);
+        nftContract.on('Minted', async (tokenId, creatorAddress, tokenURI) => {
+            if (!req.app.locals.isFirstLoading) {
+                console.log(await downloadDataFromIpfs(tokenURI));
+                console.log(tokenId.toString(), creatorAddress, tokenURI);
             }
         });
 
