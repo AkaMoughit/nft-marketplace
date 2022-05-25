@@ -9,7 +9,7 @@ exports.loadingHandler = async function (req, res, next) {
         req.app.locals.isFirstLoading = true;
     }
 
-    if(req.app.locals.isFirstLoading) {
+    if(req.app.locals.isFirs                                                                                qqwftLoading) {
         const provider = new ethers.providers.JsonRpcProvider(SmartContractHelper.rpcUrl);
         let marketplaceContract = new ethers.Contract(SmartContractHelper.marketplaceAddress, SmartContractHelper.marketplaceContract.abi, provider);
         let nftContract = new ethers.Contract(SmartContractHelper.nftAddress, SmartContractHelper.nftContract.abi, provider);
