@@ -18,10 +18,35 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CustomOffer.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT,
-    value_offered: DataTypes.DOUBLE,
-    creation_date: DataTypes.DATE
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    body: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    value_offered: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        min: 0.0001
+      }
+    },
+    creation_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'CustomOffer',

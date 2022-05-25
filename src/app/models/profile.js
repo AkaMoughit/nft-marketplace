@@ -31,15 +31,78 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Profile.init({
-    name: DataTypes.STRING,
-    wallet_id: DataTypes.STRING,
-    picture_url: DataTypes.STRING,
-    banner_url: DataTypes.STRING,
-    acc_creation_date: DataTypes.DATE,
-    profile_id: DataTypes.STRING,
-    blockchain_type: DataTypes.STRING,
-    specialize_in: DataTypes.STRING,
-    birthdate: DataTypes.DATE,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    wallet_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    picture_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        validateUrl(value) {
+          if(!/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+            throw new Error('Url entered is not valid!');
+          }
+        }
+      }
+    },
+    banner_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        validateUrl(value) {
+          if(!/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+            throw new Error('Url entered is not valid!');
+          }
+        }
+      }
+    },
+    acc_creation_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
+    profile_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: { // not enough
+        notNull: true
+      }
+    },
+    blockchain_type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        isIn: [['ETHEREUM']]
+      }
+    },
+    specialize_in: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        isIn : [['Digital Art', 'Photography', 'Music']]
+      }
+    },
+    birthdate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    },
     about: DataTypes.TEXT
   }, {
     sequelize,

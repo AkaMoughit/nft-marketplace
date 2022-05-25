@@ -309,9 +309,9 @@
                                                                             <div
                                                                                     class="form-floating item-name-field mb-3">
                                                                                 <input type="text" class="form-control"
-                                                                                       id="itemNameInput"
-                                                                                       placeholder="Item Name"
-                                                                                       name="name">
+                                                                                    id="itemNameInput"
+                                                                                    placeholder="Item Name"
+                                                                                    name="name" required>
                                                                                 <label for="itemNameInput">Item
                                                                                     Name</label>
                                                                             </div>
@@ -321,7 +321,8 @@
                                                                                 <textarea class="form-control"
                                                                                           id="itemDesc"
                                                                                           name="description"
-                                                                                          placeholder="Item Description"></textarea>
+                                                                                          placeholder="Item Description" required>
+                                                                                </textarea>
                                                                                 <label for="itemDesc">Item
                                                                                     Description</label>
                                                                             </div>
@@ -330,9 +331,8 @@
                                                                                 <select class="form-select"
                                                                                         id="listingType"
                                                                                         name="listingType"
-                                                                                        aria-label="Floating label select">
-                                                                                    <option value="NORMAL"
-                                                                                            id="listingType" selected>
+                                                                                        aria-label="Floating label select" required>
+                                                                                    <option value="NORMAL" id="listingType" selected>
                                                                                         Normal
                                                                                     </option>
                                                                                     <option value="AUCTION"
@@ -350,7 +350,7 @@
                                                                                 <input type="text" class="form-control"
                                                                                        id="priceInput"
                                                                                        placeholder="Price"
-                                                                                       name="price">
+                                                                                       name="price" required>
                                                                                 <label for="priceInput">Price</label>
                                                                             </div>
                                                                             <div class="item-category-field mb-30">
