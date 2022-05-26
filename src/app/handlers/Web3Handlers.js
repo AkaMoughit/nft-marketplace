@@ -4,6 +4,9 @@ const { ethers } = require('ethers');
 const SmartContractHelper = require("../utils/SmartContractHelper");
 const {downloadDataFromIpfs} = require("../utils/UploadHelper");
 
+const nftService = require('../services/NftService');
+const walletService = require('../services/WalletService');''
+
 exports.loadingHandler = async function (req, res, next) {
 
     if(req.app.locals.isFirstLoading === undefined) {
@@ -15,10 +18,31 @@ exports.loadingHandler = async function (req, res, next) {
         let marketplaceContract = new ethers.Contract(SmartContractHelper.marketplaceAddress, SmartContractHelper.marketplaceContract.abi, provider);
         let nftContract = new ethers.Contract(SmartContractHelper.nftAddress, SmartContractHelper.nftContract.abi, provider);
 
-        nftContract.on('Minted', async (tokenId, creatorAddress, tokenURI) => {
+        nftContract.on('Minted', async (tokenId, creatorAddress, tokenURI, contractAddress) => {
             if (!req.app.locals.isFirstLoading) {
-                console.log(await downloadDataFromIpfs(tokenURI));
-                console.log(tokenId.toString(), creatorAddress, tokenURI);
+                let nftDetails = await downloadDataFromIpfs(tokenURI);
+
+                let wallet = {
+                    ProfileId: req.session.profile.id,
+                    wallet_id: creatorAddress
+                };
+
+                await walletService.insertIfNotExist(wallet);
+
+
+                console.log(tokenId.toString(), creatorAddress, tokenURI, contractAddress);
+                const nft = {
+                    name : nftDetails.name,
+                    description : nftDetails.desc,
+                    contract_adress : contractAddress,
+                    token_id : tokenId.toString(),
+                    creation_date : new Date(),
+                    createdAt : new Date(),
+                    updatedAt : new Date(),
+                    CreatorId : req.session.profile.id
+                };
+
+                await nftService.create(nft);
             }
         });
 

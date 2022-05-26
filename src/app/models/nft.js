@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     contract_adress: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: false,
       validate: {
         notNull: true
       }
@@ -78,8 +78,12 @@ module.exports = (sequelize, DataTypes) => {
           updatedAt: new Date()
         });
 
-        await nftOwnership.save();
-        console.log("nft ownership added");
+        try{
+          await nftOwnership.save();
+          console.log("nft ownership added");
+        } catch (e) {
+          console.log(e);
+        }
       },
 
       async afterBulkCreate(instances, options) {

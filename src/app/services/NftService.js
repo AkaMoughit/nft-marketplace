@@ -9,6 +9,10 @@ class NftService {
         this.nftRepository = nftRepository;
     }
 
+    create(nft) {
+        return this.nftRepository.create(nft);
+    }
+
     saveAndList(nftTBR, profile_id, file) {
         return new Promise( async (resolve, reject) => {
             if (file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'

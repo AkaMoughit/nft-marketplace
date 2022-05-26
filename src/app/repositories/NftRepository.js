@@ -23,6 +23,36 @@ class NftRepository extends BaseRepository {
         this.attachment = Attachment;
     }
 
+    create(nft) {
+        return new Promise(async (resolve, reject) => {
+            let tx = await this.model.sequelize.transaction();
+            try {
+                let result = await this.model.findOrCreate({
+                    where: {
+                        token_id : nft.token_id,
+                    },
+                    defaults: {
+                        name : nft.name,
+                        description : nft.description,
+                        contract_adress : nft.contract_adress,
+                        CreatorId : nft.CreatorId,
+                        creation_date : new Date(),
+                        createdAt : new Date(),
+                        updatedAt : new Date(),
+                    },
+                    individualHooks : true,
+                    transaction: tx
+                });
+                tx.commit();
+                resolve(result);
+            } catch (e) {
+                console.log(e);
+                tx.rollback();
+                reject(e);
+            }
+        });
+    }
+
     //TO-DO : transaction commits and rollbacks
     save(nftTBR, profile_id, file) {
         const address = uuidv4();

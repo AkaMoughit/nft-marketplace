@@ -24,8 +24,8 @@ router.use('/nft', nftRouter);
 
 router.post('/testPost', web3handlers.loadingHandler, mainController.testPost);
 
-router.post('/uploadFile', authenticationHandlers.isAuth, upload.single('file'), nftController.uploadFile);
-router.post('/uploadData', authenticationHandlers.isAuth, nftController.uploadData);
+router.post('/uploadFile', authenticationHandlers.isAuth, web3handlers.loadingHandler, upload.single('file'), nftController.uploadFile);
+router.post('/uploadData', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.uploadData);
 
 router.get(['/', '/index'], web3handlers.loadingHandler, web3handlers.loadingHandler, mainController.welcomePage);
 router.get('/activity', web3handlers.loadingHandler, mainController.activityPage);
@@ -35,22 +35,22 @@ router.get('/blog-3', web3handlers.loadingHandler, mainController.blogPage3);
 router.get('/contact', web3handlers.loadingHandler, mainController.contactPage);
 router.get('/forgot-pass', web3handlers.loadingHandler, mainController.forgotPassPage);
 router.get('/item-details', web3handlers.loadingHandler, listingController.itemDetailsPage);
-router.get('/wallet', web3handlers.loadingHandler, authenticationHandlers.isAuth, mainController.walletPage);
+router.get('/wallet', authenticationHandlers.isAuth, web3handlers.loadingHandler, mainController.walletPage);
 router.get('/404', web3handlers.loadingHandler, mainController.errorNotFoundPage);
-router.get('/signout', web3handlers.loadingHandler, authenticationHandlers.isAuth, authenticationController.signout);
+router.get('/signout', authenticationHandlers.isAuth, web3handlers.loadingHandler, authenticationController.signout);
 router.get('/explore', web3handlers.loadingHandler, listingController.listingPage);
 
 router.get('/all-authors', web3handlers.loadingHandler, profileController.allAuthorsPage);
 router.get('/author', web3handlers.loadingHandler, profileController.authorPage);
 router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
-router.get('/signin', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signInPage);
-router.get('/signup', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signUpPage);
-router.post('/signup', signupValidator.schema,
-    signupValidator.validate, authenticationHandlers.isNotAuth, authenticationController.register);
-router.post('/signin', signinValidator.schema,
-            signinValidator.validate, authenticationHandlers.isNotAuth, authenticationController.login);
+router.get('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, mainController.signInPage);
+router.get('/signup',  authenticationHandlers.isNotAuth, web3handlers.loadingHandler, mainController.signUpPage);
+router.post('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signupValidator.schema,
+    signupValidator.validate, authenticationController.register);
+router.post('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signinValidator.schema,
+            signinValidator.validate, authenticationController.login);
 
-router.post('/create-nft',upload.single('file'),
+router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'),
     nftCreationValidator.schema,
     nftCreationValidator.validate, nftController.create);
 

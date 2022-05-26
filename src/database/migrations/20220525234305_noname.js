@@ -26,7 +26,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-05-25T18:54:44.909Z",
+  created: "2022-05-25T23:43:05.226Z",
   comment: "",
 };
 
@@ -333,7 +333,7 @@ const migrationCommands = (transaction) => [
         contract_adress: {
           type: Sequelize.STRING,
           field: "contract_adress",
-          unique: true,
+          unique: false,
           allowNull: false,
         },
         token_id: {

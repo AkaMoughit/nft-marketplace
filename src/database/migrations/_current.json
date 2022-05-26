@@ -458,7 +458,7 @@
                 },
                 "contract_adress": {
                     "allowNull": false,
-                    "unique": true,
+                    "unique": false,
                     "field": "contract_adress",
                     "seqType": "Sequelize.STRING"
                 },
