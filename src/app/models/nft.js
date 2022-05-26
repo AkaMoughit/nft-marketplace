@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
           NftId: instance.id,
           OwnerId: instance.CreatorId,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         });
 
         try{

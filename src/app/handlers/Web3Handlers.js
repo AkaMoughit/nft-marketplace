@@ -20,29 +20,30 @@ exports.loadingHandler = async function (req, res, next) {
 
         nftContract.on('Minted', async (tokenId, creatorAddress, tokenURI, contractAddress) => {
             if (!req.app.locals.isFirstLoading) {
-                let nftDetails = await downloadDataFromIpfs(tokenURI);
-
-                let wallet = {
-                    ProfileId: req.session.profile.id,
-                    wallet_id: creatorAddress
-                };
-
-                await walletService.insertIfNotExist(wallet);
-
-
                 console.log(tokenId.toString(), creatorAddress, tokenURI, contractAddress);
-                const nft = {
-                    name : nftDetails.name,
-                    description : nftDetails.desc,
-                    contract_adress : contractAddress,
-                    token_id : tokenId.toString(),
-                    creation_date : new Date(),
-                    createdAt : new Date(),
-                    updatedAt : new Date(),
-                    CreatorId : req.session.profile.id
-                };
+                if(req.session !== undefined && req.session.profile !== undefined) {
+                    let nftDetails = await downloadDataFromIpfs(tokenURI);
 
-                await nftService.create(nft);
+                    let wallet = {
+                        ProfileId: req.session.profile.id,
+                        wallet_id: creatorAddress
+                    };
+
+                    await walletService.insertIfNotExist(wallet);
+
+                    const nft = {
+                        name : nftDetails.name,
+                        description : nftDetails.desc,
+                        contract_adress : contractAddress,
+                        token_id : tokenId.toString(),
+                        creation_date : new Date(),
+                        createdAt : new Date(),
+                        updatedAt : new Date(),
+                        CreatorId : req.session.profile.id
+                    };
+
+                    await nftService.create(nft);
+                }
             }
         });
 
@@ -52,17 +53,17 @@ exports.loadingHandler = async function (req, res, next) {
             }
         });
 
-        const itemCount = await marketplaceContract.itemCount();
-        let items = [];
-        for(let i = 1; i <= itemCount; i++) {
-            const item = await marketplaceContract.items(i);
-            const totalPrice = await marketplaceContract.getTotalPrice(item.itemId);
-            items.push({
-                totalPrice,
-                itemId: item.itemId,
-                seller: item.seller,
-            });
-        }
+        // const itemCount = await marketplaceContract.itemCount();
+        // let items = [];
+        // for(let i = 1; i <= itemCount; i++) {
+        //     const item = await marketplaceContract.items(i);
+        //     const totalPrice = await marketplaceContract.getTotalPrice(item.itemId);
+        //     items.push({
+        //         totalPrice,
+        //         itemId: item.itemId,
+        //         seller: item.seller,
+        //     });
+        // }
 
         req.app.locals.marketplaceContract = marketplaceContract;
         req.app.locals.nftContract = nftContract;

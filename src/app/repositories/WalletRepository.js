@@ -17,8 +17,6 @@ class WalletRepository extends BaseRepository {
                         wallet_id: wallet.wallet_id
                     },
                     defaults: {
-                        ProfileId: wallet.ProfileId,
-                        wallet_id: wallet.wallet_id,
                         createdAt: new Date(),
                         updatedAt: new Date()
                     },

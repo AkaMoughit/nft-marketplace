@@ -27,14 +27,6 @@ exports.welcomePage = async function (req, res) {
     });
 };
 
-exports.signInPage = function (req, res) {
-    res.status(200).render('signin', {info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}});
-}
-
-exports.signUpPage = function (req, res) {
-    res.status(200).render('signup', {info: null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
-}
-
 exports.errorNotFoundPage = function (req, res) {
     res.status(200).render('404', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
 }

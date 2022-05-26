@@ -43,8 +43,8 @@ router.get('/explore', web3handlers.loadingHandler, listingController.listingPag
 router.get('/all-authors', web3handlers.loadingHandler, profileController.allAuthorsPage);
 router.get('/author', web3handlers.loadingHandler, profileController.authorPage);
 router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
-router.get('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, mainController.signInPage);
-router.get('/signup',  authenticationHandlers.isNotAuth, web3handlers.loadingHandler, mainController.signUpPage);
+router.get('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, authenticationController.signInPage);
+router.get('/signup',  authenticationHandlers.isNotAuth, web3handlers.loadingHandler, authenticationController.signUpPage);
 router.post('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signupValidator.schema,
     signupValidator.validate, authenticationController.register);
 router.post('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signinValidator.schema,

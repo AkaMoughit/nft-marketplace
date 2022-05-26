@@ -52,6 +52,14 @@ exports.login = function(req, res) {
         )
 }
 
+exports.signInPage = function (req, res) {
+    res.status(200).render('signin', {info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}});
+}
+
+exports.signUpPage = function (req, res) {
+    res.status(200).render('signup', {info: null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
 exports.signout = function(req,res) {
     req.session.destroy(err => {
         if (err) {
