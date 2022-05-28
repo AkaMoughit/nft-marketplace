@@ -7,7 +7,7 @@ class UserRepository extends BaseRepository {
         super(User);
     }
 
-    async save(user) {
+    async save(user, transaction) {
         const {email, password, phone_number} = user
         const hashedPwd = await bcrypt.hash(password, 10);
         return this.model.findOrCreate({
@@ -19,8 +19,9 @@ class UserRepository extends BaseRepository {
                 password : hashedPwd,
                 phone_number : phone_number
             },
-            individualHooks : true
-        })
+            individualHooks : true,
+            transaction: transaction
+        });
     }
 
     findByEmail(email) {

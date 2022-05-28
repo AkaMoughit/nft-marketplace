@@ -32,95 +32,138 @@ async function uploadFileToIpfs(file) {
     });
 }
 
-async function mintAndList(uri, price) {
-    const URI = uri;
+function mint(uri) {
+    return new Promise(async (resolve, reject) => {
+        const URI = uri;
 
-    const signer = provider.getSigner();
+        const signer = provider.getSigner();
 
-    let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, signer);
-    let nftContract = new ethers.Contract(NftAddress, Nft.abi, signer);
+        let nftContract = new ethers.Contract(NftAddress, Nft.abi, signer);
 
-    try {
-        await (await nftContract.mint(URI)).wait();
-        const tokenCount = (await nftContract.tokenCount()).toString();
+        try {
+            await (await nftContract.mint(URI)).wait();
+            const tokenCount = (await nftContract.tokenCount()).toString();
 
-        await (await nftContract.setApprovalForAll(marketplaceContract.address, true)).wait();
-        await (await marketplaceContract.makeItem(nftContract.address, tokenCount, toWei(price))).wait();
-
-        $("#popup").html(`Operation finished successfully.<br/>Your token ID: ${tokenCount}`);
-        $("#popup-trigger").click();
-    } catch (e) {
-        $("#popup").text("Error while performing transaction");
-        $("#popup-trigger").click();
-        console.log(e);
-    }
+            resolve(tokenCount);
+        } catch (e) {
+            console.log(e);
+            reject("Error while performing transaction");
+        }
+    });
 }
 
-$("#create-nft-button").on('click', async () => {
+function mintAndList(uri, price) {
+    return new Promise(async (resolve, reject) => {
+        const URI = uri;
 
-    let auth = $("#create-nft-button").data('auth');
-    if(!auth){
+        const signer = provider.getSigner();
+
+        let marketplaceContract = new ethers.Contract(MarketplaceAddress, Marketplace.abi, signer);
+        let nftContract = new ethers.Contract(NftAddress, Nft.abi, signer);
+
+        try {
+            await (await nftContract.mint(URI)).wait();
+            const tokenCount = (await nftContract.tokenCount()).toString();
+
+            await (await nftContract.setApprovalForAll(marketplaceContract.address, true)).wait();
+            await (await marketplaceContract.makeItem(nftContract.address, tokenCount, toWei(price))).wait();
+
+            resolve(tokenCount);
+        } catch (e) {
+            console.log(e);
+            reject("Error while performing transaction");
+        }
+    });
+}
+
+function getUri() {
+    return new Promise(async (resolve, reject) => {
+            let uri = null;
+
+            const name = $("#itemNameInput").val();
+            const desc = $('#itemDesc').val();
+            const listingType = $('#listingType').val();
+            const price = $('#priceInput').val();
+
+            if (!name || !desc || !listingType || !price || isNaN(price)) {
+                reject("Some fields are empty or invalid");
+            }
+
+            const files = $('#upload-file').prop('files');
+            let filePath;
+
+            if (files.length > 0) {
+                try {
+                    console.log("File uploading...");
+                    filePath = (await uploadFileToIpfs(files[0])).filePath;
+                    console.log("finished uploading");
+                } catch (err) {
+                    console.log(err);
+                    reject("IPFS error while uploading nft details");
+                }
+            } else {
+                reject("No file uploaded");
+            }
+
+            try {
+                console.log("File uploading...");
+                uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
+            } catch (err) {
+                console.log(err);
+                reject("IPFS error while uploading nft details");
+            }
+            console.log("finished uploading");
+            console.log(uri);
+            resolve(uri);
+        }
+    );
+}
+
+$(".create-nft-button").on('click', async function() {
+    let auth = $(this).data('auth');
+    if (!auth) {
         location.href = '/signin';
         return;
     }
-    if(window.ethereum) {
+
+    if (window.ethereum) {
         const accounts = await provider.listAccounts();
 
-        if(accounts.length === 0) {
+        if (accounts.length === 0) {
             let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
         }
 
-        const name = $("#itemNameInput").val();
-        const desc = $('#itemDesc').val();
-        const listingType = $('#listingType').val();
-        const price = $('#priceInput').val();
-
-        if(!name || !desc || !listingType || !price || isNaN(price)) {
-            $("#popup").text("Some fields are empty or invalid");
+        let uri = null;
+        try{
+            uri = await getUri();
+        } catch (e) {
+            $("#popup").text(e);
             $("#popup-trigger").click();
-            console.log("Some fields are empty or invalid");
             return;
         }
 
-        const files = $('#upload-file').prop('files');
-        let filePath;
+        try {
+            if (uri === null) throw new Error("files not uploaded");
+            const price = $('#priceInput').val();
 
-        if(files.length > 0) {
-            try {
-                console.log("File uploading...");
-                filePath = (await uploadFileToIpfs(files[0])).filePath;
-                console.log("finished uploading");
-            } catch (err) {
-                console.log(err);
-                $("#popup").text("IPFS error while uploading nft details");
-                $("#popup-trigger").click();
-                console.log("IPFS error while uploading nft details")
+            let tokenCount;
+            switch ($(this).data('transaction')) {
+                case 'create':
+                    tokenCount = await mint(uri);
+                    break;
+                case 'list':
+                    tokenCount = await mintAndList(uri, price);
+                    break;
+                default:
+                    throw new Error("Operation invalid");
             }
-        } else {
-            $("#popup").text("No file uploaded");
-            $("#popup-trigger").click();
-            console.log("No file uploaded");
-            return;
-        }
 
-        let uri;
-        try{
-            console.log("File uploading...");
-            uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
-        } catch (err) {
-            console.log(err);
-            $("#popup").text("IPFS error while uploading nft details");
+            $("#popup").html(`Operation finished successfully.<br/>Your token ID: ${tokenCount}`);
             $("#popup-trigger").click();
-            console.log("IPFS error while uploading nft details")
-        }
-        console.log("finished uploading");
-        console.log(uri);
-        try{
-            if(typeof uri == 'undefined') throw new Error("files not uploaded");
-            await mintAndList(uri, price);
         } catch (err) {
             $("#popup").text("Error while performing transaction");
             $("#popup-trigger").click();
+            console.log(err);
             console.log("Error while performing transaction")
         }
     } else {
@@ -132,9 +175,9 @@ $("#create-nft-button").on('click', async () => {
 
 $("#upload-field").on("change", () => {
     const files = $('#upload-file').prop('files');
-    if(files.length > 0) {
+    if (files.length > 0) {
         let preview = $("#image-preview");
-        if(preview.length) {
+        if (preview.length) {
             preview.attr("src", URL.createObjectURL(files[0]));
             $("#upload-field").append(preview);
         } else {

@@ -23,6 +23,44 @@ class NftRepository extends BaseRepository {
         this.attachment = Attachment;
     }
 
+    create(nft) {
+        return new Promise(async (resolve, reject) => {
+            this.model.findOne({
+                where: {
+                    token_id: nft.token_id,
+                }
+            }).then(async foundNft => {
+                if (foundNft === null) {
+                    try {
+                        let result = await this.model.create(
+                            {
+                                token_id: nft.token_id,
+                                name: nft.name,
+                                description: nft.description,
+                                contract_adress: nft.contract_adress,
+                                CreatorId: nft.CreatorId,
+                                creation_date: new Date(),
+                                createdAt: new Date(),
+                                updatedAt: new Date(),
+                            }, {
+                                individualHooks: true,
+                            },
+                        );
+                        resolve(result);
+                    } catch (e) {
+                        console.log(e);
+                        reject(e);
+                    }
+                } else {
+                    resolve(foundNft);
+                }
+            }).catch(rejection => {
+                console.log(rejection);
+                reject(rejection);
+            });
+        });
+    }
+
     //TO-DO : transaction commits and rollbacks
     save(nftTBR, profile_id, file) {
         const address = uuidv4();

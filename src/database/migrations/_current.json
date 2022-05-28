@@ -11,10 +11,12 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "reference_table": {
+                    "allowNull": false,
                     "field": "reference_table",
                     "seqType": "Sequelize.STRING"
                 },
                 "attachment_url": {
+                    "allowNull": false,
                     "field": "attachment_url",
                     "seqType": "Sequelize.STRING"
                 },
@@ -219,18 +221,22 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "title": {
+                    "allowNull": false,
                     "field": "title",
                     "seqType": "Sequelize.STRING"
                 },
                 "body": {
+                    "allowNull": false,
                     "field": "body",
                     "seqType": "Sequelize.TEXT"
                 },
                 "value_offered": {
+                    "allowNull": false,
                     "field": "value_offered",
                     "seqType": "Sequelize.DOUBLE"
                 },
                 "creation_date": {
+                    "allowNull": false,
                     "field": "creation_date",
                     "seqType": "Sequelize.DATE"
                 },
@@ -317,10 +323,12 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "price": {
+                    "allowNull": false,
                     "field": "price",
                     "seqType": "Sequelize.DOUBLE"
                 },
                 "type": {
+                    "allowNull": false,
                     "field": "type",
                     "seqType": "Sequelize.STRING"
                 },
@@ -389,10 +397,12 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "send_date": {
+                    "allowNull": false,
                     "field": "send_date",
                     "seqType": "Sequelize.DATE"
                 },
                 "body": {
+                    "allowNull": false,
                     "field": "body",
                     "seqType": "Sequelize.TEXT"
                 },
@@ -442,22 +452,29 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "creation_date": {
+                    "allowNull": false,
                     "field": "creation_date",
                     "seqType": "Sequelize.DATE"
                 },
                 "contract_adress": {
+                    "allowNull": false,
+                    "unique": false,
                     "field": "contract_adress",
                     "seqType": "Sequelize.STRING"
                 },
                 "token_id": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "token_id",
                     "seqType": "Sequelize.STRING"
                 },
                 "description": {
+                    "allowNull": false,
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
                 "name": {
+                    "allowNull": false,
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 },
@@ -618,10 +635,12 @@
             "tableName": "Offers",
             "schema": {
                 "value_offered": {
+                    "allowNull": false,
                     "field": "value_offered",
                     "seqType": "Sequelize.DOUBLE"
                 },
                 "offer_date": {
+                    "allowNull": false,
                     "field": "offer_date",
                     "seqType": "Sequelize.DATE"
                 },
@@ -672,38 +691,49 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "name": {
+                    "allowNull": false,
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 },
                 "wallet_id": {
+                    "allowNull": true,
+                    "unique": true,
                     "field": "wallet_id",
                     "seqType": "Sequelize.STRING"
                 },
                 "picture_url": {
+                    "allowNull": true,
                     "field": "picture_url",
                     "seqType": "Sequelize.STRING"
                 },
                 "banner_url": {
+                    "allowNull": true,
                     "field": "banner_url",
                     "seqType": "Sequelize.STRING"
                 },
                 "acc_creation_date": {
+                    "allowNull": false,
                     "field": "acc_creation_date",
                     "seqType": "Sequelize.DATE"
                 },
                 "profile_id": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "profile_id",
                     "seqType": "Sequelize.STRING"
                 },
                 "blockchain_type": {
+                    "allowNull": false,
                     "field": "blockchain_type",
                     "seqType": "Sequelize.STRING"
                 },
                 "specialize_in": {
+                    "allowNull": false,
                     "field": "specialize_in",
                     "seqType": "Sequelize.STRING"
                 },
                 "birthdate": {
+                    "allowNull": false,
                     "field": "birthdate",
                     "seqType": "Sequelize.DATE"
                 },
@@ -838,14 +868,19 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "email": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "email",
                     "seqType": "Sequelize.STRING"
                 },
                 "password": {
+                    "allowNull": false,
                     "field": "password",
                     "seqType": "Sequelize.STRING"
                 },
                 "phone_number": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "phone_number",
                     "seqType": "Sequelize.STRING"
                 },
@@ -858,6 +893,44 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "Wallets": {
+            "tableName": "Wallets",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "wallet_id": {
+                    "field": "wallet_id",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "ProfileId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ProfileId",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []

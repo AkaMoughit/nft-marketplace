@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       Profile.hasMany(models.Comment);
       Profile.hasMany(models.Message);
       Profile.hasMany(models.FavoriteList);
+      Profile.hasMany(models.Wallet);
       Profile.hasMany(models.NftOwnership, {
         as: 'Owner',
         foreignKey: {

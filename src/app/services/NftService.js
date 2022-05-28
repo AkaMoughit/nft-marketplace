@@ -9,16 +9,20 @@ class NftService {
         this.nftRepository = nftRepository;
     }
 
-    save(nftTBR, profile_id, file) {
+    create(nft) {
+        return this.nftRepository.create(nft);
+    }
+
+    saveAndList(nftTBR, profile_id, file) {
         return new Promise( async (resolve, reject) => {
             if (file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'
                 || file.mimetype === 'audio/mpeg' || file.mimetype === 'audio/mp3') {
-                this.nftRepository.save(nftTBR, profile_id, file)
+                this.nftRepository.saveAndList(nftTBR, profile_id, file)
                 .then(promise => {
                     if (promise) {
                         resolve("NFT created");
                     } else {
-                        resolve("NFT not created");
+                        reject("NFT not created");
                     }
                 })
                 .catch(err => {
@@ -26,7 +30,7 @@ class NftService {
                     reject("An error has occurred")
                 })
             } else {
-                resolve("File format not supported");
+                reject("File format not supported");
             }
         });
     }

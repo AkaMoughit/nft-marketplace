@@ -6,33 +6,6 @@ const listingRepository = require('../repositories/ListingRepository');
 const {faker} = require("@faker-js/faker");
 const {request} = require("express");
 
-const {uploadFileToIpfs, uploadDataToIpfs} = require("../utils/UploadHelper");
-
-exports.uploadData = async function (req, res) {
-    if(typeof req.body != 'undefined') {
-        try {
-            let result = await uploadDataToIpfs(req.body);
-            res.status(200).send({dataPath: 'https://ipfs.infura.io/ipfs/' + result});
-        } catch (err) {
-            if (err.code === 'ETIMEDOUT') res.status(408).send(err);
-            res.status(500).send(err);
-        }
-    }
-}
-
-exports.uploadFile = async function (req, res) {
-    if (typeof req.file !== 'undefined') {
-        try {
-            let result = await uploadFileToIpfs(req.file);
-            res.status(200).send({filePath: 'https://ipfs.infura.io/ipfs/' + result});
-        } catch (err) {
-            if (err.code === 'ETIMEDOUT') res.status(408).send(err);
-            console.log("ipfs error uploading file: ", err);
-            res.status(500).send(err);
-        }
-    }
-}
-
 exports.welcomePage = async function (req, res) {
 
     // You can access the contract by simply grabbing it from the app.locals variable
@@ -53,14 +26,6 @@ exports.welcomePage = async function (req, res) {
         });
     });
 };
-
-exports.signInPage = function (req, res) {
-    res.status(200).render('signin', {info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}});
-}
-
-exports.signUpPage = function (req, res) {
-    res.status(200).render('signup', {info: null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
-}
 
 exports.errorNotFoundPage = function (req, res) {
     res.status(200).render('404', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});

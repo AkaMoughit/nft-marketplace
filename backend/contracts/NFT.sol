@@ -9,7 +9,8 @@ contract NFT is ERC721URIStorage {
     event Minted(
         uint indexed tokenId,
         address indexed creator,
-        string tokenURI
+        string tokenURI,
+        address contractAddress
     );
 
     constructor() ERC721("Prototype NFT", "Prototype") {
@@ -24,7 +25,8 @@ contract NFT is ERC721URIStorage {
         emit Minted(
             tokenCount,
             address(msg.sender),
-            _tokenURI
+            _tokenURI,
+            address(this)
         );
 
         return(tokenCount);
