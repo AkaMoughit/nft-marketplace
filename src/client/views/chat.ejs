@@ -47,9 +47,9 @@
                     <br/>
                     <ul id="conversations">
                     <% participantsAndConversationIds.forEach(partAndConvId => {%>
-                        <li>
+                        <li class="conversation-profile" >
                             <a href="conversation?id=<%- partAndConvId.conversationId%>">
-                                <p><%- partAndConvId.OtherParticipant%></p>
+                                <%- partAndConvId.OtherParticipant%>
                             </a>
                         </li>
                     <%})%>
@@ -79,7 +79,7 @@
                                     required
                                     autocomplete="off"
                             />
-                            <button class="d-block default-btn"><i class="fas fa-paper-plane"></i> Send</button>
+                            <button class="btn c-btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
                         </form>
                     </div>
                 </div>
