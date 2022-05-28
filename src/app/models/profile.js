@@ -48,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       validate: {
         validateUrl(value) {
-          if(!/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
-            throw new Error('Url entered is not valid!');
+          if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+            throw new Error('picture_url entered is not valid!');
           }
         }
       }
@@ -59,8 +59,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       validate: {
         validateUrl(value) {
-          if(!/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
-            throw new Error('Url entered is not valid!');
+          if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+            throw new Error('banner_url entered is not valid!');
           }
         }
       }
