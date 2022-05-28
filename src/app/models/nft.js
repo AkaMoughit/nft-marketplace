@@ -66,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true
       }
     },
+    uri: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'Nft',

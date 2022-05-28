@@ -19,31 +19,30 @@ exports.loadingHandler = async function (req, res, next) {
         let nftContract = new ethers.Contract(SmartContractHelper.nftAddress, SmartContractHelper.nftContract.abi, provider);
 
         nftContract.on('Minted', async (tokenId, creatorAddress, tokenURI, contractAddress) => {
-            if (!req.app.locals.isFirstLoading) {
-                console.log(tokenId.toString(), creatorAddress, tokenURI, contractAddress);
-                if(req.session !== undefined && req.session.profile !== undefined) {
-                    let nftDetails = await downloadDataFromIpfs(tokenURI);
+            console.log(tokenId.toString(), creatorAddress, tokenURI, contractAddress);
+            if(req.session !== undefined && req.session.profile !== undefined) {
+                let nftDetails = await downloadDataFromIpfs(tokenURI);
 
-                    let wallet = {
-                        ProfileId: req.session.profile.id,
-                        wallet_id: creatorAddress
-                    };
+                let wallet = {
+                    ProfileId: req.session.profile.id,
+                    wallet_id: creatorAddress
+                };
 
-                    await walletService.insertIfNotExist(wallet);
+                await walletService.insertIfNotExist(wallet);
 
-                    const nft = {
-                        name : nftDetails.name,
-                        description : nftDetails.desc,
-                        contract_adress : contractAddress,
-                        token_id : tokenId.toString(),
-                        creation_date : new Date(),
-                        createdAt : new Date(),
-                        updatedAt : new Date(),
-                        CreatorId : req.session.profile.id
-                    };
+                const nft = {
+                    name : nftDetails.name,
+                    description : nftDetails.desc,
+                    contract_adress : contractAddress,
+                    token_id : tokenId.toString(),
+                    creation_date : new Date(),
+                    createdAt : new Date(),
+                    uri: tokenURI,
+                    updatedAt : new Date(),
+                    CreatorId : req.session.profile.id
+                };
 
-                    await nftService.create(nft);
-                }
+                await nftService.create(nft);
             }
         });
 

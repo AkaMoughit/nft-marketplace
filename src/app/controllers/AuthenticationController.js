@@ -1,6 +1,7 @@
 'use strict'
 
 const authenticationService = require('../services/AuthenticationService')
+const profileService = require("../services/ProfileService");
 
 exports.register = function (req, res) {
     let errorMsg = res.locals.nameMsg || res.locals.phoneMsg || res.locals.birthdateMsg || res.locals.emailMsg
@@ -29,8 +30,6 @@ exports.login = function(req, res) {
                 req.session.isAuth = true;
                 req.session.profile = profile;
 
-                res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
-
                 // redirect is disgusting
                 res.status(303).redirect("/author?profileId=" + profile.profile_id);
             } else {
@@ -53,7 +52,12 @@ exports.login = function(req, res) {
 }
 
 exports.signInPage = function (req, res) {
-    res.status(200).render('signin', {info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}});
+    res.status(200).render(
+        'signin',
+        {
+            info : null, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile}
+        }
+    );
 }
 
 exports.signUpPage = function (req, res) {
@@ -61,12 +65,8 @@ exports.signUpPage = function (req, res) {
 }
 
 exports.signout = function(req,res) {
-    req.session.destroy(err => {
-        if (err) {
-            console.log(err);
-        }
-        res.status(303).redirect("/signin");
-    });
+    req.session = null;
+    res.status(303).redirect("/signin");
 }
 
 
