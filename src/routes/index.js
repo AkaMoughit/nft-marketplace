@@ -8,6 +8,7 @@ const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController");
 const authenticationController = require("../app/controllers/AuthenticationController");
 const nftController = require('../app/controllers/NftController');
+const chatController = require('../app/controllers/ChatController');
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
@@ -49,6 +50,9 @@ router.post('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHan
     signupValidator.validate, authenticationController.register);
 router.post('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signinValidator.schema,
             signinValidator.validate, authenticationController.login);
+
+router.get('/chat', web3handlers.loadingHandler, authenticationHandlers.isAuth, chatController.getConversation);
+router.get('/conversation', web3handlers.loadingHandler, authenticationHandlers.isAuth, chatController.conversationPage);
 
 router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'),
     nftCreationValidator.schema,
