@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/chat.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css//icofont.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/lightcase.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/popup.css">
+    <title>Chat</title>
+</head>
+<body onload="emitJoin()">
+
+<!--<div class="preloader">-->
+<!--    <div class="preloader-inner">-->
+<!--        <div class="preloader-icon">-->
+<!--            <span></span>-->
+<!--            <span></span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<%- include('./header.ejs') %>
+
+<div id="currentProfileId" hidden><%- sessionData.profile.id%></div>
+<div id="otherParticipantId" style="display: none"><%- otherParticipant.id%></div>
+<div id="currentProfileName" style="display: none"><%- sessionData.profile.name%></div>
+<div id="otherParticipantName" style="display: none"><%- otherParticipant.name%></div>
+<div id="conversationId" style="display: none"><%- conversation.id%></div>
+<section class="profile-section padding-top">
+    <div class="section-wrapper custom-container">
+<!--        <div class="chat-container">-->
+<!--            <main class="chat-main">-->
+                <div class="chat-sidebar custom-div">
+                    <h3>Current Conversation</h3>
+                    <br/>
+                    <a href="author?profileId=<%- otherParticipant.profile_id%>"><h2><%- otherParticipant.name%></h2></a>
+                    <h3> Conversations</h3>
+                    <br/>
+                    <ul id="conversations">
+                    <% participantsAndConversationIds.forEach(partAndConvId => {%>
+                        <li>
+                            <a href="conversation?id=<%- partAndConvId.conversationId%>">
+                                <p><%- partAndConvId.OtherParticipant%></p>
+                            </a>
+                        </li>
+                    <%})%>
+                    </ul>
+                </div>
+                <div class="custom-div2">
+                    <div class="chat-messages">
+                        <%messages.forEach(message => {
+                            const messageClassName = message.ProfileId === otherParticipant.id ? "messageParticipant": "messageCurrent";%>
+                            <div class="<%- messageClassName%>">
+                                <p class="meta"><%- message.ProfileId === otherParticipant.id ?
+                                            otherParticipant.name: sessionData.profile.name%>
+                                    <span><%- message.send_date%></span>
+                                </p>
+                                <p class="text">
+                                    <%- message.body%>
+                                </p>
+                            </div>
+                        <%})%>
+                    </div>
+                    <div class="chat-form-container">
+                        <form id="chat-form">
+                            <input
+                                    id="msg"
+                                    type="text"
+                                    placeholder="Enter Message"
+                                    required
+                                    autocomplete="off"
+                            />
+                            <button class="d-block default-btn"><i class="fas fa-paper-plane"></i> Send</button>
+                        </form>
+                    </div>
+                </div>
+    </div>
+</section>
+<footer class="footer-section">
+    <div class="footer-top" style="background-image: url(assets/images/footer/bg-3.jpg);">
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row g-4 align-items-center justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="newsletter-part">
+                            <div class="ft-header">
+                                <h4>Get The Latest Rarible Updates</h4>
+                            </div>
+                            <form action="#">
+                                <input type="email" placeholder="Your Mail Address">
+                                <button type="submit" data-blast="bgColor"> Subscribe now</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="social-part ps-lg-5">
+                            <div class="ft-header">
+                                <h4>Join the Community</h4>
+                            </div>
+                            <ul class="social-list d-flex flex-wrap align-items-center mb-0">
+                                <li class="social-link"><a href="#" data-blast="bgColor"><i
+                                                class="icofont-twitter"></i></a></li>
+                                <li class="social-link"><a href="#" data-blast="bgColor"><i
+                                                class="icofont-twitch"></i></a></li>
+                                <li class="social-link"><a href="#" data-blast="bgColor"><i
+                                                class="icofont-reddit"></i></a></li>
+                                <li class="social-link"><a href="#" data-blast="bgColor"><i
+                                                class="icofont-instagram"></i></a></li>
+                                <li class="social-link"><a href="#" data-blast="bgColor"><i
+                                                class="icofont-dribble"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="footer-links padding-top padding-bottom">
+            <div class="container">
+                <div class="row g-5 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-5">
+                    <div class="col">
+                        <div class="footer-link-item">
+                            <h5>About</h5>
+                            <ul class="footer-link-list">
+                                <li><a href="#" class="footer-link">Explore</a></li>
+                                <li><a href="#" class="footer-link">How it works</a></li>
+                                <li><a href="#" class="footer-link">Support</a></li>
+                                <li><a href="#" class="footer-link">Become a partner</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-link-item">
+                            <h5>NFT Marketplace</h5>
+                            <ul class="footer-link-list">
+                                <li><a href="#" class="footer-link">Sell your assets</a></li>
+                                <li><a href="#" class="footer-link">FAQ</a></li>
+                                <li><a href="#" class="footer-link">Support</a></li>
+                                <li><a href="#" class="footer-link">Privacy/Policy</a></li>
+                                <li><a href="#" class="footer-link">Your purchases</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-link-item">
+                            <h5>Company</h5>
+                            <ul class="footer-link-list">
+                                <li><a href="#" class="footer-link">About</a></li>
+                                <li><a href="#" class="footer-link">Mission & Team</a></li>
+                                <li><a href="#" class="footer-link">Our Blog</a></li>
+                                <li><a href="#" class="footer-link">Services</a></li>
+                                <li><a href="#" class="footer-link">We're Hiring</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-link-item">
+                            <h5>NFT Marketplace</h5>
+                            <ul class="footer-link-list">
+                                <li><a href="#" class="footer-link">Sell your assets</a></li>
+                                <li><a href="#" class="footer-link">FAQ</a></li>
+                                <li><a href="#" class="footer-link">Support</a></li>
+                                <li><a href="#" class="footer-link">Privacy/Policy</a></li>
+                                <li><a href="#" class="footer-link">Your purchases</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-link-item">
+                            <h5>Comunity</h5>
+                            <ul class="footer-link-list">
+                                <li><a href="#" class="footer-link">NFT Token</a></li>
+                                <li><a href="#" class="footer-link">Discusion</a></li>
+                                <li><a href="#" class="footer-link">Voting</a></li>
+                                <li><a href="#" class="footer-link">Suggest Feature</a></li>
+                                <li><a href="#" class="footer-link">Language</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="text-center py-4 mb-0">All rights reserved &copy; Enftomark || Design By: <a
+                        href="https://themeforest.net/user/codexcoder">codexcoder</a>
+            </p>
+        </div>
+    </div>
+</footer>
+<!-- ===============//footer section end here \\================= -->
+
+
+
+<!-- scrollToTop start here -->
+<a href="#" class="scrollToTop"><i class="icofont-stylish-up"></i></a>
+<!-- scrollToTop ending here -->
+
+
+
+
+<!-- All Scripts -->
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/waypoints.min.js"></script>
+<script src="assets/js/lightcase.js"></script>
+<script src="assets/js/swiper-bundle.min.js"></script>
+<script src="assets/js/countdown.min.js"></script>
+<script src="assets/js/jquery.counterup.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/functions.js"></script>
+<script type="module" src="assets/js/utils.js"></script>
+<script type="module" src="assets/js/metamask.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="assets/js/chat.js"></script>
+</body>
+</html>

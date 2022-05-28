@@ -3,14 +3,16 @@ const models = require("../models");
 const Profile = require("../models").Profile;
 const Listing = require("../models").Listing;
 const Nft = require("../models").Nft;
+const Conversation = require("../models").Conversation;
 const NftOwnership = require("../models").NftOwnership
 
 class ProfileRepository extends BaseRepository {
-    constructor(Profile, Listing, Nft, NftOwnership) {
+    constructor(Profile, Listing, Nft, NftOwnership, conversation) {
         super(Profile);
         this.listingModel = Listing;
         this.nftModel = Nft;
         this.nftOwnershipModel = NftOwnership;
+        this.conversation = conversation;
     }
 
     findByOwnedNftPk(ownNftPk) {
@@ -55,6 +57,35 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
+    findById(id) {
+        return this.model.findOne({
+            where: {
+                id : id
+            }
+        });
+    }
+
+    findOtherParticipantByConversationId(conversationId, currentProfileId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const conversationFromDB = await this.conversation.findOne({
+                    where: {
+                        id : conversationId
+                    }
+                })
+                const conversation = conversationFromDB.dataValues;
+
+                const otherParticipantId = conversation.participent1Id === currentProfileId ?
+                    conversation.participent2Id : conversation.participent1Id;
+
+                resolve(this.findById(otherParticipantId))
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+        })
+    }
+
     save(profile) {
         return this.model.findOrCreate({
             where: {
@@ -76,4 +107,4 @@ class ProfileRepository extends BaseRepository {
 
 }
 
-module.exports = new ProfileRepository(Profile, Listing, Nft, NftOwnership);
+module.exports = new ProfileRepository(Profile, Listing, Nft, NftOwnership, Conversation);

@@ -8,6 +8,7 @@ const listingController = require('../app/controllers/ListingController');
 const profileController = require("../app/controllers/ProfileController");
 const authenticationController = require("../app/controllers/AuthenticationController");
 const nftController = require('../app/controllers/NftController');
+const chatController = require('../app/controllers/ChatController');
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
@@ -45,6 +46,8 @@ router.get('/author', web3handlers.loadingHandler, profileController.authorPage)
 router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
 router.get('/signin', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signInPage);
 router.get('/signup', web3handlers.loadingHandler, authenticationHandlers.isNotAuth, mainController.signUpPage);
+router.get('/chat', web3handlers.loadingHandler, authenticationHandlers.isAuth, chatController.getConversation);
+router.get('/conversation', web3handlers.loadingHandler, authenticationHandlers.isAuth, chatController.conversationPage);
 router.post('/signup', signupValidator.schema,
     signupValidator.validate, authenticationHandlers.isNotAuth, authenticationController.register);
 router.post('/signin', signinValidator.schema,

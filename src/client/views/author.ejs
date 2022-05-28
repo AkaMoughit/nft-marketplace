@@ -109,29 +109,28 @@
                                                 <i class="icofont-ui-copy" aria-hidden="true"
                                                    data-copytarget="#cryptoLink"></i>
                                             </span>
-
                                     </div>
                                 </div>
-
                             </li>
+<!--                            <li>-->
+<!--                                <a href="#">-->
+<!--                                    <div class="icon"><i class="icofont-ui-rate-add"></i></div>-->
+<!--                                    <div class="text">-->
+<!--                                        <p>Follow</p>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </li>-->
+                            <% if(sessionData.isAuth && sessionData.profile.profile_id !== profile.profile_id) { %>
                             <li>
-                                <a href="#">
-                                    <div class="icon"><i class="icofont-ui-rate-add"></i></div>
-                                    <div class="text">
-                                        <p>Follow</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="chat?p1Id=<%- sessionData.profile.profile_id%>&p2Id=<%- profile.profile_id%>">
                                     <div class="icon"><i class="icofont-speech-comments"></i></div>
                                     <div class="text">
                                         <p>Send Message</p>
                                     </div>
                                 </a>
                             </li>
+                            <% } %>
                         </ul>
-
                     </div>
                 </div>
                 <div class="profile-item d-none">
@@ -2933,6 +2932,8 @@
 <script type="module" src="assets/js/create-nft.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script src="assets/js/popup.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="assets/js/chat.js"></script>
 </body>
 
 </html>
