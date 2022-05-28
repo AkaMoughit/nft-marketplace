@@ -5,7 +5,7 @@ const nftService = require("../services/NftService");
 
 exports.authorPage = function (req, res) {
     let sessionData;
-        sessionData = {isAuth: req.session.isAuth, profile: req.session.profile};
+    sessionData = {isAuth: req.session.isAuth, profile: req.session.profile};
 
     profileService.findByProfileId(req.query.profileId)
         .then(profile => {
