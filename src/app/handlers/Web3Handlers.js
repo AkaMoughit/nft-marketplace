@@ -46,9 +46,12 @@ exports.loadingHandler = async function (req, res, next) {
             }
         });
 
-        marketplaceContract.on('Offered', (a, b, c, d, e) => {
-            if(!req.app.locals.isFirstLoading) {
-                console.log(a.toString(), b, c.toString(), d, e)
+        marketplaceContract.on('Offered', async (listingId, nftContractAddress, tokenId, price, sellerAddress) => {
+            if (!req.app.locals.isFirstLoading) {
+                console.log(listingId.toString(), nftContractAddress, tokenId.toString(), price, sellerAddress)
+                if (req.session !== undefined && req.session.profile !== undefined) {
+
+                }
             }
         });
 
