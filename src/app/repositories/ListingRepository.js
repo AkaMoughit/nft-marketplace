@@ -11,6 +11,44 @@ class ListingRepository extends BaseRepository {
         super(Listing);
     }
 
+    create(listing) {
+        return new Promise(async (resolve, reject) => {
+            this.model.findOne({
+                where: {
+                    id: listing.id,
+                }
+            }).then(async foundListing => {
+                if (foundListing === null) {
+                    try {
+                        let result = await this.model.create(
+                            {
+                                id: listing.id,
+                                price: listing.price,
+                                type: listing.type,
+                                sale_end_date: listing.sale_end_date,
+                                createdAt: new Date(),
+                                updatedAt: new Date(),
+                                NftId: listing.NftId,
+                                SellerId: listing.SellerId
+                            }, {
+                                individualHooks: true,
+                            },
+                        );
+                        resolve(result);
+                    } catch (e) {
+                        console.log(e);
+                        reject(e);
+                    }
+                } else {
+                    resolve(foundListing);
+                }
+            }).catch(rejection => {
+                console.log(rejection);
+                reject(rejection);
+            });
+        });
+    }
+
     findListingByTokenId(tokenId) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -142,7 +180,7 @@ class ListingRepository extends BaseRepository {
 
         for (let listing of allActiveListings.rows) {
 
-            let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount);
+            let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount, true);
             let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
             nftCardDTO.sale_end_date = deltaInDHMS;
 

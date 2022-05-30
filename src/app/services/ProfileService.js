@@ -29,8 +29,12 @@ class ProfileService {
 
                 let ownedNftCards = [];
                 for(let ownedNft of ownedNfts) {
+                    let isListed = false;
+                    if(activeListings.rows.filter(function (el) {return el.token_id === ownedNft.token_id}).length > 0) {
+                        isListed = true;
+                    }
                     let favoriteCount = await this.nftRepository.findFavoriteCountByTokenId(ownedNft.token_id);
-                    let nftCardDTO = new NftProfileListingDTO(ownedNft, profile);
+                    let nftCardDTO = new NftProfileListingDTO(ownedNft, profile, undefined, undefined, isListed);
                     nftCardDTO.favoriteCount = favoriteCount;
                     ownedNftCards.push(nftCardDTO);
                 }

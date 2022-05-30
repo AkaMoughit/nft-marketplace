@@ -260,9 +260,10 @@
                                     <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
                                         <span>No longer available!</span>
                                     </div>
+                                <% } else if(nft.owner_profile_id === sessionData.profile.profile_id) { %>
+                                        <a href="wallet" class="default-btn move-right"><span>Remove</span> </a>
                                 <% } else { %>
                                     <a href="wallet" class="default-btn move-right"><span>Buy Now</span> </a>
-                                    <a href="wallet" class="default-btn move-right"><span>Place a Bid</span> </a>
                                 <% } %>
                             </div>
                         </div>

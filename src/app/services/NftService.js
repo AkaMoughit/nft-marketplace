@@ -9,6 +9,10 @@ class NftService {
         this.nftRepository = nftRepository;
     }
 
+    findByTokenId(tokenId) {
+        return this.nftRepository.findByTokenId(tokenId);
+    }
+
     create(nft) {
         return this.nftRepository.create(nft);
     }
