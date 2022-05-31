@@ -4,15 +4,17 @@ const profileService = require("../services/ProfileService");
 const nftService = require("../services/NftService");
 
 exports.authorPage = function (req, res) {
-    let sessionData;
-    sessionData = {isAuth: req.session.isAuth, profile: req.session.profile};
-
     profileService.findByProfileId(req.query.profileId)
         .then(profile => {
-            res.status(200).render('author', { profile: profile, sessionData: sessionData });
+            req.session.reload(function (err) {
+                if(err) {
+                    console.log(err);
+                }
+                res.status(200).render('author', { profile: profile, sessionData: {isAuth: req.session.isAuth, profile: req.session.profile} });
+            });
         })
         .catch(err => {
-            res.status(404).render('404', { error: err, sessionData: sessionData });
+            res.status(404).render('404', { error: err, sessionData: {isAuth: req.session.isAuth, profile: req.session.profile} });
         });
 }
 

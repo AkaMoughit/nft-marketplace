@@ -1,7 +1,7 @@
 'use strict'
 
 class NftCardDTO {
-    constructor(nft, profile, listing, favoriteCount) {
+    constructor(nft, profile, listing, favoriteCount, isListed) {
         this.owner_profile_id = profile === undefined
             ? null
             : profile.profile_id
@@ -45,6 +45,14 @@ class NftCardDTO {
         this.favoriteCount = favoriteCount === undefined
             ? null
             : favoriteCount;
+
+        this.uri = nft.uri === undefined
+            ? null
+            : nft.uri
+
+        this.isListed = isListed === undefined
+            ? null
+            : isListed
     }
 }
 

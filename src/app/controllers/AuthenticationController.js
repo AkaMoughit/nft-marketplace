@@ -65,7 +65,7 @@ exports.signUpPage = function (req, res) {
 }
 
 exports.signout = function(req,res) {
-    req.session = null;
+    req.session.destroy();
     res.status(303).redirect("/signin");
 }
 

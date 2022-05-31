@@ -7,6 +7,10 @@ class ListingService {
         this.listingRepository = listingRepository;
     }
 
+    create(listing) {
+        return this.listingRepository.create(listing);
+    }
+
     listAll() {
         return this.listingRepository.listAll();
     }
