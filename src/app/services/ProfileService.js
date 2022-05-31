@@ -58,5 +58,45 @@ class ProfileService {
             }
         });
     }
+
+    editProfilePic(profilePicFile, profileId) {
+        return new Promise (async (resolve, reject) => {
+            // for examle : trying to turn src\client\public\assets\uploads\2b8da4273163c4fe00cb84cd9536c490 to assets/uploads/2b8da4273163c4fe00cb84cd9536c490
+            const PREFIX_LENGTH = 18 // length of "src\client\public\"
+            try {
+                if (profilePicFile.mimetype.includes('image')) {
+                    let path = profilePicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
+                    await profileRepository.updateProfilePic(path, profileId);
+                    resolve(path);
+                } else {
+                    console.log('Profile picture only accepts images');
+                    reject('Profile picture only accepts images.');
+                }
+            } catch(e) {
+                console.log(e)
+                reject('An error has occured')
+            }
+        })
+    }
+
+    editBannerPic(bannerPicFile, profileId) {
+        return new Promise (async (resolve, reject) => {
+            // for examle : trying to turn src\client\public\assets\uploads\2b8da4273163c4fe00cb84cd9536c490 to assets/uploads/2b8da4273163c4fe00cb84cd9536c490
+            const PREFIX_LENGTH = 18 // length of "src\client\public\"
+            try {
+                if (bannerPicFile.mimetype.includes('image')) {
+                    let path = bannerPicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
+                    await profileRepository.updateBannerPic(path, profileId);
+                    resolve(path);
+                } else {
+                    console.log('Banner picture only accepts images');
+                    reject('Banner picture only accepts images.');
+                }
+            } catch(e) {
+                console.log(e)
+                reject('An error has occurred.')
+            }
+        })
+    }
 }
 module.exports = new ProfileService(profileRepository, nftRepository, listingRepository);

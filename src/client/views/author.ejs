@@ -75,24 +75,24 @@
             <div class="member-profile">
                 <div class="profile-item">
                     <div class="profile-cover">
-                        <img src="assets/images/profile/cover.jpg" alt="cover-pic">
+                        <img src="<%- profile.banner_url%>" alt="banner-pic" id="bannerPic">
                         <div class="edit-photo custom-upload">
                             <div class="file-btn"><i class="icofont-camera"></i>
                                 Edit Photo
                             </div>
-                            <input type="file">
+                            <input type="file" accept="image/*" id="bannerPicInput" name="bannerPicInput">
                         </div>
                     </div>
                     <div class="profile-information">
                         <div class="profile-pic">
-                            <img src="assets/images/profile/Profile.jpg" alt="DP">
+                            <img src="<%- profile.picture_url%>" alt="DP" id="profilePic">
                             <div class="custom-upload">
                                 <div class="file-btn">
                                         <span class="d-none d-lg-inline-block"> <i class="icofont-camera"></i>
                                             Edit</span>
                                     <span class="d-lg-none mr-0"><i class="icofont-plus"></i></span>
                                 </div>
-                                <input type="file">
+                                <input type="file" accept="image/*" id="profilePicInput" name="profilePicInput">
                             </div>
                         </div>
                         <div class="profile-name">
@@ -1492,8 +1492,7 @@
 <script type="module" src="assets/js/list-nft.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script src="assets/js/popup.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="assets/js/chat.js"></script>
+<script src="assets/js/edit-profile.js"></script>
 </body>
 
 </html>

@@ -40,3 +40,23 @@ exports.allAuthorsPage = function (req, res) {
             res.status(404).render('404', {error: err, sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
     });
 }
+
+exports.editProfilePic = function (req, res) {
+    profileService.editProfilePic(req.file, req.session.profile.id)
+        .then(path => {
+            res.send(path);
+        })
+        .catch(error => {
+            res.status(400).send(error);
+        })
+}
+
+exports.editBannerPic = function (req, res) {
+    profileService.editBannerPic(req.file, req.session.profile.id)
+        .then(path => {
+            res.send(path);
+        })
+        .catch(error => {
+            res.status(400).send(error);
+        })
+}
