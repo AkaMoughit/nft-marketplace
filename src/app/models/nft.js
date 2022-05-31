@@ -69,6 +69,10 @@ module.exports = (sequelize, DataTypes) => {
     uri: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   }, {
     sequelize,

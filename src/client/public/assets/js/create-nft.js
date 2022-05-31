@@ -84,6 +84,15 @@ function getUri() {
             const desc = $('#itemDesc').val();
             const listingType = $('#listingType').val();
             const price = $('#priceInput').val();
+            let nftCategory;
+
+            let nftCategories = document.getElementsByName('nft-category');
+
+            for(let category of nftCategories) {
+                if(category.checked) {
+                    nftCategory = category.value;
+                }
+            }
 
             if (!name || !desc || !listingType || !price || isNaN(price)) {
                 reject("Some fields are empty or invalid");
@@ -107,7 +116,7 @@ function getUri() {
 
             try {
                 console.log("File uploading...");
-                uri = (await uploadDataToIpfs({filePath, name, desc, listingType})).dataPath;
+                uri = (await uploadDataToIpfs({filePath, name, desc, listingType, nftCategory})).dataPath;
             } catch (err) {
                 console.log(err);
                 reject("IPFS error while uploading nft details");

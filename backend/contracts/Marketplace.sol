@@ -19,6 +19,7 @@ contract Marketplace is ReentrancyGuard {
         uint price;
         address payable seller;
         bool sold;
+        bool removed;
     }
 
     event Offered(
@@ -36,6 +37,14 @@ contract Marketplace is ReentrancyGuard {
         uint price,
         address indexed seller,
         address indexed buyer
+    );
+
+    event Removed(
+        uint itemId,
+        address indexed nft,
+        uint tokenId,
+        uint price,
+        address indexed seller
     );
 
     mapping(uint => Item) public items;
@@ -58,6 +67,7 @@ contract Marketplace is ReentrancyGuard {
             _tokenId,
             _price,
             payable(msg.sender),
+            false,
             false
         );
 
@@ -77,6 +87,7 @@ contract Marketplace is ReentrancyGuard {
 
         require(msg.value >= _totalPrice, "Insufficient funds");
         require(!item.sold, "Item already sold");
+        require(!item.removed, "Item removed");
 
         item.seller.transfer(items[_itemId].price);
         feeAccount.transfer(_totalPrice - item.price);
@@ -92,6 +103,24 @@ contract Marketplace is ReentrancyGuard {
             item.price,
             item.seller,
             msg.sender
+        );
+    }
+
+    function removeItem(uint _itemId) external nonReentrant {
+        Item storage item = items[_itemId];
+        require(!item.sold, "Item already sold");
+        require(msg.sender == item.seller, "Item not owned");
+
+        item.removed = true;
+
+        item.nft.transferFrom(address(this), msg.sender, item.tokenId);
+
+        emit Removed(
+            _itemId,
+            address(item.nft),
+            item.tokenId,
+            item.price,
+            item.seller
         );
     }
 

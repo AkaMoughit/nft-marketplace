@@ -129,4 +129,45 @@ describe('Marketplace', function () {
                 .to.be.revertedWith("Item already sold");
         });
     });
+    describe('Removing marketplace items', function () {
+        let price = 2;
+        beforeEach(async function() {
+            await nft.connect(addr2).mint(URI);
+            await nft.connect(addr2).setApprovalForAll(marketplace.address, true);
+            await marketplace.connect(addr2).makeItem(nft.address, 1, toWei(price));
+        });
+        it('Should mark item as removed', async function () {
+            await marketplace.connect(addr2).removeItem(1);
+            expect((await marketplace.items(1)).removed).to.equal(true);
+        });
+        it('Should should emit Removed event', async function () {
+            await expect(marketplace.connect(addr2).removeItem(1))
+                .to.emit(marketplace, 'Removed')
+                .withArgs(
+                    1,
+                    nft.address,
+                    1,
+                    toWei(price),
+                    addr2.address
+                );
+        });
+        it('Should fail removing when item is already sold', async function () {
+            let totalPriceInWei = await marketplace.getTotalPrice(1);
+
+            await marketplace.connect(addr1).purchaseItem(1, {value: totalPriceInWei});
+            await expect(marketplace.connect(addr2).removeItem(1))
+                .to.be.revertedWith("Item already sold");
+        });
+        it('Should fail buying when item already removed', async function () {
+            let totalPriceInWei = await marketplace.getTotalPrice(1);
+
+            await marketplace.connect(addr2).removeItem(1);
+            await expect(marketplace.connect(addr1).purchaseItem(1, {value: totalPriceInWei}))
+                .to.be.revertedWith("Item removed");
+        });
+        it('Should fail when item not owned', async function () {
+            await expect(marketplace.connect(addr1).removeItem(1))
+                .to.be.revertedWith("Item not owned");
+        });
+    });
 });

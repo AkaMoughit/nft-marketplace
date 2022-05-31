@@ -483,6 +483,11 @@
                     "field": "uri",
                     "seqType": "Sequelize.STRING"
                 },
+                "category": {
+                    "allowNull": false,
+                    "field": "category",
+                    "seqType": "Sequelize.STRING"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",

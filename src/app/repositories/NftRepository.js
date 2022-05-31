@@ -39,6 +39,7 @@ class NftRepository extends BaseRepository {
                                 description: nft.description,
                                 contract_adress: nft.contract_adress,
                                 uri: nft.uri,
+                                category: nft.category,
                                 CreatorId: nft.CreatorId,
                                 creation_date: new Date(),
                                 createdAt: new Date(),

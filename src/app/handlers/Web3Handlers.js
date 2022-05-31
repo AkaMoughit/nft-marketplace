@@ -43,6 +43,7 @@ exports.loadingHandler = async function (req, res, next) {
                         creation_date: new Date(),
                         createdAt: new Date(),
                         uri: tokenURI,
+                        category: nftDetails.nftCategory,
                         updatedAt: new Date(),
                         CreatorId: req.session.profile.id
                     };
