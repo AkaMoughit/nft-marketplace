@@ -1,5 +1,7 @@
 import {ethers} from "./ethers.js";
 
+import {updateAccountAddress} from "./metamask.js";
+
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
 const MarketplaceAddress = await (await fetch("../contracts/Marketplace-address.json")).json();
@@ -37,10 +39,10 @@ $("#owned-nft-card-list-button").on('click', async function () {
     }
 
     if (window.ethereum) {
-        const accounts = await provider.listAccounts();
+        let accounts = await provider.listAccounts();
 
         if (accounts.length === 0) {
-            let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+            accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
         }
 
         let tokenId = $("#owned-nft-card-list-button").data('tokenid');
@@ -53,6 +55,7 @@ $("#owned-nft-card-list-button").on('click', async function () {
         }
 
         try {
+            let result = await updateAccountAddress(accounts[0]);
             await list(price, tokenId);
 
             $("#popup").html(`Operation finished successfully.<br/>Your token ID: ${tokenId}`);

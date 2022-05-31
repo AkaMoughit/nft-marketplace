@@ -14,7 +14,7 @@ $(document).ready(async () => {
         }
 
         window.ethereum.on('chainChanged', (_chainId) => {
-            window.location.reload();
+            // window.location.reload();
         });
 
         setInterval(async () => {
@@ -34,6 +34,23 @@ $(document).ready(async () => {
 
 });
 
+export function updateAccountAddress(account) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: 'updateAccountAddress',
+            type: 'post',
+            data: JSON.stringify({account}),
+            contentType: 'application/json',
+            success: function (data, status, xhr) {
+                resolve({data, status});
+            },
+            error: function (xhr, status, error) {
+                reject({error, status});
+            }
+        });
+    });
+}
+
 $(".metamask-connection").on('click', async () => {
 
     if(window.ethereum) {
@@ -41,6 +58,8 @@ $(".metamask-connection").on('click', async () => {
             const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
+
+            const result = await updateAccountAddress(accounts[0]);
 
             window.location.href = "/index"
         } catch (e) {
@@ -51,10 +70,11 @@ $(".metamask-connection").on('click', async () => {
             window.location.reload();
         });
 
-        window.ethereum.on('accountsChanged', (accounts) => {
+        window.ethereum.on('accountsChanged', async (accounts) => {
             console.log("account changed triggered")
-            if(accounts.length > 0) {
+            if (accounts.length > 0) {
                 console.log(`Using account ${accounts[0]}`);
+                const result = await updateAccountAddress(accounts[0]);
                 window.location.reload();
             } else {
                 console.error("0 accounts found");

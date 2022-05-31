@@ -7,6 +7,10 @@ class ListingService {
         this.listingRepository = listingRepository;
     }
 
+    updateById(listingId, listing) {
+        return this.listingRepository.updateById(listingId, listing);
+    }
+
     create(listing) {
         return this.listingRepository.create(listing);
     }

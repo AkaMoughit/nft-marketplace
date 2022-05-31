@@ -28,12 +28,7 @@ exports.loadingHandler = async function (req, res, next) {
                 try {
                     let nftDetails = await downloadDataFromIpfs(tokenURI);
 
-                    let wallet = {
-                        ProfileId: req.session.profile.id,
-                        wallet_id: creatorAddress
-                    };
-
-                    await walletService.insertIfNotExist(wallet);
+                    const creatorWallet = await walletService.findByAccountAddress(creatorAddress);
 
                     const nft = {
                         name: nftDetails.name,
@@ -45,7 +40,7 @@ exports.loadingHandler = async function (req, res, next) {
                         uri: tokenURI,
                         category: nftDetails.nftCategory,
                         updatedAt: new Date(),
-                        CreatorId: req.session.profile.id
+                        CreatorId: creatorWallet.ProfileId
                     };
 
                     await nftService.create(nft);
@@ -56,24 +51,13 @@ exports.loadingHandler = async function (req, res, next) {
 
 
             console.log(tokenId.toString(), creatorAddress, tokenURI, contractAddress);
-            req.session.reload(async function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                await createNft();
-            });
+            await createNft();
         });
 
-        marketplaceContract.on('Offered', (listingId, nftAddress, tokenId, price, sellerAddress) => {
+        marketplaceContract.on('Offered', async (listingId, nftAddress, tokenId, price, sellerAddress) => {
             async function listNft() {
-
                 try {
-                    let wallet = {
-                        ProfileId: req.session.profile.id,
-                        wallet_id: sellerAddress
-                    };
-
-                    await walletService.insertIfNotExist(wallet);
+                    const sellerWallet = await walletService.findByAccountAddress(sellerAddress);
 
                     let listedNft = await nftService.findByTokenId(tokenId.toString());
 
@@ -85,7 +69,7 @@ exports.loadingHandler = async function (req, res, next) {
                         createdAt: new Date(),
                         updatedAt: new Date(),
                         NftId: listedNft.id,
-                        SellerId: req.session.profile.id
+                        SellerId: sellerWallet.ProfileId
                     }
 
                     await listingService.create(listing);
@@ -95,27 +79,44 @@ exports.loadingHandler = async function (req, res, next) {
             }
 
             console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress);
-            req.session.reload(async function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                await listNft();
-            });
+            await listNft();
         });
 
-        const itemCount = await marketplaceContract.itemCount();
-        let items = [];
-        for(let i = 1; i <= itemCount; i++) {
-            const item = await marketplaceContract.items(i);
-            const totalPrice = await marketplaceContract.getTotalPrice(item.itemId);
-            items.push({
-                totalPrice,
-                itemId: item.itemId,
-                seller: item.seller,
-            });
-        }
+        marketplaceContract.on('Bought', async (listingId, nftAddress, tokenId, price, sellerAddress, buyerAddress) => {
+            async function buyNft() {
+                try {
+                    const buyerWallet = await walletService.findByAccountAddress(buyerAddress);
 
-        console.log(items);
+                    let boughtListing = {
+                        transaction_date: new Date(),
+                        BuyerId: buyerWallet.ProfileId,
+                        price: fromWei(price.toString()),
+                        updatedAt: new Date()
+                    }
+
+                    await listingService.updateById(listingId, boughtListing);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress, buyerAddress);
+            await buyNft();
+        });
+
+        // const itemCount = await marketplaceContract.itemCount();
+        // let items = [];
+        // for(let i = 1; i <= itemCount; i++) {
+        //     const item = await marketplaceContract.items(i);
+        //     const totalPrice = await marketplaceContract.getTotalPrice(item.itemId);
+        //     items.push({
+        //         totalPrice,
+        //         itemId: item.itemId,
+        //         seller: item.seller,
+        //     });
+        // }
+        //
+        // console.log(items);
 
         req.app.locals.marketplaceContract = marketplaceContract;
         req.app.locals.nftContract = nftContract;

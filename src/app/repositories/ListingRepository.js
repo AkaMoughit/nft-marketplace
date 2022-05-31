@@ -11,6 +11,19 @@ class ListingRepository extends BaseRepository {
         super(Listing);
     }
 
+    updateById(listingId, listing) {
+        return this.model.update(
+            listing,
+            {
+                where: {
+                    id: listingId
+                },
+                individualHooks: true
+            },
+
+        );
+    }
+
     create(listing) {
         return new Promise(async (resolve, reject) => {
             this.model.findOne({

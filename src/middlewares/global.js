@@ -7,6 +7,8 @@ const cookieSession = require('cookie-session');
 const {sessionCfg} = require("../configs/global.config");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const {ethers} = require("ethers");
+const SmartContractHelper = require("../app/utils/SmartContractHelper");
 const SessionStore = require('connect-session-sequelize')(session.Store);
 
 module.exports = appMiddlewares = (app, sequelize) => {
@@ -29,7 +31,6 @@ module.exports = appMiddlewares = (app, sequelize) => {
     }));
 
     sessionStore.sync();
-
 
     app.use(require('../routes'));
 }
