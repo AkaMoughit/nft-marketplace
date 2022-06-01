@@ -33,6 +33,9 @@ $("#buy-nft-btn").on('click', async function () {
                 console.log("Not enough balance");
                 console.log("Your balance: ", fromWei(balance));
                 console.log("Required: ", fromWei(totalPriceInWei));
+
+                $("#popup").html(`Not enough balance.<br/>Your balance: ${parseFloat(fromWei(balance)).toFixed(4)}<br/>Required: ${fromWei(totalPriceInWei)}`);
+                $("#popup-trigger").click();
                 return;
             }
 

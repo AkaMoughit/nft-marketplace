@@ -75,6 +75,7 @@ class ListingRepository extends BaseRepository {
                         },
                         'Seller'
                     ],
+                    order: [['createdAt', 'DESC']],
                     // where: {
                     //     transaction_date: {
                     //         [Op.is]: null
