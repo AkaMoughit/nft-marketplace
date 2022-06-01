@@ -2,6 +2,7 @@ const router = require('express').Router();
 const multer  = require('multer')
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
+var uploading = multer({dest: './src/client/public/assets/uploads'});
 
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
@@ -61,5 +62,10 @@ router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'),
     nftCreationValidator.schema,
     nftCreationValidator.validate, nftController.create);
 
+router.put('/edit-profile-pic', authenticationHandlers.isAuth, web3handlers.loadingHandler,
+    uploading.single('profilePic'), profileController.editProfilePic)
+
+router.put('/edit-banner-pic', authenticationHandlers.isAuth, web3handlers.loadingHandler,
+    uploading.single('bannerPic'), profileController.editBannerPic)
 
 module.exports = router;

@@ -29,20 +29,23 @@
 <!--</div>-->
 
 <%- include('./header.ejs') %>
-
+<% if (otherParticipant && conversation && messages) { %>
 <div id="currentProfileId" hidden><%- sessionData.profile.id%></div>
 <div id="otherParticipantId" style="display: none"><%- otherParticipant.id%></div>
 <div id="currentProfileName" style="display: none"><%- sessionData.profile.name%></div>
 <div id="otherParticipantName" style="display: none"><%- otherParticipant.name%></div>
 <div id="conversationId" style="display: none"><%- conversation.id%></div>
+<% } %>
 <section class="profile-section padding-top">
     <div class="section-wrapper custom-container">
 <!--        <div class="chat-container">-->
 <!--            <main class="chat-main">-->
                 <div class="chat-sidebar custom-div">
+                    <% if (otherParticipant) { %>
                     <h3>Current Conversation</h3>
                     <br/>
                     <a href="author?profileId=<%- otherParticipant.profile_id%>"><h2><%- otherParticipant.name%></h2></a>
+                    <% } %>
                     <h3> Conversations</h3>
                     <br/>
                     <ul id="conversations">
@@ -56,6 +59,7 @@
                     </ul>
                 </div>
                 <div class="custom-div2">
+                    <% if (messages) { %>
                     <div class="chat-messages">
                         <%messages.forEach(message => {
                             const messageClassName = message.ProfileId === otherParticipant.id ? "messageParticipant": "messageCurrent";%>
@@ -82,6 +86,7 @@
                             <button class="btn c-btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
                         </form>
                     </div>
+                    <% } %>
                 </div>
     </div>
 </section>

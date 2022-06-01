@@ -15,96 +15,116 @@ class ProfileRepository extends BaseRepository {
         this.conversation = conversation;
     }
 
-findByOwnedNftPk(ownNftPk) {
-    return this.model.findOne({
-        include: [
-            {
-                model: this.nftOwnershipModel,
-                as: 'Owner',
-                where: {
-                    NftId: ownNftPk
+    findByOwnedNftPk(ownNftPk) {
+        return this.model.findOne({
+            include: [
+                {
+                    model: this.nftOwnershipModel,
+                    as: 'Owner',
+                    where: {
+                        NftId: ownNftPk
+                    }
+                }
+            ]
+        });
+    }
+
+    findAll(limit, offset, name) {
+        return this.model.findAndCountAll({
+            limit: limit,
+            offset: offset,
+            where: {
+                name: {
+                    [models.Sequelize.Op.like]: name==null?"%":"%"+name+"%"
                 }
             }
-        ]
-    });
-}
+        });
+    }
 
-findAll(limit, offset, name) {
-    return this.model.findAndCountAll({
-        limit: limit,
-        offset: offset,
-        where: {
-            name: {
-                [models.Sequelize.Op.like]: name==null?"%":"%"+name+"%"
+    findByProfileId(profileId) {
+        return this.model.findOne({
+            where: {
+                profile_id: profileId
             }
-        }
-    });
-}
+        });
+    }
 
-findByProfileId(profileId) {
-    return this.model.findOne({
-        where: {
-            profile_id: profileId
-        }
-    });
-}
+    findByuserId(userId) {
+        return this.model.findOne({
+            where: {
+                userId : userId
+            }
+        });
+    }
 
-findByuserId(userId) {
-    return this.model.findOne({
-        where: {
-            userId : userId
-        }
-    });
-}
+    findById(id) {
+        return this.model.findOne({
+            where: {
+                id : id
+            }
+        });
+    }
 
-findById(id) {
-    return this.model.findOne({
-        where: {
-            id : id
-        }
-    });
-}
+    findOtherParticipantByConversationId(conversationId, currentProfileId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const conversationFromDB = await this.conversation.findOne({
+                    where: {
+                        id : conversationId
+                    }
+                })
+                const conversation = conversationFromDB.dataValues;
 
-findOtherParticipantByConversationId(conversationId, currentProfileId) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const conversationFromDB = await this.conversation.findOne({
-                where: {
-                    id : conversationId
-                }
-            })
-            const conversation = conversationFromDB.dataValues;
+                const otherParticipantId = conversation.participent1Id === currentProfileId ?
+                    conversation.participent2Id : conversation.participent1Id;
 
-            const otherParticipantId = conversation.participent1Id === currentProfileId ?
-                conversation.participent2Id : conversation.participent1Id;
+                resolve(this.findById(otherParticipantId))
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+        })
+    }
 
-            resolve(this.findById(otherParticipantId))
-        } catch (e) {
-            console.log(e);
-            reject(e);
-        }
-    })
-}
+    save(profile, transaction) {
+        return this.model.findOrCreate({
+            where: {
+                profile_id : profile.profile_id,
+            },
+            defaults: {
+                name : profile.name,
+                acc_creation_date : new Date(),
+                blockchain_type : "ETHEREUM",
+                specialize_in : profile.specialize_in,
+                birthdate : profile.birthdate,
+                createdAt : new Date(),
+                updatedAt : new Date(),
+                profile_id : profile.profile_id,
+                UserId : profile.UserId
+            },
+            transaction: transaction
+        });
+    }
 
-save(profile, transaction) {
-    return this.model.findOrCreate({
-        where: {
-            profile_id : profile.profile_id,
-        },
-        defaults: {
-            name : profile.name,
-            acc_creation_date : new Date(),
-            blockchain_type : "ETHEREUM",
-            specialize_in : profile.specialize_in,
-            birthdate : profile.birthdate,
-            createdAt : new Date(),
-            updatedAt : new Date(),
-            profile_id : profile.profile_id,
-            UserId : profile.UserId
-        },
-        transaction: transaction
-    });
-}
+    updateProfilePic(path, id) {
+        return this.model.update({
+            picture_url : path,
+        }, {
+            where: {
+                id : id
+            }
+        })
+    }
+
+    updateBannerPic(path, id) {
+        return this.model.update({
+            banner_url : path,
+        }, {
+            where: {
+                id : id
+            }
+        })
+    }
 
 }
 

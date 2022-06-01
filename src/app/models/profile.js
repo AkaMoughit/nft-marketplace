@@ -47,24 +47,24 @@ module.exports = (sequelize, DataTypes) => {
     picture_url: {
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-        validateUrl(value) {
-          if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
-            throw new Error('picture_url entered is not valid!');
-          }
-        }
-      }
+      // validate: {
+      //   validateUrl(value) {
+      //     if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+      //       throw new Error('picture_url entered is not valid!');
+      //     }
+      //   }
+      // }
     },
     banner_url: {
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-        validateUrl(value) {
-          if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
-            throw new Error('banner_url entered is not valid!');
-          }
-        }
-      }
+      // validate: {
+      //   validateUrl(value) {
+      //     if(value && !/^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm.test(value)) {
+      //       throw new Error('banner_url entered is not valid!');
+      //     }
+      //   }
+      // }
     },
     acc_creation_date: {
       type: DataTypes.DATE,

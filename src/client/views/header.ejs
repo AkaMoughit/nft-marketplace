@@ -67,6 +67,9 @@
                            aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">Pages</a>
 
                         <ul class="dropdown-menu header__nav-menu">
+                            <% if(sessionData.isAuth) { %>
+                            <li><a class="drop-down-item" href="conversation">My conversations</a></li>
+                                <% } %>
                             <li><a class="drop-down-item" href="all-authors">ALL Authors</a></li>
                             <li><a class="drop-down-item" href="wallet">Wallet Connect</a></li>
                             <li><a class="drop-down-item" href="404">404</a></li>
