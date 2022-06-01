@@ -53,6 +53,10 @@ class NftCardDTO {
         this.isListed = isListed === undefined
             ? null
             : isListed
+
+        this.itemId = listing === undefined
+            ? null
+            : listing.id
     }
 }
 

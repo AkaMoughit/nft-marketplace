@@ -7,6 +7,14 @@ class WalletRepository extends BaseRepository {
         super(Wallet);
     }
 
+    findByAccountAddress(accountAddress) {
+        return this.model.findOne({
+            where: {
+                wallet_id: accountAddress
+            }
+        });
+    }
+
     insertIfNotExist(wallet) {
         return new Promise(async (resolve, reject) => {
             let tx = await this.model.sequelize.transaction();
