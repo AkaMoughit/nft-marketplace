@@ -27,6 +27,7 @@ router.use('/nft', nftRouter);
 // router.post('/*', web3handlers.loadingHandler);
 router.post('/testPost', mainController.testPost);
 
+router.post('/updateAccountAddress', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.updateAccount);
 router.post('/uploadFile', authenticationHandlers.isAuth, web3handlers.loadingHandler, upload.single('file'), nftController.uploadFile);
 router.post('/uploadData', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.uploadData);
 

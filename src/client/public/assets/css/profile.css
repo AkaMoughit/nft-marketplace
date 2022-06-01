@@ -2,11 +2,11 @@
     outline: none;!important;
 }
 
-#owned-nft-card-list-button {
+.owned-nft-card-list-button {
     background-color: #0a53be;
 }
 
-#owned-nft-card-price {
+.owned-nft-card-price {
     background: #040b29;
     color: white;
     width: 50%

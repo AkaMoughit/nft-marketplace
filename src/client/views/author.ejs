@@ -597,7 +597,7 @@
                                                                                     <div class="price-like d-flex justify-content-between align-items-center">
                                                                                         <a href="item-details?nft_id=<%- nft.token_id %>"><h4><%- nft.name %></h4></a>
                                                                                         <% if(!nft.isListed) { %>
-                                                                                            <input required type="number" id="owned-nft-card-price" class="form-control" placeholder="Price (ETH)" />
+                                                                                            <input id="<%- nft.token_id %>" required type="number" class="owned-nft-card-price form-control" placeholder="Price (ETH)" />
                                                                                         <% } %>
                                                                                     </div>
                                                                                     <div
@@ -611,7 +611,7 @@
                                                                                                     class="icofont-heart"></i>
                                                                                             <%- nft.favoriteCount %></a>
                                                                                         <% if(!nft.isListed) { %>
-                                                                                            <button id="owned-nft-card-list-button" data-auth="<%- sessionData.isAuth %>" data-tokenid="<%- nft.token_id %>" class="btn btn-primary">List</button>
+                                                                                            <button data-auth="<%- sessionData.isAuth %>" data-tokenid="<%- nft.token_id %>" class="owned-nft-card-list-button btn btn-primary">List</button>
                                                                                         <% } %>
                                                                                     </div>
                                                                                 </div>

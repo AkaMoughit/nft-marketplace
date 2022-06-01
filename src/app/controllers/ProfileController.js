@@ -2,6 +2,20 @@
 
 const profileService = require("../services/ProfileService");
 const nftService = require("../services/NftService");
+const walletService = require("../services/WalletService");
+
+exports.updateAccount = async function (req, res) {
+    try{
+        await walletService.insertIfNotExist({
+            ProfileId: req.session.profile.id,
+            wallet_id: req.body.account
+        });
+
+        res.status(200).send();
+    } catch (e) {
+        res.status(500).send(e);
+    }
+}
 
 exports.authorPage = function (req, res) {
     profileService.findByProfileId(req.query.profileId)

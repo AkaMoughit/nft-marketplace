@@ -11,6 +11,21 @@ class ListingRepository extends BaseRepository {
         super(Listing);
     }
 
+    updateById(listingId, listing) {
+        return this.model.update(
+            listing,
+            {
+                where: {
+                    id: listingId,
+                    transaction_date: null,
+                    BuyerId: null
+                },
+                individualHooks: true
+            },
+
+        );
+    }
+
     create(listing) {
         return new Promise(async (resolve, reject) => {
             this.model.findOne({
@@ -62,6 +77,7 @@ class ListingRepository extends BaseRepository {
                         },
                         'Seller'
                     ],
+                    order: [['createdAt', 'DESC']],
                     // where: {
                     //     transaction_date: {
                     //         [Op.is]: null

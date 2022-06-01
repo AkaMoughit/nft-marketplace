@@ -1,5 +1,6 @@
 import {ethers} from "./ethers.js";
 
+import {updateAccountAddress} from "./metamask.js";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
@@ -136,17 +137,19 @@ $(".create-nft-button").on('click', async function() {
     }
 
     if (window.ethereum) {
-        const accounts = await provider.listAccounts();
+        let accounts = await provider.listAccounts();
 
         if (accounts.length === 0) {
-            let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+            accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
         }
 
         let uri = null;
         try{
-            uri = await getUri();
+            uri = await getUri(accounts[0]);
+            let result = await updateAccountAddress(accounts[0]);
         } catch (e) {
-            $("#popup").text(e);
+            console.log(e);
+            $("#popup").text("Something went wrong when preparing transaction");
             $("#popup-trigger").click();
             return;
         }

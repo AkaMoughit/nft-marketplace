@@ -13,6 +13,10 @@ class WalletService {
         return this.walletRepository.insertIfNotExist(wallet);
     }
 
+    findByAccountAddress(accountAddress) {
+        return this.walletRepository.findByAccountAddress(accountAddress);
+    }
+
 
 }
 module.exports = new WalletService(walletRepository);
