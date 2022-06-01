@@ -16,7 +16,9 @@ class ListingRepository extends BaseRepository {
             listing,
             {
                 where: {
-                    id: listingId
+                    id: listingId,
+                    transaction_date: null,
+                    BuyerId: null
                 },
                 individualHooks: true
             },
