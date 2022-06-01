@@ -43,7 +43,13 @@ $("#buy-nft-btn").on('click', async function () {
                 let result = await updateAccountAddress(accounts[0]);
                 await (await marketplaceContract.purchaseItem(itemId, {value: totalPriceInWei})).wait();
             } catch (e) {
-                console.log(e);
+                if (e.status === 409) {
+                    $("#popup").text(e.error);
+                    $("#popup-trigger").click();
+                } else {
+                    console.log(e);
+                }
+                return;
             }
         } else {
             $("#popup").text("Metamask not installed");

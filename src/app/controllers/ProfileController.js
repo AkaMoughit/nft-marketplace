@@ -13,7 +13,11 @@ exports.updateAccount = async function (req, res) {
 
         res.status(200).send();
     } catch (e) {
-        res.status(500).send(e);
+        if(e === 'Wallet already linked with an account') {
+            res.status(409).send(e);
+        } else {
+            res.status(500).send(e);
+        }
     }
 }
 

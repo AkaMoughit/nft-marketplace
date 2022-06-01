@@ -44,7 +44,9 @@ export function updateAccountAddress(account) {
             success: function (data, status, xhr) {
                 resolve({data, status});
             },
-            error: function (xhr, status, error) {
+            error: function (xhr, statusMessage, errorThrown) {
+                const status = xhr.status;
+                const error = xhr.responseText;
                 reject({error, status});
             }
         });
@@ -63,7 +65,12 @@ $(".metamask-connection").on('click', async () => {
 
             window.location.href = "/index"
         } catch (e) {
-            console.log(e.message);
+            if (e.status === 409) {
+                $("#popup").text(e.error);
+                $("#popup-trigger").click();
+            } else {
+                console.log(e);
+            }
         }
 
         window.ethereum.on('chainChanged', (_chainId) => {
@@ -73,9 +80,18 @@ $(".metamask-connection").on('click', async () => {
         window.ethereum.on('accountsChanged', async (accounts) => {
             console.log("account changed triggered")
             if (accounts.length > 0) {
-                console.log(`Using account ${accounts[0]}`);
-                const result = await updateAccountAddress(accounts[0]);
-                window.location.reload();
+                try{
+                    console.log(`Using account ${accounts[0]}`);
+                    const result = await updateAccountAddress(accounts[0]);
+                    window.location.reload();
+                } catch (e) {
+                    if (e.status === 409) {
+                        $("#popup").text(e.error);
+                        $("#popup-trigger").click();
+                    } else {
+                        console.log(e);
+                    }
+                }
             } else {
                 console.error("0 accounts found");
             }
