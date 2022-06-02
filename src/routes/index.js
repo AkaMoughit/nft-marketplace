@@ -32,6 +32,9 @@ router.post('/updateAccountAddress', authenticationHandlers.isAuth, web3handlers
 router.post('/uploadFile', authenticationHandlers.isAuth, web3handlers.loadingHandler, upload.single('file'), nftController.uploadFile);
 router.post('/uploadData', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.uploadData);
 
+router.get('/verifyAccount', authenticationController.emailVerification);
+router.get('/resendVerification', authenticationController.resendVerification);
+
 router.get(['/', '/index'], web3handlers.loadingHandler, mainController.welcomePage);
 router.get('/activity', web3handlers.loadingHandler, mainController.activityPage);
 router.get('/blog', mainController.blogPage);

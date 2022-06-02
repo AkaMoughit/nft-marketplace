@@ -19,6 +19,7 @@ const Sequelize = require("sequelize");
  * createTable() => "Offers", deps: [Listings, Profiles]
  * createTable() => "Tickets", deps: [Profiles]
  * createTable() => "TicketAttachments", deps: [Tickets]
+ * createTable() => "UserVerifications", deps: [Users]
  * createTable() => "Wallets", deps: [Profiles]
  *
  */
@@ -26,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-01T00:38:13.616Z",
+  created: "2022-06-02T15:02:57.608Z",
   comment: "",
 };
 
@@ -59,6 +60,12 @@ const migrationCommands = (transaction) => [
           field: "phone_number",
           unique: true,
           allowNull: false,
+        },
+        isVerified: {
+          type: Sequelize.BOOLEAN,
+          field: "isVerified",
+          allowNull: false,
+          defaultValue: false,
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -816,6 +823,42 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
+      "UserVerifications",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        verificationCode: { type: Sequelize.STRING, field: "verificationCode" },
+        expirationDate: { type: Sequelize.DATE, field: "expirationDate" },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+        UserId: {
+          type: Sequelize.INTEGER,
+          field: "UserId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Users", key: "id" },
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
       "Wallets",
       {
         id: {
@@ -914,6 +957,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["Users", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["UserVerifications", { transaction }],
   },
   {
     fn: "dropTable",

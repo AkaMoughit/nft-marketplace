@@ -31,6 +31,17 @@ class UserRepository extends BaseRepository {
             }
         });
     }
+
+    update(user) {
+        return this.model.update(
+            user,
+            {
+                where: {
+                    id: user.id
+                }
+            }
+        );
+    }
 }
 
 module.exports = new UserRepository(User);
