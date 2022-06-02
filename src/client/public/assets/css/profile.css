@@ -20,3 +20,69 @@ input::-webkit-inner-spin-button {
 input[type=number]{
     -moz-appearance: textfield;
 }
+
+#edit-profile-button {
+    background-color:#0a53be;
+    border-radius:11px;
+    display:inline-block;
+    cursor:pointer;
+    color:#fff;
+    font-size:16px;
+    margin-left: 200px;
+    padding:8px 18px;
+}
+#edit-profile-button:hover {
+    background-color:#094DB0;
+}
+
+.form-popup-outer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.form-popup {
+    display: none;
+    z-index: 2;
+}
+
+.form-popup-container {
+    background-color: #1A203C;
+    width: 400px;
+    padding: 20px;
+    margin-left: 745px; /* disgusting, i know :( */
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+
+.form-popup-container input[type=text], .form-popup-container input[type=password], .form-popup-container textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.form-popup-container input[type=text]:focus, .form-popup-container input[type=password]:focus,
+        .form-popup-container textarea:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.form-popup-container .btn {
+    background-color: #094DB0;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    border-radius: 4px;
+}
+
+/* Add some hover effects to buttons */
+.form-popup-container .btn:hover, .open-button:hover {
+    background-color:#094DB0;
+}

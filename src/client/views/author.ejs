@@ -130,6 +130,16 @@
                                 </a>
                             </li>
                             <% } %>
+                            <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                                <li>
+                                    <a href="conversation">
+                                        <div class="icon"><i class="icofont-speech-comments"></i></div>
+                                        <div class="text">
+                                            <p>My conversations</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
@@ -196,7 +206,7 @@
                             </button>
                             <button class="nav-link" id="nav-wallet-tab" data-bs-toggle="tab"
                                     data-bs-target="#wallet" type="button" role="tab" aria-controls="wallet"
-                                    aria-selected="false">My Wallet
+                                    aria-selected="false">Wallet
                             </button>
                             <div class="dropdown">
                                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -210,9 +220,31 @@
                                     <li><a class="dropdown-item" href="#">Block user</a></li>
                                 </ul>
                             </div>
-
+                            <% if (sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                                <button id="edit-profile-button" onclick="toggleForm()"> Edit profile </button>
+                            <% } %>
                         </div>
                     </nav>
+                    <% if (sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                        <div id="form-popup-outer-container">
+                            <div class="form-popup" id="popupForm">
+                                <form action="/edit-profile" method="post" class="form-popup-container" id="editForm">
+                                    <h2>Edit profile</h2>
+
+                                    <label for="name"><b>Name</b></label>
+                                    <input type="text" id="edit-name" name="name" value="<%- profile.name%>" required>
+
+                                    <label for="edit-about"><b>About</b></label>
+                                    <textarea id="edit-about" name="about" form="editForm"><%- profile.about%></textarea>
+
+                                    <label for="edit-password"><b>Password</b></label>
+                                    <input type="password" id="edit-password" name="password">
+
+                                    <button type="submit" class="btn">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% } %>
                     <div class="tab-content" id="nav-tabContent">
                         <!-- All NFT tab -->
                         <div class="tab-pane activity-page fade show active" id="allNft" role="tabpanel">

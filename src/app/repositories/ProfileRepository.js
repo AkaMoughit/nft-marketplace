@@ -106,24 +106,16 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    updateProfilePic(path, id) {
-        return this.model.update({
-            picture_url : path,
-        }, {
-            where: {
-                id : id
+    update(profile, id) {
+        return this.model.update(
+            profile,
+            {
+                where: {
+                    id : id,
+                },
+                individualHooks: true
             }
-        })
-    }
-
-    updateBannerPic(path, id) {
-        return this.model.update({
-            banner_url : path,
-        }, {
-            where: {
-                id : id
-            }
-        })
+        );
     }
 
 }

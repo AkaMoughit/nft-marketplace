@@ -78,3 +78,13 @@ exports.editBannerPic = function (req, res) {
             res.status(400).send(error);
         })
 }
+
+exports.editProfile = function(req, res) {
+    profileService.editProfile(req.body, req.session.profile.id, req.session.profile.UserId)
+        .then(res => {
+            res.status(200).redirect('author?profileId='+ req.session.profile.profile_id);
+        })
+        .catch(err => {
+            res.status(200).redirect('author?profileId='+ req.session.profile.profile_id);
+        })
+}
