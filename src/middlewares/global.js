@@ -32,5 +32,7 @@ module.exports = appMiddlewares = (app, sequelize) => {
 
     sessionStore.sync();
 
+
+
     app.use(require('../routes'));
 }
