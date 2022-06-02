@@ -46,7 +46,12 @@ exports.login = function(req, res) {
                 req.session.profile = {};
 
                 console.log(err);
-                res.status(500).render('signin', {info : "An error has occurred", sessionData: { isAuth: false, profile: {}}});
+                if(err.userId === -3) {
+                    const htmlResult = `Account not verified, <a class="resend-verification-button" href="#" data-email="${req.body.email}">Resend?</a>`
+                    res.status(401).render('signin', {info: htmlResult, sessionData: {isAuth: false, profile: {}}});
+                } else {
+                    res.status(500).render('signin', {info : "An error has occurred", sessionData: { isAuth: false, profile: {}}});
+                }
             }
         )
 }
@@ -69,4 +74,34 @@ exports.signout = function(req,res) {
     res.status(303).redirect("/signin");
 }
 
+exports.emailVerification = function (req, res) {
+    let verificationCode = req.query.verificationCode;
+    if(!verificationCode) {
+        res.status(400).send("Invalid verification code");
+        return;
+    }
+
+    authenticationService.emailVerification(verificationCode)
+        .then(userVerification => {
+            res.status(200).send('Verification completed');
+        }).catch(error => {
+            res.status(401).send(error.reason);
+    });
+}
+
+exports.resendVerification = function (req, res) {
+    if(!req.query.email) {
+        res.status(404).render('404', {sessionData: {isAuth: false, profile: {}}});
+        return;
+    }
+
+    authenticationService.resendVerification(req.query.email)
+        .then(result => {
+            res.status(200).send(result);
+        })
+        .catch(e => {
+            console.log(e);
+            res.status(401).send(e);
+        });
+}
 

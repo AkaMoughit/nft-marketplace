@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasOne(models.Profile);
+      User.hasOne(models.UserVerification);
     }
   }
   User.init({
@@ -41,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         len: [10,10]
       }
     },
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
