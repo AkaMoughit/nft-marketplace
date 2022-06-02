@@ -148,9 +148,14 @@ $(".create-nft-button").on('click', async function() {
             uri = await getUri(accounts[0]);
             let result = await updateAccountAddress(accounts[0]);
         } catch (e) {
-            console.log(e);
-            $("#popup").text("Something went wrong when preparing transaction");
-            $("#popup-trigger").click();
+            if (e.status === 409) {
+                $("#popup").text(e.error);
+                $("#popup-trigger").click();
+            } else {
+                console.log(e);
+                $("#popup").text("Something went wrong when preparing transaction");
+                $("#popup-trigger").click();
+            }
             return;
         }
 

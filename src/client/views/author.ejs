@@ -75,7 +75,7 @@
             <div class="member-profile">
                 <div class="profile-item">
                     <div class="profile-cover">
-                        <img src="<%- profile.banner_url%>" alt="banner-pic" id="bannerPic">
+                            <img src="<%- profile.banner_url %>" alt="banner-pic" onerror="this.onerror=null;this.src='assets/images/profile/cover.jpg';" id="bannerPic">
                         <div class="edit-photo custom-upload">
                             <div class="file-btn"><i class="icofont-camera"></i>
                                 Edit Photo
@@ -85,7 +85,7 @@
                     </div>
                     <div class="profile-information">
                         <div class="profile-pic">
-                            <img src="<%- profile.picture_url%>" alt="DP" id="profilePic">
+                            <img src="<%- profile.picture_url %>" alt="DP" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';" id="profilePic">
                             <div class="custom-upload">
                                 <div class="file-btn">
                                         <span class="d-none d-lg-inline-block"> <i class="icofont-camera"></i>

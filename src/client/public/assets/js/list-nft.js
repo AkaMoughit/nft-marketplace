@@ -61,11 +61,16 @@ $(document).ready(function (){
 
                 $("#popup").html(`Operation finished successfully.<br/>Your token ID: ${tokenId}`);
                 $("#popup-trigger").click();
-            } catch (err) {
-                $("#popup").text("Error while performing transaction");
-                $("#popup-trigger").click();
-                console.log(err);
-                console.log("Error while performing transaction")
+            } catch (e) {
+                if (e.status === 409) {
+                    $("#popup").text(e.error);
+                    $("#popup-trigger").click();
+                } else {
+                    $("#popup").text("Error while performing transaction");
+                    $("#popup-trigger").click();
+                    console.log(e);
+                }
+                return;
             }
         } else {
             $("#popup").text("Metamask not installed");
