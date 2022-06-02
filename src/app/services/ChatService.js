@@ -54,7 +54,7 @@ class ChatService {
                 }
 
                 if (conversationId === undefined) {
-                    resolve([participantsAndConversationIds, null, null, null])
+                    return resolve([participantsAndConversationIds, null, null, null])
                 }
 
                 // Get the Other Participant profile data
