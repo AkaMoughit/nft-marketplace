@@ -113,10 +113,11 @@ class ProfileService {
             if (profileInfo.password) {
                 const hashedPwd = await bcrypt.hash(profileInfo.password, 10);
                 let user = {
+                    id : userId,
                     password: hashedPwd
                 }
                 try {
-                    await userRepository.update(user, userId);
+                    await userRepository.update(user);
                 } catch (error) {
                     console.log(error);
                     reject("An error has occurred");
