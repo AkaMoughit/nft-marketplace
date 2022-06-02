@@ -3,15 +3,18 @@
 const profileRepository = require("../repositories/ProfileRepository");
 const nftRepository = require("../repositories/NftRepository");
 const listingRepository = require("../repositories/ListingRepository");
+const userRepository = require("../repositories/UserRepository");
 const AuthorDTO = require("../models/dtos/AuthorDTO");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
+const bcrypt = require('bcrypt');
 
 class ProfileService {
-    constructor(profileRepository, nftRepository, listingRepository) {
+    constructor(profileRepository, nftRepository, listingRepository, userRepository) {
         this.profileRepository = profileRepository;
         this.nftRepository = nftRepository;
         this.listingRepository = listingRepository;
+        this.userRepository = userRepository;
     }
 
     findAllAuthors(limit, offset, name=null) {
@@ -66,7 +69,10 @@ class ProfileService {
             try {
                 if (profilePicFile.mimetype.includes('image')) {
                     let path = profilePicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
-                    await profileRepository.updateProfilePic(path, profileId);
+                    let profile = {
+                        picture_url : path
+                    }
+                    await profileRepository.update(profile, profileId);
                     resolve(path);
                 } else {
                     console.log('Profile picture only accepts images');
@@ -86,7 +92,10 @@ class ProfileService {
             try {
                 if (bannerPicFile.mimetype.includes('image')) {
                     let path = bannerPicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
-                    await profileRepository.updateBannerPic(path, profileId);
+                    let profile = {
+                        banner_url : path
+                    }
+                    await profileRepository.update(profile, profileId);
                     resolve(path);
                 } else {
                     console.log('Banner picture only accepts images');
@@ -98,5 +107,35 @@ class ProfileService {
             }
         })
     }
+
+    editProfile(profileInfo, profileId, userId) {
+        return new Promise(async (resolve, reject) => {
+            if (profileInfo.password) {
+                const hashedPwd = await bcrypt.hash(profileInfo.password, 10);
+                let user = {
+                    password: hashedPwd
+                }
+                try {
+                    await userRepository.update(user, userId);
+                } catch (error) {
+                    console.log(error);
+                    reject("An error has occurred");
+                }
+            }
+
+            let profile = {
+                name: profileInfo.name,
+                about: profileInfo.about
+            }
+
+            try {
+                await profileRepository.update(profile, profileId);
+                resolve("Profile edited successfully");
+            } catch (error) {
+                console.log(error);
+                reject("An error has occurred");
+            }
+        });
+    }
 }
-module.exports = new ProfileService(profileRepository, nftRepository, listingRepository);
+module.exports = new ProfileService(profileRepository, nftRepository, listingRepository, userRepository);

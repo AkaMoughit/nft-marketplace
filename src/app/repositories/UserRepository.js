@@ -32,13 +32,15 @@ class UserRepository extends BaseRepository {
         });
     }
 
-    update(user) {
+
+    update(user, id) {
         return this.model.update(
             user,
             {
                 where: {
-                    id: user.id
-                }
+                    id : id
+                },
+                individualHooks: true
             }
         );
     }

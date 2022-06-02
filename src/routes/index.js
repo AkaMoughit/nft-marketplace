@@ -71,4 +71,6 @@ router.put('/edit-profile-pic', authenticationHandlers.isAuth, web3handlers.load
 router.put('/edit-banner-pic', authenticationHandlers.isAuth, web3handlers.loadingHandler,
     uploading.single('bannerPic'), profileController.editBannerPic)
 
+router.post('/edit-profile', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.editProfile)
+
 module.exports = router;
