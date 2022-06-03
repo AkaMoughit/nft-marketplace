@@ -7,6 +7,14 @@ class WalletRepository extends BaseRepository {
         super(Wallet);
     }
 
+    findByProfileId(profileId) {
+        return this.model.findOne({
+            where: {
+                ProfileId: profileId
+            }
+        });
+    }
+
     findByAccountAddress(accountAddress) {
         return this.model.findOne({
             where: {

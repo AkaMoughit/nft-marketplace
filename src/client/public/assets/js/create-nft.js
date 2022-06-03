@@ -96,7 +96,7 @@ function getUri() {
             }
 
             if (!name || !desc || !listingType || !price || isNaN(price)) {
-                reject("Some fields are empty or invalid");
+                return reject("Some fields are empty or invalid");
             }
 
             const files = $('#upload-file').prop('files');
@@ -109,10 +109,10 @@ function getUri() {
                     console.log("finished uploading");
                 } catch (err) {
                     console.log(err);
-                    reject("IPFS error while uploading nft details");
+                    return reject("IPFS error while uploading nft details");
                 }
             } else {
-                reject("No file uploaded");
+                return reject("No file uploaded");
             }
 
             try {
@@ -120,11 +120,11 @@ function getUri() {
                 uri = (await uploadDataToIpfs({filePath, name, desc, listingType, nftCategory})).dataPath;
             } catch (err) {
                 console.log(err);
-                reject("IPFS error while uploading nft details");
+                return reject("IPFS error while uploading nft details");
             }
             console.log("finished uploading");
             console.log(uri);
-            resolve(uri);
+            return resolve(uri);
         }
     );
 }
@@ -153,7 +153,7 @@ $(".create-nft-button").on('click', async function() {
                 $("#popup-trigger").click();
             } else {
                 console.log(e);
-                $("#popup").text("Something went wrong when preparing transaction");
+                $("#popup").text(e);
                 $("#popup-trigger").click();
             }
             return;

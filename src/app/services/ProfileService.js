@@ -4,17 +4,19 @@ const profileRepository = require("../repositories/ProfileRepository");
 const nftRepository = require("../repositories/NftRepository");
 const listingRepository = require("../repositories/ListingRepository");
 const userRepository = require("../repositories/UserRepository");
+const walletRepository = require("../repositories/WalletRepository")
 const AuthorDTO = require("../models/dtos/AuthorDTO");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 const bcrypt = require('bcrypt');
 
 class ProfileService {
-    constructor(profileRepository, nftRepository, listingRepository, userRepository) {
+    constructor(profileRepository, nftRepository, listingRepository, userRepository, walletRepository) {
         this.profileRepository = profileRepository;
         this.nftRepository = nftRepository;
         this.listingRepository = listingRepository;
         this.userRepository = userRepository;
+        this.walletRepository = walletRepository;
     }
 
     findAllAuthors(limit, offset, name=null) {
@@ -25,6 +27,7 @@ class ProfileService {
         return new Promise(async (resolve, reject) => {
             try {
                 let profile = await this.profileRepository.findByProfileId(profileId);
+                profile.wallet_id = await this.walletRepository.findByProfileId(profile.id);
 
                 let activeListings = await this.listingRepository.findAllActiveListingsByProfilePk(6, 0, null, profile.id);
 
@@ -139,4 +142,4 @@ class ProfileService {
         });
     }
 }
-module.exports = new ProfileService(profileRepository, nftRepository, listingRepository, userRepository);
+module.exports = new ProfileService(profileRepository, nftRepository, listingRepository, userRepository, walletRepository);
