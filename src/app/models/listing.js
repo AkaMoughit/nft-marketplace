@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
                   NftId: instance.NftId
                 }
               });
-          console.log("nft ownership updated");
+          console.log("pages ownership updated");
         }
       },
 
@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
                 });
           }
         }
-          console.log("nft ownerships updated");
+          console.log("pages ownerships updated");
       }
     }
   });
