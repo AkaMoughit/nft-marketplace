@@ -40,8 +40,3 @@ bannerPicFile.addEventListener("change", function(event) {
         }
     });
 }, false);
-
-function toggleForm() {
-    document.getElementById("popupForm").style.display =
-        document.getElementById("popupForm").style.display === "none" ? "block" : "none";
-}

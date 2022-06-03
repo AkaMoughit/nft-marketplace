@@ -1,5 +1,7 @@
-.btn-primary:focus {
-    outline: none;!important;
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .btn-primary:focus {
+    background-color: #5138EE !important;
+    box-shadow:none !important;
+    outline: 0px;!important;
 }
 
 .owned-nft-card-list-button {
@@ -33,6 +35,11 @@ input[type=number]{
     border-radius: 35px;!important;
 }
 
+#edit-inline-popups {
+    padding: 20px 26px;
+    margin: 0 0;
+}
+
 .form-popup-outer-container {
     display: flex;
     flex-direction: row;
@@ -41,7 +48,6 @@ input[type=number]{
 }
 
 .form-popup {
-    display: none;
     z-index: 2;
 }
 

@@ -1,5 +1,5 @@
 // Inline popups
-$('#inline-popups').magnificPopup({
+$('#inline-popups, #edit-inline-popups').magnificPopup({
     delegate: 'a',
     removalDelay: 500, //delay removal by X to allow out-animation
     callbacks: {
@@ -29,7 +29,7 @@ $('#image-popups').magnificPopup({
 
 
 // Hinge effect popup
-$('#popup-trigger.hinge').magnificPopup({
+$('#popup-trigger.hinge, #edit-popup-trigger.hinge').magnificPopup({
     mainClass: 'mfp-with-fade',
     removalDelay: 1000, //delay removal by X to allow out-animation
     callbacks: {
