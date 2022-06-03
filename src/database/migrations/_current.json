@@ -240,6 +240,11 @@
                     "field": "creation_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "attachment_url": {
+                    "allowNull": true,
+                    "field": "attachment_url",
+                    "seqType": "Sequelize.STRING"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
