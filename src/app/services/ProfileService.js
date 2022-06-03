@@ -27,7 +27,11 @@ class ProfileService {
         return new Promise(async (resolve, reject) => {
             try {
                 let profile = await this.profileRepository.findByProfileId(profileId);
-                profile.wallet_id = await this.walletRepository.findByProfileId(profile.id);
+                let wallet = await this.walletRepository.findByProfileId(profile.id);
+
+                if(wallet) {
+                    profile.wallet_id = wallet.dataValues.wallet_id;
+                }
 
                 let activeListings = await this.listingRepository.findAllActiveListingsByProfilePk(6, 0, null, profile.id);
 
