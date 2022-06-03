@@ -71,11 +71,9 @@ class ProfileService {
 
     editProfilePic(profilePicFile, profileId) {
         return new Promise (async (resolve, reject) => {
-            // for examle : trying to turn src\client\public\assets\uploads\2b8da4273163c4fe00cb84cd9536c490 to assets/uploads/2b8da4273163c4fe00cb84cd9536c490
-            const PREFIX_LENGTH = 18 // length of "src\client\public\"
             try {
                 if (profilePicFile.mimetype.includes('image')) {
-                    let path = profilePicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
+                    let path = profilePicFile.path.replace('src/client/public/', '');
                     let profile = {
                         picture_url : path
                     }
@@ -94,11 +92,9 @@ class ProfileService {
 
     editBannerPic(bannerPicFile, profileId) {
         return new Promise (async (resolve, reject) => {
-            // for examle : trying to turn src\client\public\assets\uploads\2b8da4273163c4fe00cb84cd9536c490 to assets/uploads/2b8da4273163c4fe00cb84cd9536c490
-            const PREFIX_LENGTH = 18 // length of "src\client\public\"
             try {
                 if (bannerPicFile.mimetype.includes('image')) {
-                    let path = bannerPicFile.path.slice(PREFIX_LENGTH).replace(/\\/g,'/');
+                    let path = bannerPicFile.path.replace('src/client/public/', '');
                     let profile = {
                         banner_url : path
                     }
