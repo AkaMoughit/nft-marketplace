@@ -99,7 +99,7 @@ class ProfileService {
         return new Promise (async (resolve, reject) => {
             try {
                 if (bannerPicFile.mimetype.includes('image')) {
-                    let relativePath = profilePicFile.path
+                    let relativePath = bannerPicFile.path
                         .split(path.sep)
                         .join(path.posix.sep)
                         .replace('src/client/public/', '');
