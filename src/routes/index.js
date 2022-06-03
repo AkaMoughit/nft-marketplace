@@ -3,6 +3,7 @@ const multer  = require('multer')
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 var uploading = multer({dest: './src/client/public/assets/uploads'});
+const offerUpload = multer({ dest: './src/client/public/assets/uploads/offers' });
 
 const mainController = require('../app/controllers/MainController');
 const listingController = require('../app/controllers/ListingController');
@@ -10,6 +11,7 @@ const profileController = require("../app/controllers/ProfileController");
 const authenticationController = require("../app/controllers/AuthenticationController");
 const nftController = require('../app/controllers/NftController');
 const chatController = require('../app/controllers/ChatController');
+const customOfferController = require('../app/controllers/CustomOfferController');
 
 const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
 const web3handlers = require("../app/handlers/Web3Handlers");
@@ -40,6 +42,8 @@ router.get('/activity', web3handlers.loadingHandler, mainController.activityPage
 router.get('/blog', mainController.blogPage);
 router.get('/blog-2', mainController.blogPage2);
 router.get('/blog-3', mainController.blogPage3);
+router.get('/blog-single', mainController.blogSinglePage);
+router.get('/blog-single-2', mainController.blogSingle2Page);
 router.get('/contact', mainController.contactPage);
 router.get('/forgot-pass', mainController.forgotPassPage);
 router.get('/item-details', web3handlers.loadingHandler, listingController.itemDetailsPage);
@@ -72,5 +76,7 @@ router.put('/edit-banner-pic', authenticationHandlers.isAuth, web3handlers.loadi
     uploading.single('bannerPic'), profileController.editBannerPic)
 
 router.post('/edit-profile', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.editProfile)
+
+router.post('/createCustomOffer', offerUpload.single('file'), customOfferController.createCustomOffer);
 
 module.exports = router;

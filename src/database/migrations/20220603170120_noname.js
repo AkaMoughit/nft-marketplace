@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-02T15:02:57.608Z",
+  created: "2022-06-03T17:01:20.088Z",
   comment: "",
 };
 
@@ -182,6 +182,11 @@ const migrationCommands = (transaction) => [
           type: Sequelize.DATE,
           field: "creation_date",
           allowNull: false,
+        },
+        attachment_url: {
+          type: Sequelize.STRING,
+          field: "attachment_url",
+          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DATE,
