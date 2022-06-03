@@ -77,6 +77,6 @@ router.put('/edit-banner-pic', authenticationHandlers.isAuth, web3handlers.loadi
 
 router.post('/edit-profile', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.editProfile)
 
-router.post('/createCustomOffer', offerUpload.single('file'), customOfferController.createCustomOffer);
+router.post('/createCustomOffer', authenticationHandlers.isAuth, offerUpload.single('file'), customOfferController.createCustomOffer);
 
 module.exports = router;
