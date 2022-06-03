@@ -9,6 +9,7 @@ const AuthorDTO = require("../models/dtos/AuthorDTO");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 const bcrypt = require('bcrypt');
+const path = require("path");
 
 const customOfferModel = require('../models').CustomOffer;
 
@@ -24,7 +25,11 @@ class CustomOfferService {
     createCustomOffer(customoffer) {
         return new Promise(async (resolve, reject) => {
             try {
-                let relativeFilePath = customoffer.file.path.replace('src/client/public/', '');
+                let relativeFilePath = customoffer.file.path
+                    .split(path.sep)
+                    .join(path.posix.sep)
+                    .replace('src/client/public/', '');
+
                 let result = await customOfferModel.create({
                     title: customoffer.title,
                     body: customoffer.description,

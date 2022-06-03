@@ -9,6 +9,7 @@ const AuthorDTO = require("../models/dtos/AuthorDTO");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 const bcrypt = require('bcrypt');
+const path = require("path");
 
 class ProfileService {
     constructor(profileRepository, nftRepository, listingRepository, userRepository, walletRepository) {
@@ -73,12 +74,16 @@ class ProfileService {
         return new Promise (async (resolve, reject) => {
             try {
                 if (profilePicFile.mimetype.includes('image')) {
-                    let path = profilePicFile.path.replace('src/client/public/', '');
+                    let relativePath = profilePicFile.path
+                        .split(path.sep)
+                        .join(path.posix.sep)
+                        .replace('src/client/public/', '');
+
                     let profile = {
-                        picture_url : path
+                        picture_url : relativePath
                     }
                     await profileRepository.update(profile, profileId);
-                    resolve(path);
+                    resolve(relativePath);
                 } else {
                     console.log('Profile picture only accepts images');
                     reject('Profile picture only accepts images.');
@@ -94,12 +99,16 @@ class ProfileService {
         return new Promise (async (resolve, reject) => {
             try {
                 if (bannerPicFile.mimetype.includes('image')) {
-                    let path = bannerPicFile.path.replace('src/client/public/', '');
+                    let relativePath = profilePicFile.path
+                        .split(path.sep)
+                        .join(path.posix.sep)
+                        .replace('src/client/public/', '');
+
                     let profile = {
-                        banner_url : path
+                        banner_url : relativePath
                     }
                     await profileRepository.update(profile, profileId);
-                    resolve(path);
+                    resolve(relativePath);
                 } else {
                     console.log('Banner picture only accepts images');
                     reject('Banner picture only accepts images.');
