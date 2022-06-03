@@ -84,7 +84,7 @@ class NftRepository extends BaseRepository {
                     CreatorId : profile_id
                 });
                 if (nft) {
-                    console.log("nft saved");
+                    console.log("pages saved");
                     const listing = await this.listingModel.create({
                         price : nftTBR.price,
                         type : nftTBR.listingType,
@@ -114,7 +114,7 @@ class NftRepository extends BaseRepository {
                         resolve(false);
                     }
                 } else {
-                    console.log("nft not saved");
+                    console.log("pages not saved");
                     resolve(false);
                 }
             } catch (err) {

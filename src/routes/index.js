@@ -1,82 +1,13 @@
 const router = require('express').Router();
-const multer  = require('multer')
-const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
-var uploading = multer({dest: './src/client/public/assets/uploads'});
-const offerUpload = multer({ dest: './src/client/public/assets/uploads/offers' });
 
 const mainController = require('../app/controllers/MainController');
-const listingController = require('../app/controllers/ListingController');
-const profileController = require("../app/controllers/ProfileController");
-const authenticationController = require("../app/controllers/AuthenticationController");
-const nftController = require('../app/controllers/NftController');
-const chatController = require('../app/controllers/ChatController');
-const customOfferController = require('../app/controllers/CustomOfferController');
-
-const authenticationHandlers = require("../app/handlers/AuthenticationHandlers");
-const web3handlers = require("../app/handlers/Web3Handlers");
-
-const signinValidator = require('../app/validators/SigninValidator');
-const signupValidator = require('../app/validators/SignupValidator');
-const nftCreationValidator = require('../app/validators/NftCreationValidator');
 
 const apiRouter = require('./api');
-const nftRouter = require('./nft');
+const pageRouter = require('./pages');
 
-router.use('/api', apiRouter);
-router.use('/nft', nftRouter);
+router.use('/', apiRouter);
+router.use('/', pageRouter);
 
-// router.get('/*', web3handlers.loadingHandler);
-// router.post('/*', web3handlers.loadingHandler);
 router.post('/testPost', mainController.testPost);
-
-router.post('/updateAccountAddress', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.updateAccount);
-router.post('/uploadFile', authenticationHandlers.isAuth, web3handlers.loadingHandler, upload.single('file'), nftController.uploadFile);
-router.post('/uploadData', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.uploadData);
-
-router.get('/verifyAccount', authenticationController.emailVerification);
-router.get('/resendVerification', authenticationController.resendVerification);
-
-router.get(['/', '/index'], web3handlers.loadingHandler, mainController.welcomePage);
-router.get('/activity', web3handlers.loadingHandler, mainController.activityPage);
-router.get('/blog', mainController.blogPage);
-router.get('/blog-2', mainController.blogPage2);
-router.get('/blog-3', mainController.blogPage3);
-router.get('/blog-single', mainController.blogSinglePage);
-router.get('/blog-single-2', mainController.blogSingle2Page);
-router.get('/contact', mainController.contactPage);
-router.get('/forgot-pass', mainController.forgotPassPage);
-router.get('/item-details', web3handlers.loadingHandler, listingController.itemDetailsPage);
-router.get('/wallet', authenticationHandlers.isAuth, web3handlers.loadingHandler, mainController.walletPage);
-router.get('/404', web3handlers.loadingHandler, mainController.errorNotFoundPage);
-router.get('/signout', authenticationHandlers.isAuth, authenticationController.signout);
-router.get('/explore', web3handlers.loadingHandler, listingController.listingPage);
-
-router.get('/all-authors', web3handlers.loadingHandler, profileController.allAuthorsPage);
-router.get('/author', web3handlers.loadingHandler, profileController.authorPage);
-router.get('/auction', web3handlers.loadingHandler, mainController.auctionPage);
-router.get('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, authenticationController.signInPage);
-router.get('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, authenticationController.signUpPage);
-router.post('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signupValidator.schema,
-    signupValidator.validate, authenticationController.register);
-router.post('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signinValidator.schema,
-            signinValidator.validate, authenticationController.login);
-
-router.get('/chat', authenticationHandlers.isAuth, web3handlers.loadingHandler, chatController.getConversation);
-router.get('/conversation', authenticationHandlers.isAuth, web3handlers.loadingHandler, chatController.conversationPage);
-
-router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'),
-    nftCreationValidator.schema,
-    nftCreationValidator.validate, nftController.create);
-
-router.put('/edit-profile-pic', authenticationHandlers.isAuth, web3handlers.loadingHandler,
-    uploading.single('profilePic'), profileController.editProfilePic)
-
-router.put('/edit-banner-pic', authenticationHandlers.isAuth, web3handlers.loadingHandler,
-    uploading.single('bannerPic'), profileController.editBannerPic)
-
-router.post('/edit-profile', authenticationHandlers.isAuth, web3handlers.loadingHandler, profileController.editProfile)
-
-router.post('/createCustomOffer', authenticationHandlers.isAuth, offerUpload.single('file'), customOfferController.createCustomOffer);
 
 module.exports = router;

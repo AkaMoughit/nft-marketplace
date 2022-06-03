@@ -88,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
 
         try{
           await nftOwnership.save();
-          console.log("nft ownership added");
+          console.log("pages ownership added");
         } catch (e) {
           console.log(e);
         }
@@ -105,7 +105,7 @@ module.exports = (sequelize, DataTypes) => {
 
           await nftOwnership.save();
         }
-        console.log("nft ownerships added");
+        console.log("pages ownerships added");
       }
     }
   });
