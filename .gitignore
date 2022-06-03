@@ -6,6 +6,8 @@ coverage
 coverage.json
 typechain
 package-lock.json
+src/client/public/assets/uploads/
+
 
 #Hardhat files
 cache
