@@ -10,3 +10,7 @@ package-lock.json
 #Hardhat files
 cache
 artifacts
+
+src/app/contracts/
+src/client/public/contracts/
+src/client/public/assets/uploads/

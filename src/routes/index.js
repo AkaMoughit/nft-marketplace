@@ -79,4 +79,6 @@ router.post('/edit-profile', authenticationHandlers.isAuth, web3handlers.loading
 
 router.post('/createCustomOffer', authenticationHandlers.isAuth, offerUpload.single('file'), customOfferController.createCustomOffer);
 
+router.post('/delete-conversation', authenticationHandlers.isAuth, web3handlers.loadingHandler, chatController.deleteConversation)
+
 module.exports = router;

@@ -175,6 +175,14 @@
                     "field": "creation_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "isCustomOffer": {
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "allowNull": false,
+                    "field": "isCustomOffer",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -205,6 +213,18 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "participent2Id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "initiator": {
+                    "allowNull": true,
+                    "name": "initiator",
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "initiator",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -1001,8 +1021,8 @@
             "indexes": []
         }
     },
-    "path": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current.json",
-    "backupPath": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current_bak.json",
+    "path": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current.json",
+    "backupPath": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current_bak.json",
     "exists": false,
     "revision": 1
 }
