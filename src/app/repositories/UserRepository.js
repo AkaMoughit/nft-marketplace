@@ -32,6 +32,14 @@ class UserRepository extends BaseRepository {
         });
     }
 
+    findByPhoneNumber(phoneNumber) {
+        return this.model.findOne({
+           where: {
+               phone_number: phoneNumber
+           }
+        });
+    }
+
 
     update(user) {
         return this.model.update(
