@@ -110,12 +110,12 @@
                                 <div class="nft-item style-2">
                                     <div class="nft-inner">
                                         <div class="nft-thumb">
-                                            <img loading="lazy" src="assets/images/nft-item/style-2/01.jpg" alt="nft-img">
+                                            <img loading="lazy" src="<%- profile.banner_url %>" alt="nft-img" onerror="this.onerror=null;this.src='assets/images/profile/cover.jpg';">
                                         </div>
                                         <div class="nft-content">
                                             <div class="author-thumb">
-                                                <a href="/author?profileId=<%- profile.profile_id %>" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/04.png" alt="author-img"></a>
+                                                <a href="/author?profileId=<%- profile.profile_id %>" class="veryfied">
+                                                    <img loading="lazy" src="<%- profile.picture_url %>" alt="author-img" style="aspect-ratio: 1/1" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
                                             </div>
                                             <div class="author-details">
                                                 <h5><a href="/author?profileId=<%- profile.profile_id %>"><%- profile.name %></a> </h5>

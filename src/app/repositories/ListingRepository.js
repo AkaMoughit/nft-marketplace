@@ -2,13 +2,16 @@ const BaseRepository = require("./BaseRepository");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 const models = require("../models");
+const {downloadDataFromIpfs} = require("../utils/UploadHelper");
 const Listing = require('../models').Listing;
+const Profile = require('../models').Profile;
 
 const Op = require('../models').Sequelize.Op;
 
 class ListingRepository extends BaseRepository {
-    constructor(Listing) {
+    constructor(Listing, Profile) {
         super(Listing);
+        this.profileModel = Profile;
     }
 
     updateById(listingId, listing) {
@@ -73,9 +76,19 @@ class ListingRepository extends BaseRepository {
                             model: models.Nft,
                             where: {
                                 token_id: tokenId
-                            }
+                            },
+                            include: [
+                                {
+                                    model: models.NftOwnership,
+                                    where: {
+                                        NftId: {
+                                            [Op.col]: 'Nft.id'
+                                        }
+                                    },
+                                },
+                            ],
                         },
-                        'Seller'
+
                     ],
                     order: [['createdAt', 'DESC']],
                     // where: {
@@ -88,7 +101,14 @@ class ListingRepository extends BaseRepository {
                     // },
                 });
 
-                let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues);
+                let owner = await this.profileModel.findOne({
+                    where: {
+                        id: listing.Nft.NftOwnership.OwnerId
+                    }
+                });
+
+                listing.Nft.uri = (await downloadDataFromIpfs(listing.Nft.uri)).filePath;
+                let nftCardDTO = new NftProfileListingDTO(listing.Nft, owner.dataValues, listing.dataValues);
                 let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
                 nftCardDTO.sale_end_date = deltaInDHMS;
 
@@ -136,7 +156,7 @@ class ListingRepository extends BaseRepository {
                     order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
                 });
 
-                let listNftCards = this.extractNftCards(allActiveListings);
+                let listNftCards = await this.extractNftCards(allActiveListings);
 
                 resolve({ count: allActiveListings.count, rows: listNftCards });
             }catch (err) {
@@ -182,7 +202,7 @@ class ListingRepository extends BaseRepository {
                     order: [[this.model.sequelize.literal('favoritesCount'), 'DESC']]
                 });
 
-                let listNftCards = this.extractNftCards(allActiveListings);
+                let listNftCards = await this.extractNftCards(allActiveListings);
 
                 resolve({ count: allActiveListings.count, rows: listNftCards });
             }catch (err) {
@@ -191,11 +211,12 @@ class ListingRepository extends BaseRepository {
         })
     }
 
-    extractNftCards(allActiveListings) {
+    async extractNftCards(allActiveListings) {
         let listNftCards = [];
 
         for (let listing of allActiveListings.rows) {
 
+            listing.Nft.uri = (await downloadDataFromIpfs(listing.Nft.uri)).filePath;
             let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount, true);
             let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
             nftCardDTO.sale_end_date = deltaInDHMS;
@@ -206,4 +227,4 @@ class ListingRepository extends BaseRepository {
     }
 }
 
-module.exports = new ListingRepository(Listing);
+module.exports = new ListingRepository(Listing,Profile);

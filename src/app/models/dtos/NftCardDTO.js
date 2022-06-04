@@ -57,6 +57,10 @@ class NftCardDTO {
         this.itemId = listing === undefined
             ? null
             : listing.id
+
+        this.owner = profile === undefined
+            ? null
+            : profile
     }
 }
 

@@ -77,7 +77,7 @@
                         <div class="item-desc-part">
                             <div class="item-desc-inner">
                                 <div class="item-desc-thumb">
-                                    <img src="assets/images/nft-item/item-details.gif" alt="item-img">
+                                    <img src="<%- nft.uri %>" alt="item-img">
                                 </div>
                                 <div class="item-desc-content">
                                     <nav>
@@ -100,12 +100,12 @@
                                             <p><%- nft.description %></p>
                                             <div class="author-profile d-flex flex-wrap align-items-center gap-15">
                                                 <div class="author-p-thumb">
-                                                    <a href="author"><img src="assets/images/seller/02.gif"
-                                                                              alt="author-img "></a>
+                                                    <a ><img style="aspect-ratio: 1/1" src="<%- nft.owner.picture_url %>"
+                                                                              alt="author-img " onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
                                                 </div>
                                                 <div class="author-p-info">
                                                     <p class="mb-0">Owner</p>
-                                                    <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner_name %></a></h6>
+                                                    <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner.name %></a></h6>
                                                 </div>
                                             </div>
                                             <ul class="other-info-list">
