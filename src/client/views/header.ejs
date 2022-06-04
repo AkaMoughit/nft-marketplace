@@ -24,58 +24,30 @@
                            aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">Home</a>
 
                         <ul class="dropdown-menu header__nav-menu">
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#">Landing</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#cathegoryId">Cathegories</a>
+                            <li><a class="drop-down-item" href="/index#">Landing</a></li>
+                            <li><a class="drop-down-item" href="/index#cathegoryId">Cathegories</a>
                             </li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item"
+                            <li><a class="drop-down-item"
                                    href="/index#sellerId">Sellers</a></li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#nftId">NFTs</a>
+                            <li><a class="drop-down-item" href="/index#nftId">NFTs</a>
                             </li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#orderId">Orders</a>
+                            <li><a class="drop-down-item" href="/index#orderId">Orders</a>
                             </li>
-                            <li><a onclick="enableHomeElement()" class="drop-down-item" href="/index#gigId">Gigs</a>
+                            <li><a class="drop-down-item" href="/index#gigId">Gigs</a>
                             </li>
                         </ul>
                     </li>
                     <li class="header__nav-item">
-                        <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">Explore</a>
-
-                        <ul class="dropdown-menu header__nav-menu">
-                            <li><a class="drop-down-item" href="explore">Explore NFT's</a></li>
-                            <li><a class="drop-down-item" href="auction">Auction Page</a></li>
-
-                        </ul>
+                        <a href="explore" class="header__nav-link">Explore</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a href="all-authors" class="header__nav-link">Authors</a>
+                    </li>
+                    <li class="header__nav-item">
+                        <a href="offers" class="header__nav-link">Offers</a>
                     </li>
                     <li class="header__nav-item">
                         <a href="activity" class="header__nav-link">Activity</a>
-                    </li>
-                    <li class="header__nav-item">
-                        <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">Blog</a>
-
-                        <ul class="dropdown-menu header__nav-menu">
-                            <li><a class="drop-down-item" href="blog">Blog style 1</a></li>
-                            <li><a class="drop-down-item" href="blog-2">Blog style 2</a></li>
-                            <li><a class="drop-down-item" href="blog-3">Blog style 3</a></li>
-                            <li><a class="drop-down-item" href="blog-single">Blog Single </a></li>
-                            <li><a class="drop-down-item" href="blog-single-2">Blog Single 2</a></li>
-                        </ul>
-                    </li>
-                    <li class="header__nav-item">
-                        <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-bs-offset="0,10">Pages</a>
-
-                        <ul class="dropdown-menu header__nav-menu">
-                            <% if(sessionData.isAuth) { %>
-                            <li><a class="drop-down-item" href="conversation">My conversations</a></li>
-                                <% } %>
-                            <li><a class="drop-down-item" href="all-authors">ALL Authors</a></li>
-                            <li><a class="drop-down-item" href="wallet">Wallet Connect</a></li>
-                            <li><a class="drop-down-item" href="404">404</a></li>
-                            <li><a class="drop-down-item" href="forgot-pass">Forgot Password</a></li>
-
-                        </ul>
                     </li>
                     <li class="header__nav-item">
                         <a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown"
@@ -90,6 +62,7 @@
                         <ul class="dropdown-menu header__nav-menu">
                             <li><a class="drop-down-item" href="contact">Contact </a></li>
                             <li><a class="drop-down-item" href="coming-soon">Coming soon</a></li>
+                            <li><a class="drop-down-item" href="offer-single">Offer (Test)</a></li>
                         </ul>
                     </li>
                 </ul>

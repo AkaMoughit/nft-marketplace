@@ -1,11 +1,8 @@
-const mainController = require("../../app/controllers/MainController");
+const customOfferController = require("../../app/controllers/CustomOfferController");
 
 var router = require("express").Router();
 
-router.get('/blog', mainController.blogPage);
-router.get('/blog-2', mainController.blogPage2);
-router.get('/blog-3', mainController.blogPage3);
-router.get('/blog-single', mainController.blogSinglePage);
-router.get('/blog-single-2', mainController.blogSingle2Page);
+router.get('/offers', customOfferController.offersPage);
+router.get('/offer-single', customOfferController.offerDetailsPage);
 
 module.exports = router;

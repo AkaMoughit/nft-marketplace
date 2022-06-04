@@ -103,23 +103,3 @@ exports.testPost = async function (req, res) {
 
     res.status(200).send();
 }
-
-exports.blogPage = function (req, res) {
-    res.status(200).render('blog', {});
-}
-
-exports.blogPage2 = function (req, res) {
-    res.status(200).render('blog-2', {});
-}
-
-exports.blogPage3 = function (req, res) {
-    res.status(200).render('blog-3', {});
-}
-
-exports.blogSinglePage = function (req, res) {
-    res.status(200).render('blog-single', {});
-}
-
-exports.blogSingle2Page = function (req, res) {
-    res.status(200).render('blog-single-2', {});
-}
