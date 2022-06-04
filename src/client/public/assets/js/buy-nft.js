@@ -10,7 +10,7 @@ const NftAddress = await (await fetch("../contracts/NFT-address.json")).json();
 const toWei = (number) => ethers.utils.parseEther(number.toString());
 const fromWei = (number) => ethers.utils.formatEther(number);
 
-$("#buy-pages-btn").on('click', async function () {
+$("#buy-nft-btn").on('click', async function () {
     if ($(this).data("auth")) {
         if (window.ethereum) {
             let accounts = await provider.listAccounts();

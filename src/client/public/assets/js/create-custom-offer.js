@@ -48,7 +48,7 @@ $(".create-offer-button").on('click', async function () {
     const offeredPrice = $('#offerPriceInput').val();
     let offerNftCategory;
 
-    let offerNftCategories = document.getElementsByName('offer-pages-category');
+    let offerNftCategories = document.getElementsByName('offer-nft-category');
 
     for (let category of offerNftCategories) {
         if (category.checked) {

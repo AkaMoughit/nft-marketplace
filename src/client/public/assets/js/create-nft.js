@@ -87,7 +87,7 @@ function getUri() {
             const price = $('#priceInput').val();
             let nftCategory;
 
-            let nftCategories = document.getElementsByName('pages-category');
+            let nftCategories = document.getElementsByName('nft-category');
 
             for(let category of nftCategories) {
                 if(category.checked) {
@@ -109,7 +109,7 @@ function getUri() {
                     console.log("finished uploading");
                 } catch (err) {
                     console.log(err);
-                    return reject("IPFS error while uploading pages details");
+                    return reject("IPFS error while uploading nft details");
                 }
             } else {
                 return reject("No file uploaded");
@@ -120,7 +120,7 @@ function getUri() {
                 uri = (await uploadDataToIpfs({filePath, name, desc, listingType, nftCategory})).dataPath;
             } catch (err) {
                 console.log(err);
-                return reject("IPFS error while uploading pages details");
+                return reject("IPFS error while uploading nft details");
             }
             console.log("finished uploading");
             console.log(uri);
@@ -129,7 +129,7 @@ function getUri() {
     );
 }
 
-$(".create-pages-button").on('click', async function() {
+$(".create-nft-button").on('click', async function() {
     let auth = $(this).data('auth');
     if (!auth) {
         location.href = '/signin';

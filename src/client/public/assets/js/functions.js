@@ -61,7 +61,7 @@ $(window).on('load', function () {
     $(function () {
         // init Isotope
         var $grid = $('.assets-holder').isotope({
-            itemSelector: '.pages-item',
+            itemSelector: '.nft-item',
             layoutMode: 'fitRows',
             fitRows: {
                 gutter: 20,
@@ -273,8 +273,8 @@ $(document).ready(function () {
         loop: true
     });
 
-    //pages-category thumb slider
-    var swiper = new Swiper('.pages-cat-thumb', {
+    //nft-category thumb slider
+    var swiper = new Swiper('.nft-cat-thumb', {
         slidesPerView: 3,
         spaceBetween: 10,
         speed: 2000,

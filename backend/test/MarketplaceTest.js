@@ -49,11 +49,11 @@ describe('Marketplace', function () {
                     addr2.address
                 );
         });
-        it('Should have ownership over pages', async function () {
+        it('Should have ownership over nft', async function () {
             await marketplace.connect(addr2).makeItem(nft.address, 1, toWei(1));
             expect(await nft.ownerOf(1)).to.equal(marketplace.address);
         });
-        it('Should have pages count as 1', async function () {
+        it('Should have nft count as 1', async function () {
             await marketplace.connect(addr2).makeItem(nft.address, 1, toWei(1));
             expect(await marketplace.itemCount()).to.equal(1);
         });

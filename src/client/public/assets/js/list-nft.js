@@ -32,7 +32,7 @@ $(document).ready(function (){
         });
     }
 
-    $(".owned-pages-card-list-button").on('click', async function () {
+    $(".owned-nft-card-list-button").on('click', async function () {
         let auth = $(this).data('auth');
         if (!auth) {
             location.href = '/signin';

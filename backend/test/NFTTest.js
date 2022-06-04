@@ -26,7 +26,7 @@ describe("NFT", function () {
     });
 
     describe("Mint", function() {
-        it("Should track each minted pages", async function() {
+        it("Should track each minted nft", async function() {
             await nft.connect(addr1).mint(URI);
 
             expect(await nft.tokenCount()).to.equal(1);
