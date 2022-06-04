@@ -64,11 +64,9 @@ $(".create-offer-button").on('click', async function () {
 
     const files = $('#offer-upload-file').prop('files');
 
-    if (files.length > 0) {
+    if (files.length) {
         await uploadOffer(files[0], title, desc, offeredPrice, offerNftCategory);
     } else {
-        $("#popup-offer").text("No file uploaded");
-        $("#offer-popup-trigger").click();
-        return;
+        await uploadOffer(null, title, desc, offeredPrice, offerNftCategory);
     }
 })

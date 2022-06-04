@@ -74,164 +74,35 @@
                 <div class="row">
                     <div class="col-lg-9 col-12">
                         <div class="blog-wrapper">
+                            <% customOffers.forEach(customOffer => { %>
                             <div class="post-item">
                                 <div class="post-item-inner">
-                                    <div class="post-thumb">
-                                        <a href="blog-single"><img src="assets/images/blog/01.gif" alt="blog"></a>
-                                    </div>
+                                    <% if (customOffer.attachment_url) { %>
+                                        <div class="post-thumb">
+                                            <a href="offer-details?id=<%- customOffer.id %>"><img src="<%- customOffer.attachment_url %>" alt="blog"></a>
+                                        </div>
+                                    <% } %>
                                     <div class="post-content">
-                                        <span class="meta">By <a href="#">Admin</a> March 24, 2021</span>
-                                        <h3><a href="blog-single">Uompe Qrear High Ecent Nche Without Some Prin
-                                                Uomp Without Some Qreari</a></h3>
-                                        <p>Rapidious qntegrate distrbuted supply chains throuih marke position bestn
-                                            practces chain marke positonn bestin practcer ieractvel fashon and sound
-                                            qources forin iteractve fashion bestin practce ieractve and sound qources
-                                            for.</p>
+                                        <span class="meta">By <a href="author?profileId=<%- customOffer.creator.profile_id%>">
+                                                <%- customOffer.creator.name %> </a>
+                                            <%- customOffer.creation_date %></span>
+                                        <h3><a href="offer-details?id=<%- customOffer.id %>"><%- customOffer.title %></a></h3>
+                                        <p><%- customOffer.body %></p>
                                     </div>
                                     <div class="blog-footer">
-                                        <a href="blog-single" class="viewall">Read More <i
+                                        <a href="offer-details?id=<%- customOffer.id %>" class="viewall">Read More <i
                                                 class="icofont-double-right"></i></a>
                                         <div class="right">
-                                            <a href="#" class="blog-heart"><i class="icofont-heart-alt"></i> 12 <span
-                                                    class="d-none d-sm-inline-block">Like</span> </a>
-                                            <a href="#" class="blog-comment"><i class="icofont-comment"></i> 24
+<!--                                            <a href="#" class="blog-heart"><i class="icofont-heart-alt"></i> 12 <span-->
+<!--                                                    class="d-none d-sm-inline-block">Like</span> </a>-->
+                                            <a href="#" class="blog-comment"><i class="icofont-comment"></i>
+                                                <%- customOffer.commentsCount%>
                                                 <span class="d-none d-sm-inline-block">Comments</span> </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="post-item post-slider">
-                                <div class="post-item-inner">
-                                    <div class="post-thumb">
-                                        <div class="blog-slider">
-                                            <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <img loading="lazy" src="assets/images/blog/03.jpg" alt="blog">
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <img loading="lazy" src="assets/images/blog/02.jpg" alt="blog">
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <img loading="lazy" src="assets/images/blog/04.jpg" alt="blog">
-                                                </div>
-                                            </div>
-                                            <div class="blog-slider-next">
-                                                <i class="icofont-play"></i>
-                                            </div>
-                                            <div class="blog-slider-prev">
-                                                <i class="icofont-play"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-content">
-                                        <span class="meta">By <a href="blog-single">Admin</a> March 24, 2021</span>
-                                        <h3><a href="blog-single">Uompe Qrear High Ecent Nche Without Some Prin
-                                                Uomp Without Some Qreari</a></h3>
-                                        <p>Rapidious qntegrate distrbuted supply chains throuih marke position bestn
-                                            practces chain marke positonn bestin practcer ieractvel fashon and sound
-                                            qources forin iteractve fashion bestin practce ieractve and sound qources
-                                            for.</p>
-                                    </div>
-                                    <div class="blog-footer">
-                                        <a href="blog-single" class="viewall">Read More <i
-                                                class="icofont-double-right"></i></a>
-                                        <div class="right">
-                                            <a href="#" class="blog-heart"><i class="icofont-heart-alt"></i> 12 <span
-                                                    class="d-none d-sm-inline-block">Like</span> </a>
-                                            <a href="#" class="blog-comment"><i class="icofont-comment"></i> 24
-                                                <span class="d-none d-sm-inline-block">Comments</span> </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item video-post">
-                                <div class="post-item-inner">
-                                    <div class="post-thumb">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe loading="lazy"
-                                                src="https://www.youtube-nocookie.com/embed/eEzD-Y97ges?controls=0"
-                                                allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                    <div class="post-content">
-                                        <span class="meta">By <a href="#">Admin</a> March 24, 2021</span>
-                                        <h3><a href="blog-single">Uompe Qrear High Ecent Nche Without Some Prin
-                                                Uomp Without Some Qreari</a></h3>
-                                        <p>Rapidious qntegrate distrbuted supply chains throuih marke position bestn
-                                            practces chain marke positonn bestin practcer ieractvel fashon and sound
-                                            qources forin iteractve fashion bestin practce ieractve and sound qources
-                                            for.</p>
-                                    </div>
-                                    <div class="blog-footer">
-                                        <a href="blog-single" class="viewall">Read More <i
-                                                class="icofont-double-right"></i></a>
-                                        <div class="right">
-                                            <a href="#" class="blog-heart"><i class="icofont-heart-alt"></i> 12 <span
-                                                    class="d-none d-sm-inline-block">Like</span> </a>
-                                            <a href="#" class="blog-comment"><i class="icofont-comment"></i> 24
-                                                <span class="d-none d-sm-inline-block">Comments</span> </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item code-post">
-                                <div class="post-item-inner">
-                                    <div class="post-thumb">
-                                        <div class="code-content">
-                                            <i class="icofont-quote-right"></i>
-                                            <p>Rapidious qntegrate distrbuted supply chains throuih marke position bestn
-                                                practces chain marke positonn bestin practcer ieractvel fashon and sound
-                                                qources forin iteractve fashion bestin practce ieractve and sound
-                                                qources
-                                                for.</p>
-                                        </div>
-                                    </div>
-                                    <div class="post-content">
-                                        <span class="meta">By <a href="#">Admin</a> March 24, 2021</span>
-                                        <h3><a href="blog-single">Uompe Qrear High Ecent Nche Without Some Prin
-                                                Uomp Without Some Qreari</a></h3>
-                                        <p>Rapidious qntegrate distrbuted supply chains throuih marke position bestn
-                                            practces chain marke positonn bestin practcer ieractvel fashon and sound
-                                            qources forin iteractve fashion bestin practce ieractve and sound qources
-                                            for.</p>
-                                    </div>
-                                    <div class="blog-footer">
-                                        <a href="blog-single" class="viewall">Read More <i
-                                                class="icofont-double-right"></i></a>
-                                        <div class="right">
-                                            <a href="#" class="blog-heart"><i class="icofont-heart-alt"></i> 12 <span
-                                                    class="d-none d-sm-inline-block">Like</span> </a>
-                                            <a href="#" class="blog-comment"><i class="icofont-comment"></i> 24
-                                                <span class="d-none d-sm-inline-block">Comments</span> </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="paginations">
-                            <ul class="lab-ul d-flex flex-wrap justify-content-center mb-1">
-                                <li>
-                                    <a href="#"><i class="icofont-rounded-double-left"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">1</a>
-                                </li>
-                                <li class="d-none d-sm-block">
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">...</a>
-                                </li>
-                                <li class="d-none d-sm-block">
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icofont-rounded-double-right"></i></a>
-                                </li>
-                            </ul>
+                            <% }) %>
                         </div>
                     </div>
                     <div class="col-lg-3 col-12">

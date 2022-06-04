@@ -23,9 +23,23 @@ exports.createCustomOffer = async function (req, res) {
 };
 
 exports.offersPage = function (req, res) {
-    res.status(200).render('offers', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+    customOfferService.getCustomOffers()
+        .then(customOffers => {
+            res.status(200).render('offers', {customOffers: customOffers, sessionData:
+                    { isAuth: req.session.isAuth, profile: req.session.profile }});
+        })
+        .catch(err => {
+            res.status(404).render('404', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+        })
 }
 
 exports.offerDetailsPage = function (req, res) {
-    res.status(200).render('offer-details', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+    customOfferService.findById(req.query.id)
+        .then(([customOffer, comments]) => {
+            res.status(200).render('offer-details', {customOffer: customOffer, comments: comments, sessionData:
+                    { isAuth: req.session.isAuth, profile: req.session.profile }});
+        })
+        .catch(error => {
+            res.status(404).render('404', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+        })
 }
