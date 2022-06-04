@@ -14,10 +14,19 @@ module.exports = (sequelize, DataTypes) => {
       Conversation.hasMany(models.Message);
       Conversation.belongsTo(models.Profile, { foreignKey : 'participent1Id' });
       Conversation.belongsTo(models.Profile, { foreignKey : 'participent2Id' });
+      Conversation.belongsTo(models.Profile, { foreignKey : {name: 'initiator', allowNull: true} });
     }
   }
   Conversation.init({
     creation_date: DataTypes.DATE,
+    isCustomOffer : {
+      type : DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Conversation',

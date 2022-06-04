@@ -133,6 +133,12 @@
                                         <p>Send Message</p>
                                     </div>
                                 </a>
+                                <a href="chat?p1Id=<%- sessionData.profile.profile_id%>&p2Id=<%- profile.profile_id%>&customOffer=true">
+                                    <div class="icon"><i class="icofont-speech-comments"></i></div>
+                                    <div class="text">
+                                        <p>Custom Offer</p>
+                                    </div>
+                                </a>
                             </li>
                             <% } %>
                             <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>

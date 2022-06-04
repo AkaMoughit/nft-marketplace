@@ -18,14 +18,15 @@ class ChatService {
     }
 
 
-    findOrCreateConversation(p1Id, p2Id) {
+    findOrCreateConversation(p1Id, p2Id, customOffer) {
         return new Promise(async (resolve, reject) => {
             try {
+                if (customOffer === undefined) customOffer = false;
                 if (p1Id === p2Id) throw new Error("You can't have a conversation with yourself");
                 let participant1 = await this.profileRepository.findByProfileId(p1Id);
                 let participant2 = await this.profileRepository.findByProfileId(p2Id);
 
-                let [conversation, created] = await this.conversationRepository.findOrCreate(participant1.id, participant2.id);
+                let [conversation, created] = await this.conversationRepository.findOrCreate(participant1.id, participant2.id, customOffer);
                 resolve(conversation);
             } catch (error) {
                 console.log(error);
@@ -49,6 +50,7 @@ class ChatService {
 
                     participantsAndConversationIds.push({
                         conversationId : conversation.dataValues.id,
+                        isCustomOffer: conversation.dataValues.isCustomOffer,
                         OtherParticipant : otherParticipant.name
                     })
                 }
@@ -78,6 +80,20 @@ class ChatService {
                 console.log(e);
                 reject(e);
             }
+        })
+    }
+
+    deleteConversation(conversationId) {
+        return new Promise((resolve, reject) => {
+            console.log("conversation id : ", conversationId);
+            this.conversationRepository.deleteById(conversationId)
+                .then(res => {
+                    resolve("sucess");
+                })
+                .catch(error=> {
+                    console.log(error);
+                    reject("error");
+                })
         })
     }
 }

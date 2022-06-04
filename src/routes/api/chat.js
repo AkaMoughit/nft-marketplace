@@ -5,5 +5,7 @@ const chatController = require("../../app/controllers/ChatController");
 var router = require("express").Router();
 
 router.get('/chat', authenticationHandlers.isAuth, web3handlers.loadingHandler, chatController.getConversation);
+router.post('/delete-conversation', authenticationHandlers.isAuth, web3handlers.loadingHandler,
+    chatController.deleteConversation)
 
 module.exports = router;

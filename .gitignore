@@ -13,3 +13,7 @@ src/app/contracts/
 #Hardhat files
 cache
 artifacts
+
+src/app/contracts/
+src/client/public/contracts/
+src/client/public/assets/uploads/

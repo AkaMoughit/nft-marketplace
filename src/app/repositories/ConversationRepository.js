@@ -7,11 +7,14 @@ class ConversationRepository extends BaseRepository {
         super(Conversation);
     }
 
-    findOrCreate(participent1Id, participent2Id) {
+    findOrCreate(participent1Id, participent2Id, customOffer) {
+        const initiator = customOffer? participent1Id : null;
         return this.model.findOrCreate({
             where: {
                 participent1Id: Math.min(participent1Id, participent2Id),
-                participent2Id : Math.max(participent1Id, participent2Id)
+                participent2Id : Math.max(participent1Id, participent2Id),
+                isCustomOffer : customOffer,
+                initiator : initiator
             },
             defaults: {
                 creation_date: new Date(),
@@ -38,6 +41,14 @@ class ConversationRepository extends BaseRepository {
                 id: id
             }
         })
+    }
+
+    deleteById(id) {
+        return this.model.destroy({
+            where: {
+                id: id
+            }
+        });
     }
 }
 

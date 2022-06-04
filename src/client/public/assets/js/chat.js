@@ -7,6 +7,7 @@ const otherParticipantId = document.getElementById('otherParticipantId').innerTe
 const currentProfileName = document.getElementById('currentProfileName').innerText;
 const otherParticipantName = document.getElementById('otherParticipantName').innerText;
 const conversationId = document.getElementById('conversationId').innerText;
+const closeButton = document.getElementById('close-conversation');
 
 socket.on('message', message => {
     displayMessage(message);
@@ -29,6 +30,20 @@ chatForm.addEventListener('submit', (e) => {
     socket.emit('message', message);
     displayMessage(message);
     document.getElementById('msg').value = ''
+})
+
+closeButton.addEventListener('click', () => {
+    $.ajax({
+        url: '/delete-conversation/',
+        data: {conversationId},
+        type: 'POST',
+        'success': function (data, textStatus) {
+            window.location.href = "conversation";
+        },
+        'error': function (data, textStatus) {
+            window.location.href = "conversation";
+        }
+    });
 })
 
 function displayMessage(message) {
