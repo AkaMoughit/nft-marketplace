@@ -11,7 +11,8 @@ router.post('/signup', authenticationHandlers.isNotAuth, web3handlers.loadingHan
 router.post('/signin', authenticationHandlers.isNotAuth, web3handlers.loadingHandler, signinValidator.schema,
     signinValidator.validate, authenticationController.login);
 router.get('/signout', authenticationHandlers.isAuth, authenticationController.signout);
-router.get('/verifyAccount', authenticationController.emailVerification);
-router.get('/resendVerification', authenticationController.resendVerification);
+router.get('/verifyAccount', authenticationHandlers.isNotAuth, authenticationController.emailVerification);
+router.get('/resendVerification', authenticationHandlers.isNotAuth, authenticationController.resendVerification);
+router.post('/resetPassword', authenticationHandlers.isNotAuth, authenticationController.resetPassword);
 
 module.exports = router;
