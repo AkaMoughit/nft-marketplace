@@ -124,9 +124,22 @@ class AuthenticationService {
                 password: reqBody.password,
                 phone_number: reqBody.phone_number
             }
+
             const transaction = await this.userRepository.model.sequelize.transaction();
             try {
-                let [user, created] = await this.userRepository.save(userTBR, transaction);
+                let resultUser = await this.userRepository.findByEmail(userTBR.email);
+                if(resultUser) {
+                    console.log("Email already used : " + userTBR.email);
+                    return reject("A profile with this email already exists");
+                }
+
+                resultUser = await this.userRepository.findByPhoneNumber(userTBR.phone_number);
+                if(resultUser) {
+                    console.log("Phone number already used : " + userTBR.phone_number);
+                    return reject("This phone number is already used");
+                }
+
+                let [user, created] = await this.userRepository.save(userTBR, transaction)
                 if (created) {
                     console.log("user created : ", user.dataValues.id);
 
@@ -137,37 +150,47 @@ class AuthenticationService {
                         birthdate: reqBody.birthdate,
                         specialize_in: reqBody.specialize_in
                     }
-                    let [profile, created] = await this.profileRepository.save(profileTBR, transaction)
-                    if (created) {
-                        let verificationCode = uuidv4();
-                        const userVerification = {
-                            verificationCode: verificationCode,
-                            expirationDate: new Date(new Date().setDate(new Date().getDate() + verificationExpirationDelay)),
-                            UserId: user.id,
-                            createdAt: new Date(),
-                            updatedAt: new Date()
-                        }
+                    this.profileRepository.save(profileTBR, transaction)
+                        .then(async ([profile, created]) => {
+                            if (created) {
+                                let verificationCode = uuidv4();
+                                const userVerification = {
+                                    verificationCode: verificationCode,
+                                    expirationDate: new Date(new Date().setDate(new Date().getDate() + verificationExpirationDelay)),
+                                    UserId: user.id,
+                                    createdAt: new Date(),
+                                    updatedAt: new Date()
+                                }
 
-                        await this.userVerificationRepository.createOrUpdate(userVerification, transaction);
-                        await email.verificationEmail(emailVerificationConfig.email, userTBR.email, verificationCode);
+                                try {
+                                    await this.userVerificationRepository.createOrUpdate(userVerification, transaction);
+                                    await email.verificationEmail(emailVerificationConfig.email, userTBR.email, verificationCode);
+                                } catch (err) {
+                                    console.log("Error while generating verification : ", err);
+                                }
 
-                        console.log("profile created : ", profile.dataValues.name);
-                        await transaction.commit();
-                        resolve("Profile created successfully");
-                    } else {
-                        console.log("profile exists : ", profile.dataValues.name);
+                                console.log("profile created : ", profile.dataValues.name);
+                                await transaction.commit();
+                                resolve("Profile created successfully");
+                            } else {
+                                console.log("profile exists : ", profile.dataValues.name);
+                                await transaction.rollback();
+                                reject("Profile already exists");
+                            }
+                        }).catch(async err => {
+                        console.log("Error while persisting profile : ", err);
                         await transaction.rollback();
-                        reject("User not created");
-                    }
+                        reject("Error while persisting profile");
+                    });
                 } else {
                     console.log("email not available : " + user.dataValues.email);
                     await transaction.rollback();
                     reject("A profile with this email already exists");
                 }
             } catch (err) {
-                console.log('error user creation : ' + err);
+                console.log("Error while persisting user : ", err);
                 await transaction.rollback();
-                reject("An error has occurred");
+                reject("Error while persisting user");
             }
         });
     }
