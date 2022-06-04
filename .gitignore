@@ -7,7 +7,8 @@ coverage.json
 typechain
 package-lock.json
 src/client/public/assets/uploads/
-
+src/client/public/contracts/
+src/app/contracts/
 
 #Hardhat files
 cache
