@@ -49,10 +49,10 @@ class ProfileRepository extends BaseRepository {
         });
     }
 
-    findByuserId(userId) {
+    findByUserId(userId) {
         return this.model.findOne({
             where: {
-                userId : userId
+                UserId : userId
             }
         });
     }

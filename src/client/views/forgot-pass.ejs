@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="assets/css/lightcase.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/popup.css">
 
     <!-- site title -->    <title>Enftomark</title>
 </head>
@@ -86,9 +87,14 @@
                                 </div>
                             </div>
                             <div class="form-group mb-0">
-                                <button class="d-block default-btn move-top"><span>Reset Now</span></button>
+                                <button type="button" class="reset-pass-button d-block default-btn move-top"><span>Reset Now</span></button>
                             </div>
                         </form>
+                        <div id="inline-popups" class="submit-btn-field"
+                             style="display: flex; justify-content: space-evenly;">
+                            <a hidden id="popup-trigger" href="#popup" data-effect="mfp-zoom-in">Test</a>
+                        </div>
+                        <div id="popup" class="blue-popup mfp-with-anim mfp-hide">TestPopup</div>
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -238,6 +244,9 @@
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
     <script type="module" src="assets/js/metamask.js"></script>
+    <script src="assets/js/reset-password.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/popup.js"></script>
 </body>
 
 </html>

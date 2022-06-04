@@ -105,3 +105,12 @@ exports.resendVerification = function (req, res) {
         });
 }
 
+exports.resetPassword = function (req, res) {
+    authenticationService.resetPassword(req.body.email)
+        .then(result => {
+            res.status(200).send(result);
+        }).catch(e => {
+            console.log(e);
+            res.status(401).send(e);
+        });
+}

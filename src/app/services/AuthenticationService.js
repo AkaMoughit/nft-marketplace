@@ -3,7 +3,6 @@
 const { v4: uuidv4 } = require('uuid');
 const short = require('short-uuid');
 const bcrypt = require("bcrypt");
-const session = require('express-session');
 const userRepository = require('../repositories/UserRepository');
 const profileRepository = require('../repositories/ProfileRepository');
 const userVerificationRepository = require('../repositories/UserVerificationRepository');
@@ -17,6 +16,48 @@ class AuthenticationService {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.userVerificationRepository = userVerificationRepository;
+    }
+
+    resetPassword(email) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await this.userRepository.findByEmail(email);
+                user = user ? user.dataValues : null;
+                if(user) {
+                    if(user.isVerified) {
+                        let pw = short().new();
+                        user.password = await bcrypt.hash(pw, 10);
+                        await this.userRepository.update(user);
+                        const nodemailer = require("nodemailer");
+
+                        let transporter = nodemailer.createTransport({
+                            service: emailVerificationConfig.mailService,
+                            auth: {
+                                user: emailVerificationConfig.email,
+                                pass: emailVerificationConfig.password
+                            },
+                        });
+                        const options = {
+                            from: emailVerificationConfig.email,
+                            to: user.email,
+                            subject: 'Secure Artz Password reset',
+                            text: 'Your new password: ' + pw
+                        }
+                        await transporter.sendMail(options, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                        resolve("New password has been sent to this email");
+                    }
+                } else {
+                    resolve("New password has been sent to this email");
+                }
+            } catch (e) {
+                console.log(e);
+                reject("An error occurred while sending password email");
+            }
+        })
     }
 
     emailVerification(verificationCode) {
@@ -139,7 +180,7 @@ class AuthenticationService {
                         if (user && await bcrypt.compare(reqBody.password, user.password)) {
                             console.log("user found ", user.dataValues.email);
                             if(user.dataValues.isVerified) {
-                                this.profileRepository.findByuserId(user.id)
+                                this.profileRepository.findByUserId(user.id)
                                     .then(profile => {
                                         console.log("associated profile : ", profile.dataValues.name);
                                         resolve(profile.dataValues);
