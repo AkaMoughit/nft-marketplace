@@ -186,25 +186,40 @@ class AuthenticationService {
                                         resolve(profile.dataValues);
                                     })
                                     .catch(err => {
-                                        console.log("error during finding profile : " + err)
-                                        reject({userId : -2})
+                                        console.log("Error when fetching for profile : " + err)
+                                        reject({
+                                            code: -1,
+                                            message: "Error when fetching for profile"
+                                        })
                                     })
                             } else {
                                 console.log("Account not verified");
-                                reject({userId : -3});
+                                reject({
+                                    code: -2,
+                                    message: "Account not verified"
+                                });
                             }
                         } else {
-                            console.log("wrong email or password");
-                            resolve({userId : -1});
+                            console.log("Wrong email or password");
+                            reject({
+                                code: -3,
+                                message: "Wrong email or password"
+                            });
                         }
                     } catch (err) {
-                        console.log("error during comparing password : " + err);
-                        reject({error : err});
+                        console.log("Error when verifying user info : " + err);
+                        reject({
+                            code: -4,
+                            message: "Error when verifying user info"
+                        });
                     }
                 })
                 .catch(err => {
-                    console.log("error during finding user : " + err);
-                    reject({error : err});
+                    console.log("Error when fetching for user : " + err);
+                    reject({
+                        code: -5,
+                        message: "Error when fetching for user"
+                    });
                 })
         });
     }

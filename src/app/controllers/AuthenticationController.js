@@ -26,34 +26,34 @@ exports.login = function(req, res) {
     }
     authenticationService.login(req.body)
         .then(profile => {
-            if (profile.UserId > 0) {
-                req.session.isAuth = true;
-                req.session.profile = profile;
+            req.session.isAuth = true;
+            req.session.profile = profile;
 
-                // redirect is disgusting
-                res.status(303).redirect("/author?profileId=" + profile.profile_id);
-            } else {
+            // redirect is disgusting
+            res.status(303).redirect("/author?profileId=" + profile.profile_id);
+        }).catch(err => {
                 req.session.isAuth = false;
                 req.session.profile = {};
 
-                res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
-                res.status(401).render('signin', {info : "wrong email or password", sessionData: { isAuth: false, profile: {}}});
-            }
-        })
-        .catch(
-            err => {
-                req.session.isAuth = false;
-                req.session.profile = {};
+                switch(err.code) {
+                    case -2:
+                        const htmlResult = `Account not verified, <a class="resend-verification-button" href="#" data-email="${req.body.email}">Resend?</a>`
+                        res.status(401).render('signin', {info: htmlResult, sessionData: {isAuth: false, profile: {}}});
+                        break;
+                    case -3:
+                        req.session.isAuth = false;
+                        req.session.profile = {};
 
-                console.log(err);
-                if(err.userId === -3) {
-                    const htmlResult = `Account not verified, <a class="resend-verification-button" href="#" data-email="${req.body.email}">Resend?</a>`
-                    res.status(401).render('signin', {info: htmlResult, sessionData: {isAuth: false, profile: {}}});
-                } else {
-                    res.status(500).render('signin', {info : "An error has occurred", sessionData: { isAuth: false, profile: {}}});
+                        res.cookie("sessionData", { isAuth: req.session.isAuth, profile: req.session.profile }, { httpOnly: true });
+                        res.status(401).render('signin', {info : err.message, sessionData: { isAuth: false, profile: {}}});
+                        break;
+                    default:
+                        req.session.isAuth = false;
+                        req.session.profile = {};
+
+                        res.status(500).render('signin', {info : err.message, sessionData: { isAuth: false, profile: {}}});
                 }
-            }
-        )
+            });
 }
 
 exports.signInPage = function (req, res) {
