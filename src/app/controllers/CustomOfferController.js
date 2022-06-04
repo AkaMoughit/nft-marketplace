@@ -21,3 +21,11 @@ exports.createCustomOffer = async function (req, res) {
             res.status(500).send("Error while creating custom offer");
         });
 };
+
+exports.offersPage = function (req, res) {
+    res.status(200).render('offers', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}
+
+exports.offerDetailsPage = function (req, res) {
+    res.status(200).render('offer-details', {sessionData: { isAuth: req.session.isAuth, profile: req.session.profile }});
+}

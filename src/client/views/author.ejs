@@ -76,24 +76,29 @@
                 <div class="profile-item">
                     <div class="profile-cover">
                             <img src="<%- profile.banner_url %>" alt="banner-pic" onerror="this.onerror=null;this.src='assets/images/profile/cover.jpg';" id="bannerPic">
-                        <div class="edit-photo custom-upload">
-                            <div class="file-btn"><i class="icofont-camera"></i>
-                                Edit Photo
+                        <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                            <div class="edit-photo custom-upload">
+                                <div class="file-btn"><i class="icofont-camera"></i>
+                                    Edit Photo
+                                </div>
+                                <input type="file" accept="image/*" id="bannerPicInput" name="bannerPicInput">
                             </div>
-                            <input type="file" accept="image/*" id="bannerPicInput" name="bannerPicInput">
-                        </div>
+                        <% } %>
                     </div>
                     <div class="profile-information">
                         <div class="profile-pic">
                             <img src="<%- profile.picture_url %>" alt="DP" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';" id="profilePic">
-                            <div class="custom-upload">
-                                <div class="file-btn">
-                                        <span class="d-none d-lg-inline-block"> <i class="icofont-camera"></i>
-                                            Edit</span>
-                                    <span class="d-lg-none mr-0"><i class="icofont-plus"></i></span>
+
+                            <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
+                                <div class="custom-upload">
+                                    <div class="file-btn">
+                                            <span class="d-none d-lg-inline-block"> <i class="icofont-camera"></i>
+                                                Edit</span>
+                                        <span class="d-lg-none mr-0"><i class="icofont-plus"></i></span>
+                                    </div>
+                                    <input type="file" accept="image/*" id="profilePicInput" name="profilePicInput">
                                 </div>
-                                <input type="file" accept="image/*" id="profilePicInput" name="profilePicInput">
-                            </div>
+                            <% } %>
                         </div>
                         <div class="profile-name">
                             <h4><%- profile.name %></h4>
@@ -904,58 +909,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="widget widget-instagram">
-                                                <div class="widget-header">
-                                                    <h5 class="title">Featured NFT</h5>
-                                                </div>
-                                                <ul class="widget-wrapper d-flex flex-wrap justify-content-center">
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/01.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/01.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/02.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/02.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/03.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/03.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/04.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/04.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/05.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/05.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/06.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/06.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/07.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/07.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/08.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/08.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/09.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/09.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </aside>
                                     </div>
                                 </div>
@@ -1031,58 +984,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="widget widget-instagram">
-                                                <div class="widget-header">
-                                                    <h5 class="title">Featured NFT</h5>
-                                                </div>
-                                                <ul class="widget-wrapper d-flex flex-wrap justify-content-center">
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/01.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/01.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/02.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/02.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/03.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/03.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/04.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/04.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/05.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/05.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/06.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/06.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/07.jp"><img loading="lazy"
-                                                                                                    src="assets/images/nft-item/07.jpg"
-                                                                                                    alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/08.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/08.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/09.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/09.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </aside>
                                     </div>
@@ -1226,58 +1127,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="widget widget-instagram">
-                                                <div class="widget-header">
-                                                    <h5 class="title">Featured NFT</h5>
-                                                </div>
-                                                <ul class="widget-wrapper d-flex flex-wrap justify-content-center">
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/01.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/01.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/02.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/02.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/03.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/03.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/04.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/04.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/05.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/05.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/06.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/06.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/07.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/07.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/08.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/08.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/09.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/09.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </aside>
                                     </div>
@@ -1425,58 +1274,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="widget widget-instagram">
-                                                <div class="widget-header">
-                                                    <h5 class="title">Featured NFT</h5>
-                                                </div>
-                                                <ul class="widget-wrapper d-flex flex-wrap justify-content-center">
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/01.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/01.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/02.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/02.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/03.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/03.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/04.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/04.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/05.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/05.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/06.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/06.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/07.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/07.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/08.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/08.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                    <li><a data-rel="lightcase"
-                                                           href="assets/images/nft-item/09.jpg"><img loading="lazy"
-                                                                                                     src="assets/images/nft-item/09.jpg"
-                                                                                                     alt="nft-img"></a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </aside>
                                     </div>
