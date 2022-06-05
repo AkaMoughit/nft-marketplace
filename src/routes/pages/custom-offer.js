@@ -3,6 +3,6 @@ const customOfferController = require("../../app/controllers/CustomOfferControll
 var router = require("express").Router();
 
 router.get('/offers', customOfferController.offersPage);
-router.get('/offer-single', customOfferController.offerDetailsPage);
+router.get('/offer-details', customOfferController.offerDetailsPage);
 
 module.exports = router;
