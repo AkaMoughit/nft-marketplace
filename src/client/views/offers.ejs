@@ -79,7 +79,9 @@
                                 <div class="post-item-inner">
                                     <% if (customOffer.attachment_url) { %>
                                         <div class="post-thumb">
-                                            <a href="offer-details?id=<%- customOffer.id %>"><img src="<%- customOffer.attachment_url %>" alt="blog"></a>
+                                            <a class="file-data-container" data-src="<%- customOffer.attachment_url %>" href="offer-details?id=<%- customOffer.id %>">
+
+                                            </a>
                                         </div>
                                     <% } %>
                                     <div class="post-content">
@@ -286,6 +288,7 @@
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
     <script type="module" src="assets/js/metamask.js"></script>
+    <script src="assets/js/file-display.js"></script>
 </body>
 
 </html>

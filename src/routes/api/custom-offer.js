@@ -2,7 +2,20 @@ const authenticationHandlers = require("../../app/handlers/AuthenticationHandler
 const customOfferController = require("../../app/controllers/CustomOfferController");
 
 const multer  = require('multer')
-const offerUpload = multer({ dest: './src/client/public/assets/uploads/offers' });
+const {nanoid} = require("nanoid");
+const mime = require("mime-types");
+const offerUpload = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null,  './src/client/public/assets/uploads/offers')
+        },
+        filename: (req, file, cb) => {
+            let id = nanoid();
+            let ext = mime.extension(file.mimetype);
+            cb(null, `${id}.${ext}`);
+        }
+    })
+});
 
 var router = require('express').Router();
 

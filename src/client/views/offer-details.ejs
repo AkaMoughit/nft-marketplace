@@ -55,11 +55,11 @@
             <div class="page-header-content">
                 <div class="page-header-inner">
                     <div class="page-title">
-                        <h2>Blog Single Page </h2>
+                        <h2>Offer Details</h2>
                     </div>
                     <ol class="breadcrumb">
                         <li><a href="index">Home</a></li>
-                        <li class="active">Blog Single </li>
+                        <li class="active">Offer Details</li>
                     </ol>
                 </div>
             </div>
@@ -77,8 +77,8 @@
                         <div class="blog-wrapper">
                             <div class="post-item">
                                 <div class="post-item-inner">
-                                    <div class="post-thumb">
-                                        <img src="<%- customOffer.attachment_url %>" alt="blog">
+                                    <div data-src="<%- customOffer.attachment_url %>" class="file-data-container post-thumb">
+
                                     </div>
                                     <div class="post-content">
                                         <span class="meta">By
@@ -334,6 +334,7 @@
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/functions.js"></script>
     <script src="assets/js/comment.js"></script>
+    <script src="assets/js/file-display.js"></script>
 </body>
 
 </html>

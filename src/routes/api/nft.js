@@ -4,7 +4,18 @@ const nftController = require("../../app/controllers/NftController");
 const authenticationHandlers = require("../../app/handlers/AuthenticationHandlers");
 
 const multer = require("multer");
-const storage = multer.memoryStorage();
+const {nanoid} = require("nanoid");
+const mime = require("mime-types");
+const storage = multer.memoryStorage({
+    destination: (req, file, cb) => {
+        cb(null,  '')
+    },
+    filename: (req, file, cb) => {
+        let id = nanoid();
+        let ext = mime.extension(file.mimetype);
+        cb(null, `${id}.${ext}`);
+    }
+});
 const upload = multer({storage: storage});
 
 var router = require('express').Router();

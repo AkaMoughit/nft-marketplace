@@ -2,8 +2,21 @@ const authenticationHandlers = require("../../app/handlers/AuthenticationHandler
 const web3handlers = require("../../app/handlers/Web3Handlers");
 const profileController = require("../../app/controllers/ProfileController");
 const multer = require("multer");
+const {nanoid} = require("nanoid");
+const mime = require("mime-types");
 
-var uploading = multer({dest: './src/client/public/assets/uploads'});
+var uploading = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null,  './src/client/public/assets/uploads')
+        },
+        filename: (req, file, cb) => {
+            let id = nanoid();
+            let ext = mime.extension(file.mimetype);
+            cb(null, `${id}.${ext}`);
+        }
+    })
+});
 
 var router = require("express").Router();
 
