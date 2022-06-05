@@ -106,8 +106,6 @@ class ListingRepository extends BaseRepository {
                         id: listing.Nft.NftOwnership.OwnerId
                     }
                 });
-
-                listing.Nft.uri = (await downloadDataFromIpfs(listing.Nft.uri)).filePath;
                 let nftCardDTO = new NftProfileListingDTO(listing.Nft, owner.dataValues, listing.dataValues);
                 let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
                 nftCardDTO.sale_end_date = deltaInDHMS;
@@ -216,7 +214,6 @@ class ListingRepository extends BaseRepository {
 
         for (let listing of allActiveListings.rows) {
 
-            listing.Nft.uri = (await downloadDataFromIpfs(listing.Nft.uri)).filePath;
             let nftCardDTO = new NftProfileListingDTO(listing.Nft, listing.Seller, listing.dataValues, listing.dataValues.favoritesCount, true);
             let deltaInDHMS = getDeltaInDHMS(new Date(nftCardDTO.sale_end_date), new Date());
             nftCardDTO.sale_end_date = deltaInDHMS;

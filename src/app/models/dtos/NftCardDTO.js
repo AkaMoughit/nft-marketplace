@@ -46,9 +46,9 @@ class NftCardDTO {
             ? null
             : favoriteCount;
 
-        this.uri = nft.uri === undefined
+        this.uri = nft.data_url === undefined
             ? null
-            : nft.uri
+            : nft.data_url
 
         this.isListed = isListed === undefined
             ? null

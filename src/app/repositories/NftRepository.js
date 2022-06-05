@@ -40,6 +40,7 @@ class NftRepository extends BaseRepository {
                                 description: nft.description,
                                 contract_adress: nft.contract_adress,
                                 uri: nft.uri,
+                                data_url: nft.data_url,
                                 category: nft.category,
                                 CreatorId: nft.CreatorId,
                                 creation_date: new Date(),
@@ -138,9 +139,6 @@ class NftRepository extends BaseRepository {
                         }
                     ]
                 });
-                for (const nft of nfts) {
-                    nft.uri = (await downloadDataFromIpfs(nft.uri)).filePath;
-                }
                 resolve(nfts);
             } catch (e) {
                 reject(e);
@@ -156,9 +154,6 @@ class NftRepository extends BaseRepository {
                         creatorId: creatorPk
                     }
                 });
-                for (const nft of nfts) {
-                    nft.uri = (await downloadDataFromIpfs(nft.uri)).filePath;
-                }
                 resolve(nfts);
             } catch (e) {
                 reject(e);

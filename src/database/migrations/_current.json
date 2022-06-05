@@ -508,6 +508,11 @@
                     "field": "uri",
                     "seqType": "Sequelize.STRING"
                 },
+                "data_url": {
+                    "allowNull": false,
+                    "field": "data_url",
+                    "seqType": "Sequelize.STRING"
+                },
                 "category": {
                     "allowNull": false,
                     "field": "category",

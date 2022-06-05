@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-04T17:52:34.955Z",
+  created: "2022-06-05T00:51:26.327Z",
   comment: "",
 };
 
@@ -376,6 +376,11 @@ const migrationCommands = (transaction) => [
         },
         name: { type: Sequelize.STRING, field: "name", allowNull: false },
         uri: { type: Sequelize.STRING, field: "uri", allowNull: false },
+        data_url: {
+          type: Sequelize.STRING,
+          field: "data_url",
+          allowNull: false,
+        },
         category: {
           type: Sequelize.STRING,
           field: "category",
