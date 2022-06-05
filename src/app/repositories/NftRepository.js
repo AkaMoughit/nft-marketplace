@@ -12,6 +12,7 @@ const uploadHelper = require('../utils/UploadHelper');
 const models = require('../models');
 
 let getDeltaInDHMS = require('../utils/DateHelper');
+const {downloadDataFromIpfs} = require("../utils/UploadHelper");
 
 class NftRepository extends BaseRepository {
     constructor(Nft, Profile, Listing, FavoriteList, NftOwnership) {
@@ -39,6 +40,7 @@ class NftRepository extends BaseRepository {
                                 description: nft.description,
                                 contract_adress: nft.contract_adress,
                                 uri: nft.uri,
+                                data_url: nft.data_url,
                                 category: nft.category,
                                 CreatorId: nft.CreatorId,
                                 creation_date: new Date(),
@@ -125,22 +127,36 @@ class NftRepository extends BaseRepository {
     }
 
     findAllByOwnerPk(ownerId) {
-        return this.model.findAll({
-            include: [
-                {
-                    model: this.NftOwnership,
-                    where: {
-                        OwnerId: ownerId
-                    }
-                }
-            ]
+        return new Promise(async (resolve, reject) => {
+            try {
+                let nfts = await this.model.findAll({
+                    include: [
+                        {
+                            model: this.NftOwnership,
+                            where: {
+                                OwnerId: ownerId
+                            }
+                        }
+                    ]
+                });
+                resolve(nfts);
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
     findByCreatorPk(creatorPk) {
-        return this.model.findAll({
-            where: {
-                creatorId: creatorPk
+        return new Promise(async (resolve, reject) => {
+            try {
+                let nfts = await this.model.findAll({
+                    where: {
+                        creatorId: creatorPk
+                    }
+                });
+                resolve(nfts);
+            } catch (e) {
+                reject(e);
             }
         });
     }
@@ -166,6 +182,7 @@ class NftRepository extends BaseRepository {
         });
     }
 
+    // deprecated
     findAllNftCardsOrderedByFavoriteCount(limit, offset, name) {
         return new Promise(async (resolve, reject) => {
             let listNftCards = [];
@@ -208,6 +225,8 @@ class NftRepository extends BaseRepository {
         });
     }
 
+
+    // deprecated
     findNftCardByTokenId(tokenId) {
         return new Promise((resolve, reject) => {
             this.findByTokenId(tokenId)

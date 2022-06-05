@@ -133,6 +133,12 @@
                                         <p>Send Message</p>
                                     </div>
                                 </a>
+                                <a href="chat?p1Id=<%- sessionData.profile.profile_id%>&p2Id=<%- profile.profile_id%>&customOffer=true">
+                                    <div class="icon"><i class="icofont-speech-comments"></i></div>
+                                    <div class="text">
+                                        <p>Custom Offer</p>
+                                    </div>
+                                </a>
                             </li>
                             <% } %>
                             <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id) { %>
@@ -445,17 +451,14 @@
                                                                                     class="nft-item-top d-flex justify-content-between align-items-center">
                                                                                 <div class="author-part">
                                                                                     <ul class="author-list d-flex">
-                                                                                        <li class="single-author">
-                                                                                            <a href="#"><img
-                                                                                                        src="assets/images/seller/01.png"
-                                                                                                        alt="author-img"></a>
-                                                                                        </li>
                                                                                         <li
                                                                                                 class="single-author d-flex align-items-center">
                                                                                             <a href="#"
                                                                                                class="veryfied"><img
-                                                                                                        src="assets/images/seller/02.gif"
-                                                                                                        alt="author-img"></a>
+                                                                                                        style="aspect-ratio: 1/1;"
+                                                                                                        src="<%- onSaleNftCard.owner.picture_url %>"
+                                                                                                        alt="author-img"
+                                                                                                        onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
                                                                                             <h6>
                                                                                                 <a href="#"><%- profile.name %></a>
                                                                                             </h6>
@@ -491,7 +494,7 @@
                                                                             <!-- nft-bottom part -->
                                                                             <div class="nft-item-bottom">
                                                                                 <div class="nft-thumb">
-                                                                                    <img src="assets/images/nft-item/02.jpg"
+                                                                                    <img src="<%- onSaleNftCard.uri %>"
                                                                                          alt="nft-img">
 
                                                                                     <!-- nft countdwon -->
@@ -563,17 +566,14 @@
                                                                                     class="nft-item-top d-flex justify-content-between align-items-center">
                                                                                 <div class="author-part">
                                                                                     <ul class="author-list d-flex">
-                                                                                        <li class="single-author">
-                                                                                            <a href="author"><img
-                                                                                                        src="assets/images/seller/01.gif"
-                                                                                                        alt="author-img"></a>
-                                                                                        </li>
                                                                                         <li
                                                                                                 class="single-author d-flex align-items-center">
                                                                                             <a href="#"
                                                                                                class="veryfied"><img
-                                                                                                        src="assets/images/seller/01.png"
-                                                                                                        alt="author-img"></a>
+                                                                                                        style="aspect-ratio: 1/1;"
+                                                                                                        src="<%- nft.owner.picture_url %>"
+                                                                                                        alt="author-img"
+                                                                                                        onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
                                                                                             <h6>
                                                                                                 <a href="#"><%- profile.name %></a>
                                                                                             </h6>
@@ -609,7 +609,7 @@
                                                                             <!-- nft-bottom part -->
                                                                             <div class="nft-item-bottom">
                                                                                 <div class="nft-thumb">
-                                                                                    <img src="assets/images/nft-item/04.jpg"
+                                                                                    <img src="<%- nft.uri %>"
                                                                                          alt="nft-img">
 
                                                                                     <!-- nft countdwon -->
@@ -640,7 +640,7 @@
                                                                                 <div class="nft-content">
                                                                                     <div class="price-like d-flex justify-content-between align-items-center">
                                                                                         <a href="item-details?nft_id=<%- nft.token_id %>"><h4><%- nft.name %></h4></a>
-                                                                                        <% if(!nft.isListed) { %>
+                                                                                        <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id && !nft.isListed) { %>
                                                                                             <input id="<%- nft.token_id %>" required type="number" class="owned-nft-card-price form-control" placeholder="Price (ETH)" />
                                                                                         <% } %>
                                                                                     </div>
@@ -654,7 +654,7 @@
                                                                                         <a href="#" class="nft-like"><i
                                                                                                     class="icofont-heart"></i>
                                                                                             <%- nft.favoriteCount %></a>
-                                                                                        <% if(!nft.isListed) { %>
+                                                                                        <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id && !nft.isListed) { %>
                                                                                             <button data-auth="<%- sessionData.isAuth %>" data-tokenid="<%- nft.token_id %>" class="owned-nft-card-list-button btn btn-primary">List</button>
                                                                                         <% } %>
                                                                                     </div>
@@ -683,17 +683,14 @@
                                                                                     class="nft-item-top d-flex justify-content-between align-items-center">
                                                                                 <div class="author-part">
                                                                                     <ul class="author-list d-flex">
-                                                                                        <li class="single-author">
-                                                                                            <a href="author?profileId=<%- createdNft.owner_profile_id %>"><img
-                                                                                                        src="assets/images/seller/05.png"
-                                                                                                        alt="author-img"></a>
-                                                                                        </li>
                                                                                         <li
                                                                                                 class="single-author d-flex align-items-center">
                                                                                             <a href="author?profileId=<%- createdNft.owner_profile_id %>"
                                                                                                class="veryfied"><img
-                                                                                                        src="assets/images/seller/05.gif"
-                                                                                                        alt="author-img"></a>
+                                                                                                        style="aspect-ratio: 1/1;"
+                                                                                                        src="<%- createdNft.owner.picture_url %>"
+                                                                                                        alt="author-img"
+                                                                                                        onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
                                                                                             <h6>
                                                                                                 <a href="author?profileId=<%- createdNft.owner_profile_id %>"><%- createdNft.owner_name %></a>
                                                                                             </h6>
@@ -730,7 +727,7 @@
                                                                             <!-- nft-bottom part -->
                                                                             <div class="nft-item-bottom">
                                                                                 <div class="nft-thumb">
-                                                                                    <img src="assets/images/nft-item/06.gif"
+                                                                                    <img src="<%- createdNft.uri %>"
                                                                                          alt="nft-img">
 
                                                                                     <!-- nft countdwon -->

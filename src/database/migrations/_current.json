@@ -175,6 +175,14 @@
                     "field": "creation_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "isCustomOffer": {
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "allowNull": false,
+                    "field": "isCustomOffer",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -205,6 +213,18 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "participent2Id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "initiator": {
+                    "allowNull": true,
+                    "name": "initiator",
+                    "references": {
+                        "model": "Profiles",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "initiator",
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -486,6 +506,11 @@
                 "uri": {
                     "allowNull": false,
                     "field": "uri",
+                    "seqType": "Sequelize.STRING"
+                },
+                "data_url": {
+                    "allowNull": false,
+                    "field": "data_url",
                     "seqType": "Sequelize.STRING"
                 },
                 "category": {

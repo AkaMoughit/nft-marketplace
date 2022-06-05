@@ -8,7 +8,7 @@ const Sequelize = require("sequelize");
  * createTable() => "CustomOffers", deps: [Profiles]
  * createTable() => "NftCollections", deps: [Profiles]
  * createTable() => "CollectionFavoriteLists", deps: [NftCollections, Profiles]
- * createTable() => "Conversations", deps: [Profiles, Profiles]
+ * createTable() => "Conversations", deps: [Profiles, Profiles, Profiles]
  * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Attachments", deps: [CustomOffers, Nfts]
@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-03T17:01:20.088Z",
+  created: "2022-06-05T00:51:26.327Z",
   comment: "",
 };
 
@@ -295,6 +295,12 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         creation_date: { type: Sequelize.DATE, field: "creation_date" },
+        isCustomOffer: {
+          type: Sequelize.BOOLEAN,
+          field: "isCustomOffer",
+          allowNull: false,
+          defaultValue: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -319,6 +325,15 @@ const migrationCommands = (transaction) => [
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
+          allowNull: true,
+        },
+        initiator: {
+          type: Sequelize.INTEGER,
+          field: "initiator",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Profiles", key: "id" },
+          name: "initiator",
           allowNull: true,
         },
       },
@@ -361,6 +376,11 @@ const migrationCommands = (transaction) => [
         },
         name: { type: Sequelize.STRING, field: "name", allowNull: false },
         uri: { type: Sequelize.STRING, field: "uri", allowNull: false },
+        data_url: {
+          type: Sequelize.STRING,
+          field: "data_url",
+          allowNull: false,
+        },
         category: {
           type: Sequelize.STRING,
           field: "category",

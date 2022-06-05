@@ -43,11 +43,13 @@ class NftService {
         return this.nftRepository.listAll();
     }
 
+    // deprecated
     findNftCardByTokenId(tokenId) {
         return this.nftRepository.findNftCardByTokenId(tokenId);
 
     }
 
+    // deprecated
     findAllNftCardsOrderedByFavoriteCount(limit, offset, name=null) {
         return this.nftRepository.findAllNftCardsOrderedByFavoriteCount(limit, offset, name);
     }

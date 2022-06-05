@@ -70,6 +70,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    data_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: false,

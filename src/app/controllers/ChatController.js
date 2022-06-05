@@ -1,7 +1,7 @@
 const chatService = require('../services/ChatService')
 
 exports.getConversation = (req, res) => {
-    chatService.findOrCreateConversation(req.query.p1Id, req.query.p2Id)
+    chatService.findOrCreateConversation(req.query.p1Id, req.query.p2Id, req.query.customOffer)
         .then(conversation => {
             res.status(200).redirect('/conversation?id=' + conversation.id)
         })
@@ -30,5 +30,14 @@ exports.conversationPage = (req, res) => {
                 sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
             });
         })
+}
 
+exports.deleteConversation = (req, res) => {
+    chatService.deleteConversation(req.body.conversationId)
+        .then( result => {
+            res.status(200).redirect('/conversation');
+        })
+        .catch(error => {
+            res.status(500).redirect('/conversation');
+        })
 }

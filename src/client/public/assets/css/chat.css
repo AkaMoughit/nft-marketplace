@@ -33,8 +33,38 @@ a {
     text-decoration: none;
 }
 
-.c-btn {
+.a-btn {
+    margin: 2px!important;
     border-radius: 35px;!important;
+}
+
+.b-btn {
+    margin: 2px!important;
+    border-radius: 35px;!important;
+    background-color: darkgreen!important;
+    color: #fff!important;
+    height: 40px!important;
+    align-self: flex-end;
+    margin-bottom: 20px!important;
+}
+
+.c-btn {
+    margin: 2px!important;
+    border-radius: 35px;!important;
+    background-color: darkred!important;
+    color: #fff!important;
+    height: 40px!important;
+    align-self: flex-end;
+    margin-bottom: 20px!important;
+}
+
+.custom-offer-container {
+    padding: 25px 30px;
+    margin-right: 10px;
+    background-color: var(--dark-color-a);
+    border-radius: 7px;
+    align-self: flex-end;
+    height: 90px;
 }
 
 .conversation-profile {
@@ -190,7 +220,7 @@ a {
 .custom-container {
     display: flex;
     flex-direction: row;
-    height: 855px;
+    height: 620px;
 }
 
 .custom-div {
