@@ -1,10 +1,11 @@
 const CommentForm = document.getElementById('commentform');
 const customOfferId = document.getElementById('customOfferId').innerText;
-const commentBody = document.getElementById('commentBodyInput').value;
 const commenstList = document.querySelector('.comment-list');
 
 CommentForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const commentBody = document.getElementById('commentBodyInput').value;
 
     let comment = {
         send_date: new Date(),
@@ -24,6 +25,7 @@ CommentForm.addEventListener('submit', (e) => {
         data: JSON.stringify(comment),
         success: function (comment) {
             displayComment(comment);
+            document.getElementById('commentBodyInput').value = '';
         },
         error: function (response) {
             console.log(response)

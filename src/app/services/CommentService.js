@@ -16,11 +16,11 @@ class CommentService {
 
                 const profile = await this.profileRepository.findById(profileId);
                 comment.creator = profile.dataValues;
-                
+
                 resolve(comment);
             } catch (error) {
                 console.log(error);
-                reject(error);
+                reject("An error has occurred");
             }
         })
     }
