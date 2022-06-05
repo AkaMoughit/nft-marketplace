@@ -26,6 +26,10 @@ class ConversationRepository extends BaseRepository {
         });
     }
 
+    async save(comment) {
+        return this.model.create(comment);
+    }
+
 }
 
 module.exports = new ConversationRepository(Comment);
