@@ -102,22 +102,21 @@
                                                                             class="yellow-color"><%- message.Listing.price %>
                                                                                                                     ETH</span>
                                                                 </p>
-                                                                <% if(message.ProfileId === otherParticipant.id) { %>
-<!--                                                                    <a href="#" class="default-btn move-right">-->
-<!--                                                                        Buy-->
-<!--                                                                    </a>-->
-                                                                    <div data-itemid="<%- message.Listing.id %>" data-auth="<%- sessionData.isAuth %>" class="buy-nft-btn buying-btns d-flex flex-wrap">
-                                                                        <% if(message.Listing.transaction_date != undefined) { %>
-                                                                            <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
-                                                                                <span>No longer available!</span>
-                                                                            </div>
-                                                                        <% } else { %>
-                                                                            <a class="default-btn move-right" style="cursor: pointer">
-                                                                                <span>Buy</span>
-                                                                            </a>
-                                                                        <% } %>
-                                                                    </div>
-                                                                <% } %>
+                                                                <div class="buying-btns d-flex flex-wrap">
+                                                                    <% if(message.Listing.transaction_date != undefined) { %>
+                                                                        <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
+                                                                            <span>No longer available!</span>
+                                                                        </div>
+                                                                    <% } else if(message.ProfileId === otherParticipant.id) { %>
+                                                                        <a data-itemid="<%- message.Listing.id %>" data-auth="<%- sessionData.isAuth %>" class="buy-nft-btn default-btn move-right" style="cursor: pointer">
+                                                                            <span>Buy</span>
+                                                                        </a>
+                                                                    <% } else { %>
+                                                                        <a data-itemid="<%- message.Listing.id %>" data-auth="<%- sessionData.isAuth %>" class="remove-nft-btn default-btn move-right" style="cursor: pointer">
+                                                                            <span>Remove</span>
+                                                                        </a>
+                                                                    <% } %>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -413,5 +412,6 @@
 <script src="assets/js/popup.js"></script>
 <script type="module" src="assets/js/create-nft.js"></script>
 <script type="module" src="assets/js/list-nft.js"></script>
+<script type="module" src="assets/js/unlist-nft.js"></script>
 </body>
 </html>

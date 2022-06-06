@@ -285,7 +285,7 @@ closeButton.addEventListener('click', () => {
 
 function displayMessage(message) {
     let ownerName, messageClass;
-    if (message.ProfileId === currentProfileId) {
+    if (message.ProfileId.toString() === currentProfileId) {
         ownerName = currentProfileName;
         messageClass = 'messageCurrent';
     } else {
