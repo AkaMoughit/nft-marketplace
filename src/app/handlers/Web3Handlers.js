@@ -109,7 +109,14 @@ exports.loadingHandler = async function (req, res, next) {
         marketplaceContract.on('Removed', async (listingId, nftAddress, tokenId, price, sellerAddress) => {
             async function unlistNft() {
                 try {
-                    await listingService.unlistById(listingId);
+                    const buyerWallet = await walletService.findByAccountAddress(sellerAddress);
+
+                    const listing = {
+                        transaction_date: new Date(),
+                        BuyerId: buyerWallet.ProfileId
+                    }
+
+                    await listingService.unlistById(listingId, listing);
                 } catch (e) {
                     console.log(e);
                 }

@@ -27,10 +27,7 @@ class ListingService {
         return this.listingRepository.findListingByTokenId(tokenId);
     }
 
-    unlistById(listingId) {
-        const listing = {
-            transaction_date: new Date()
-        }
+    unlistById(listingId, listing) {
         return this.listingRepository.updateById(listingId, listing);
     }
 }

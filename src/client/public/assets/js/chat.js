@@ -24,10 +24,6 @@ const otherParticipantName = document.getElementById('otherParticipantName').inn
 const conversationId = document.getElementById('conversationId').innerText;
 const closeButton = document.getElementById('close-conversation');
 
-$(".remove-nft-btn").on('click', function () {
-    console.log("remove button clicked")
-})
-
 $(".buy-nft-btn").on('click', async function () {
     if ($(this).data("auth")) {
         if (window.ethereum) {
