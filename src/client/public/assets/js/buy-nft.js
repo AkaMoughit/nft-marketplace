@@ -42,6 +42,7 @@ $("#buy-nft-btn").on('click', async function () {
             try {
                 let result = await updateAccountAddress(accounts[0]);
                 await (await marketplaceContract.purchaseItem(itemId, {value: totalPriceInWei})).wait();
+                location.reload();
             } catch (e) {
                 if (e.status === 409) {
                     $("#popup").text(e.error);

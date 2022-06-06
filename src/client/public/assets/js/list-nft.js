@@ -2,7 +2,10 @@ import {ethers} from "./ethers.js";
 
 import {updateAccountAddress} from "./metamask.js";
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
+let provider;
+if(window.ethereum) {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+}
 const Marketplace = await (await fetch("../contracts/Marketplace.json")).json();
 const MarketplaceAddress = await (await fetch("../contracts/Marketplace-address.json")).json();
 const Nft = await (await fetch("../contracts/NFT.json")).json();

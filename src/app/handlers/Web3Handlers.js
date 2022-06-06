@@ -81,6 +81,7 @@ exports.loadingHandler = async function (req, res, next) {
 
             console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress);
             await listNft();
+            global.eventEmitter.emit('listingDone');
         });
 
         marketplaceContract.on('Bought', async (listingId, nftAddress, tokenId, price, sellerAddress, buyerAddress) => {
