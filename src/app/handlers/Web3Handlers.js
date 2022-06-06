@@ -105,6 +105,19 @@ exports.loadingHandler = async function (req, res, next) {
             await buyNft();
         });
 
+        marketplaceContract.on('Removed', async (listingId, nftAddress, tokenId, price, sellerAddress) => {
+            async function unlistNft() {
+                try {
+                    await listingService.unlistById(listingId);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress);
+            await unlistNft();
+        })
+
         // const itemCount = await marketplaceContract.itemCount();
         // let items = [];
         // for(let i = 1; i <= itemCount; i++) {
