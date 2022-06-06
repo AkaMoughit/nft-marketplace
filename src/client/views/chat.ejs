@@ -15,18 +15,20 @@
     <link rel="stylesheet" href="assets/css/style.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/popup.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
+
     <title>Chat</title>
 </head>
-<body onload="emitJoin()">
+<body>
 
-<!--<div class="preloader">-->
-<!--    <div class="preloader-inner">-->
-<!--        <div class="preloader-icon">-->
-<!--            <span></span>-->
-<!--            <span></span>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
 
 <%- include('./header.ejs') %>
 <% if (otherParticipant && conversation && messages) { %>
@@ -71,15 +73,57 @@
                 <div class="custom-div2">
                     <% if (messages) { %>
                     <div class="chat-messages">
-                        <%messages.forEach(message => {
-                            const messageClassName = message.ProfileId === otherParticipant.id ? "messageParticipant": "messageCurrent";%>
-                            <div class="<%- messageClassName%>">
+                        <% messages.forEach(message => {
+                            const messageClassName = message.ProfileId === otherParticipant.id ? "messageParticipant": "messageCurrent"; %>
+                            <div class="<%- messageClassName %>">
                                 <p class="meta"><%- message.ProfileId === otherParticipant.id ?
-                                            otherParticipant.name: sessionData.profile.name%>
-                                    <span><%- message.send_date%></span>
+                                            otherParticipant.name: sessionData.profile.name %>
+                                    <span><%- message.send_date %></span>
                                 </p>
-                                <p class="text">
-                                    <%- message.body%>
+                                <p class="text row justify-content-center gx-3 gy-2">
+                                    <%- message.body %>
+                                    <% if(message.Listing) { %>
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="nft-item">
+                                                <div class="nft-inner">
+                                                    <!-- nft-bottom part -->
+                                                    <div class="nft-item-bottom">
+                                                        <div data-src="<%- message.Listing.Nft.data_url %>" class="file-data-container nft-thumb">
+
+                                                        </div>
+                                                        <div class="nft-content">
+                                                            <h4>
+                                                                <a href="item-details?nft_id=<%- message.Listing.Nft.token_id %>"><%- message.Listing.Nft.name %></a>
+                                                            </h4>
+                                                            <div
+                                                                    class="price-like d-flex justify-content-between align-items-center">
+                                                                <p class="nft-price">Price:
+                                                                    <span
+                                                                            class="yellow-color"><%- message.Listing.price %>
+                                                                                                                    ETH</span>
+                                                                </p>
+                                                                <div class="buying-btns d-flex flex-wrap">
+                                                                    <% if(message.Listing.transaction_date != undefined) { %>
+                                                                        <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
+                                                                            <span>No longer available!</span>
+                                                                        </div>
+                                                                    <% } else if(message.ProfileId === otherParticipant.id) { %>
+                                                                        <a data-itemid="<%- message.Listing.id %>" data-auth="<%- sessionData.isAuth %>" class="buy-nft-btn default-btn move-right" style="cursor: pointer">
+                                                                            <span>Buy</span>
+                                                                        </a>
+                                                                    <% } else { %>
+                                                                        <a data-itemid="<%- message.Listing.id %>" data-auth="<%- sessionData.isAuth %>" class="remove-nft-btn default-btn move-right" style="cursor: pointer">
+                                                                            <span>Remove</span>
+                                                                        </a>
+                                                                    <% } %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% } %>
                                 </p>
                             </div>
                         <%})%>
@@ -101,11 +145,125 @@
         <% if (conversation && conversation.isCustomOffer) { %>
             <div class="custom-offer-container">
                 <%if (conversation.initiator === sessionData.profile.id) { %>
-                    <button class="btn b-btn">Make offer</button>
+                    <button id="make-offer-button" class="btn b-btn">Make offer</button>
                 <% } %>
                 <button class="btn c-btn" id="close-conversation">Close</button>
-            </divclass>
+            </div>
         <% } %>
+    </div>
+    <div id="offer-inline-popups" class="submit-btn-field"
+         style="display: flex; justify-content: space-evenly;">
+        <a hidden id="offer-popup-trigger" href="#popup-create-nft" data-effect="mfp-zoom-in">Test</a>
+    </div>
+        <% if(sessionData.isAuth && conversation && conversation.initiator === sessionData.profile.id) { %>
+            <div id="popup-create-nft" class="blue-popup mfp-with-anim mfp-hide create-nft py-7 px-3">
+                <section class="create-nft-form">
+                    <!-- upload field -->
+                    <div id="upload-field" class="upload-item mb-30">
+                        <p>PNG, JPG, JPEG, MP3, MPEG</p>
+                        <div class="custom-upload">
+                            <div class="file-btn">
+                                <i class="icofont-upload-alt"></i>
+                                Upload a file
+                                <input class="custom-upload"
+                                       id="upload-file" type="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- item name input -->
+                    <div
+                            class="form-floating item-name-field mb-3">
+                        <input type="text" class="form-control"
+                               id="itemNameInput"
+                               placeholder="Item Name"
+                               name="name" required>
+                        <label for="itemNameInput">Item
+                            Name</label>
+                    </div>
+                    <!-- item-description -->
+                    <div
+                            class="form-floating item-desc-field mb-30">
+                                                                                    <textarea class="form-control"
+                                                                                              id="itemDesc"
+                                                                                              name="description"
+                                                                                              placeholder="Item Description" required></textarea>
+                        <label for="itemDesc">Item
+                            Description</label>
+                    </div>
+                    <!-- Listing Type -->
+                    <div class="form-floating">
+                        <select class="form-select"
+                                id="listingType"
+                                name="listingType"
+                                aria-label="Floating label select" required>
+                            <option value="NORMAL" id="listingType" selected>
+                                Normal
+                            </option>
+                            <option value="AUCTION"
+                                    id="listingType">
+                                Auction
+                            </option>
+                        </select>
+                        <label for="listingType">Listing
+                            type</label>
+                    </div>
+                    <!-- Price -->
+                    <br>
+                    <div
+                            class="form-floating item-name-field mb-3">
+                        <input type="number" class="form-control"
+                               id="priceInput"
+                               placeholder="Price"
+                               name="price" required>
+                        <label for="priceInput">Price</label>
+                    </div>
+                    <div class="item-category-field mb-30">
+                        <h4>Select Item Catergory</h4>
+                        <ul
+                                class="item-cat-list d-flex flex-wrap">
+                            <li class="item-cat-btn active">
+                                                                                            <span><input
+                                                                                                        name="nft-category"
+                                                                                                        type="radio"
+                                                                                                        class="icofont-vector-path"
+                                                                                                        value="Digital Art"
+                                                                                                        checked></span>
+                                Digital Art
+                            </li>
+                            <li class="item-cat-btn">
+                                                                                            <span><input
+                                                                                                        name="nft-category"
+                                                                                                        type="radio"
+                                                                                                        class="icofont-ui-travel"
+                                                                                                        value="Photography"></span>
+                                Photography
+                            </li>
+                            <li class="item-cat-btn">
+                                                                                            <span><input
+                                                                                                        name="nft-category"
+                                                                                                        type="radio"
+                                                                                                        class="icofont-music-disk"
+                                                                                                        value="Music"></span>
+                                Music
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="inline-popups" class="submit-btn-field"
+                         style="display: flex; justify-content: space-evenly;">
+                        <a hidden id="popup-trigger" href="#popup" data-effect="mfp-zoom-in">Test</a>
+                        <button data-auth="<%- sessionData.isAuth %>"
+                                class="make-offer-button">Create Offer
+                        </button>
+                    </div>
+                    <div id="popup" class="blue-popup mfp-with-anim mfp-hide">TestPopup</div>
+                </section>
+            </div>
+        <% } %>
+    <div id="inline-popups" class="submit-btn-field"
+         style="display: flex; justify-content: space-evenly;">
+        <a hidden id="popup-trigger" href="#popup" data-effect="mfp-zoom-in">Test</a>
+    </div>
+    <div id="popup" class="blue-popup mfp-with-anim mfp-hide create-nft py-7 px-3">
     </div>
 </section>
 <footer class="footer-section">
@@ -248,7 +406,12 @@
 <script type="module" src="assets/js/utils.js"></script>
 <script type="module" src="assets/js/metamask.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="assets/js/chat.js"></script>
+<script type="module" src="assets/js/chat.js"></script>
 <script src="assets/js/file-display.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script src="assets/js/popup.js"></script>
+<script type="module" src="assets/js/create-nft.js"></script>
+<script type="module" src="assets/js/list-nft.js"></script>
+<script type="module" src="assets/js/unlist-nft.js"></script>
 </body>
 </html>

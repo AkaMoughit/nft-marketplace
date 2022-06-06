@@ -26,5 +26,9 @@ class ListingService {
     findListingByTokenId(tokenId) {
         return this.listingRepository.findListingByTokenId(tokenId);
     }
+
+    unlistById(listingId, listing) {
+        return this.listingRepository.updateById(listingId, listing);
+    }
 }
 module.exports = new ListingService(listingRepository);

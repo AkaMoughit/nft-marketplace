@@ -47,7 +47,8 @@ module.exports = {
                     password: faker.internet.password(),
                     phone_number: faker.phone.phoneNumber("+212 6 ## ## ## ##"),
                     createdAt: new Date(),
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    isVerified: true
                 })
             }
             return users;
@@ -105,16 +106,16 @@ module.exports = {
 
             for(const profile of profiles) {
 
-                let ownedCustomOffers = [];
-                for(const customOffer of customOffers) {
-                    if (customOffer.ProfileId === profile.id) {
-                        ownedCustomOffers.push(customOffer);
-                    }
-                }
+                // let ownedCustomOffers = [];
+                // for(const customOffer of customOffers) {
+                //     if (customOffer.ProfileId === profile.id) {
+                //         ownedCustomOffers.push(customOffer);
+                //     }
+                // }
 
                 for (let index = numberPerProfile * (profile.id - 1) + 1; index <= numberPerProfile * profile.id; index++) {
 
-                    let randomOwnedCustonOfferIndex = getRandomInt(0, ownedCustomOffers.length - 1);
+                    // let randomOwnedCustonOfferIndex = getRandomInt(0, ownedCustomOffers.length - 1);
                     let customOfferExist = getRandomInt(0, 2);
 
                     nfts.push({
@@ -128,11 +129,14 @@ module.exports = {
                         createdAt: new Date(),
                         updatedAt: new Date(),
                         CreatorId: profile.id,
+                        uri: 'ipfs.io/najsnjasn' + index,
+                        data_url: 'ipfs.io/najsnjasn' + index,
+                        category: 'Photography',
                         // Generate randomness
-                        CustomOfferId: customOfferExist === 1 ? ownedCustomOffers[randomOwnedCustonOfferIndex].id : undefined
+                        // CustomOfferId: customOfferExist === 1 ? ownedCustomOffers[randomOwnedCustonOfferIndex].id : undefined
                     });
                     //console.log(ownedCustomOffers[randomOwnedCustonOfferIndex]);
-                    ownedCustomOffers.splice(randomOwnedCustonOfferIndex, 1);
+                    // ownedCustomOffers.splice(randomOwnedCustonOfferIndex, 1);
 
 
                 }
@@ -288,35 +292,36 @@ module.exports = {
         let profiles = generateProfiles(users);
         await customInsert('Profiles', profiles, {});
 
-        let customOffers = generateCustomOffers(profiles, 3);
-        await customInsert('CustomOffers', customOffers, {});
+        // let customOffers = generateCustomOffers(profiles, 3);
+        // await customInsert('CustomOffers', customOffers, {});
 
-        let nfts = generateNfts(profiles, customOffers, 3);
-        await models.Nft.bulkCreate(nfts, {});
+        let nfts = generateNfts(profiles, null, 3);
+        // await models.Nft.bulkCreate(nfts, {});
+        await queryInterface.bulkInsert('Nfts', nfts, {});
 
         let listings = generateListings(profiles, nfts, 100);
         await models.Listing.bulkCreate(listings, {});
 
-        let favoriteLists = generateFavoriteLists(profiles, nfts, 400);
-        await queryInterface.bulkInsert('FavoriteLists', favoriteLists, {});
+        // let favoriteLists = generateFavoriteLists(profiles, nfts, 400);
+        // await queryInterface.bulkInsert('FavoriteLists', favoriteLists, {});
 
         // let activities = generateActivities(listings, 100);
         // await queryInterface.bulkInsert('Activities', activities, {});
 
-        let offers = generateOffers(profiles, listings, 100);
-        await queryInterface.bulkInsert('Offers', offers, {});
-
-        let comments = generateComments(customOffers, profiles,150);
-        await queryInterface.bulkInsert('Comments', comments, {});
-
-        let replies = generateReplies(comments, profiles, 150);
-        await queryInterface.bulkInsert('Comments', replies, {});
-
-        let conversations = generateConversations(profiles, 50);
-        await queryInterface.bulkInsert('Conversations', conversations, {})
-
-        let messages = generateMessages(conversations, 300);
-        await queryInterface.bulkInsert('Messages', messages, {})
+        // let offers = generateOffers(profiles, listings, 100);
+        // await queryInterface.bulkInsert('Offers', offers, {});
+        //
+        // let comments = generateComments(customOffers, profiles,150);
+        // await queryInterface.bulkInsert('Comments', comments, {});
+        //
+        // let replies = generateReplies(comments, profiles, 150);
+        // await queryInterface.bulkInsert('Comments', replies, {});
+        //
+        // let conversations = generateConversations(profiles, 50);
+        // await queryInterface.bulkInsert('Conversations', conversations, {})
+        //
+        // let messages = generateMessages(conversations, 300);
+        // await queryInterface.bulkInsert('Messages', messages, {})
     },
 
     async down (queryInterface, Sequelize) {

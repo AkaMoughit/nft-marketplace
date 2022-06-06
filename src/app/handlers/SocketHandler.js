@@ -8,12 +8,27 @@ module.exports = handleSocket = (io) => {
 
         socket.on('message', async (message) => {
             try {
-                let msg = await messageRepository.save(message);
-                socket.to(msg.dataValues.ConversationId).emit('message', msg.dataValues);
+                let savedMessage;
+                if(message.ListingId) {
+                    const waitListing = new Promise((resolve) => {
+                        // Improvement: use filters to filter out which listing exactly
+                        global.eventEmitter.once('listingDone', async () => {
+                            resolve("listing inserted");
+                        });
+                    });
+
+                    await waitListing;
+                    savedMessage = await messageRepository.save(message);
+                    savedMessage = await messageRepository.findDetailedById(savedMessage.id);
+                } else {
+                    savedMessage = await messageRepository.save(message);
+                    savedMessage = await messageRepository.findDetailedById(savedMessage.id);
+                }
+                io.sockets.in(savedMessage.dataValues.ConversationId.toString()).emit('message', savedMessage.dataValues);
             } catch (e) {
                 console.log("error saving message to DB")
                 console.log(e);
             }
-        })
-    })
+        });
+    });
 }

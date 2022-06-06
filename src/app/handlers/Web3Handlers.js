@@ -81,6 +81,7 @@ exports.loadingHandler = async function (req, res, next) {
 
             console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress);
             await listNft();
+            global.eventEmitter.emit('listingDone');
         });
 
         marketplaceContract.on('Bought', async (listingId, nftAddress, tokenId, price, sellerAddress, buyerAddress) => {
@@ -104,6 +105,26 @@ exports.loadingHandler = async function (req, res, next) {
             console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress, buyerAddress);
             await buyNft();
         });
+
+        marketplaceContract.on('Removed', async (listingId, nftAddress, tokenId, price, sellerAddress) => {
+            async function unlistNft() {
+                try {
+                    const buyerWallet = await walletService.findByAccountAddress(sellerAddress);
+
+                    const listing = {
+                        transaction_date: new Date(),
+                        BuyerId: buyerWallet.ProfileId
+                    }
+
+                    await listingService.unlistById(listingId, listing);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            console.log(listingId.toString(), nftAddress, tokenId.toString(), price.toString(), sellerAddress);
+            await unlistNft();
+        })
 
         // const itemCount = await marketplaceContract.itemCount();
         // let items = [];

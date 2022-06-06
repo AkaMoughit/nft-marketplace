@@ -12,9 +12,9 @@ const Sequelize = require("sequelize");
  * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Attachments", deps: [CustomOffers, Nfts]
- * createTable() => "Messages", deps: [Conversations, Profiles]
  * createTable() => "FavoriteLists", deps: [Profiles, Nfts]
  * createTable() => "Listings", deps: [Nfts, Profiles, Profiles]
+ * createTable() => "Messages", deps: [Conversations, Listings, Profiles]
  * createTable() => "NftOwnerships", deps: [Nfts, Profiles, Profiles]
  * createTable() => "Offers", deps: [Listings, Profiles]
  * createTable() => "Tickets", deps: [Profiles]
@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-05T00:51:26.327Z",
+  created: "2022-06-06T20:57:21.128Z",
   comment: "",
 };
 
@@ -532,54 +532,6 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
-      "Messages",
-      {
-        id: {
-          type: Sequelize.INTEGER,
-          field: "id",
-          autoIncrement: true,
-          primaryKey: true,
-          allowNull: false,
-        },
-        send_date: {
-          type: Sequelize.DATE,
-          field: "send_date",
-          allowNull: false,
-        },
-        body: { type: Sequelize.TEXT, field: "body", allowNull: false },
-        createdAt: {
-          type: Sequelize.DATE,
-          field: "createdAt",
-          allowNull: false,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          field: "updatedAt",
-          allowNull: false,
-        },
-        ConversationId: {
-          type: Sequelize.INTEGER,
-          field: "ConversationId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Conversations", key: "id" },
-          allowNull: true,
-        },
-        ProfileId: {
-          type: Sequelize.INTEGER,
-          field: "ProfileId",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Profiles", key: "id" },
-          allowNull: true,
-        },
-      },
-      { transaction },
-    ],
-  },
-  {
-    fn: "createTable",
-    params: [
       "FavoriteLists",
       {
         favorite_date: { type: Sequelize.STRING, field: "favorite_date" },
@@ -664,6 +616,62 @@ const migrationCommands = (transaction) => [
         BuyerId: {
           type: Sequelize.INTEGER,
           field: "BuyerId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Profiles", key: "id" },
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
+      "Messages",
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          field: "id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        send_date: {
+          type: Sequelize.DATE,
+          field: "send_date",
+          allowNull: false,
+        },
+        body: { type: Sequelize.TEXT, field: "body", allowNull: false },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+        ConversationId: {
+          type: Sequelize.INTEGER,
+          field: "ConversationId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Conversations", key: "id" },
+          allowNull: true,
+        },
+        ListingId: {
+          type: Sequelize.INTEGER,
+          field: "ListingId",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+          references: { model: "Listings", key: "id" },
+          allowNull: true,
+        },
+        ProfileId: {
+          type: Sequelize.INTEGER,
+          field: "ProfileId",
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
