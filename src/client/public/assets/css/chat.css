@@ -16,6 +16,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    z-index: 1;
 }
 
 body {
@@ -177,6 +178,8 @@ a {
     color: #ccc;
 }
 
+
+
 .chat-form-container {
     padding: 20px 30px;
     margin-left: 10px;
@@ -220,7 +223,7 @@ a {
 .custom-container {
     display: flex;
     flex-direction: row;
-    height: 620px;
+    height: 87vh;
 }
 
 .custom-div {
