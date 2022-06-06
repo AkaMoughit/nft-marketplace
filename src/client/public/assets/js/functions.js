@@ -31,12 +31,14 @@ async function loadMedia() {
             let image = document.createElement("img");
             image.setAttribute("src", fileUrl);
             image.setAttribute("alt", file);
+            // image.setAttribute("loading", "eager");
             file.appendChild(image);
         } else if (videoValidUrl.includes(fileType)) {
             let video = document.createElement("video");
             video.setAttribute("src", fileUrl);
             video.setAttribute("alt", file);
             video.setAttribute("controls", "");
+            // video.setAttribute("preload", "none");
             video.style.cssText += 'width: 100%;';
             video.style.cssText += 'height: 100%;';
             file.appendChild(video);
