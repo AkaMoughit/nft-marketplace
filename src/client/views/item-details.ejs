@@ -31,7 +31,7 @@
     <title>NFT Details</title>
 </head>
 
-<body>
+<body onload="getPriceOnUSD()">
     <!-- preloader start here -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -253,8 +253,9 @@
                             <% } %>
                             <div class="item-price">
                                 <h4>Price</h4>
-                                <p><span><i class="icofont-coins"></i> <%- nft.price %> ETH
-                                    </span>($ 6,227.15)</p>
+                                <p id="priceOnUSD">
+                                    <span id="priceOnETH"><i class="icofont-coins"></i> <%- nft.price %> ETH </span>($ 6,227.15)
+                                </p>
                             </div>
                             <div class="buying-btns d-flex flex-wrap">
                                 <% if(transaction_date != undefined) { %>
@@ -424,6 +425,7 @@
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/file-display.js"></script>
     <script type="module" src="assets/js/unlist-nft.js"></script>
+    <script src="assets/js/priceOnUSD.js"></script>
 </body>
 
 </html>

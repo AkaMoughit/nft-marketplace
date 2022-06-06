@@ -1037,8 +1037,8 @@
             "indexes": []
         }
     },
-    "path": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current.json",
-    "backupPath": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current_bak.json",
+    "path": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current.json",
+    "backupPath": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current_bak.json",
     "exists": false,
     "revision": 1
 }
