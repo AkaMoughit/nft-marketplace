@@ -452,6 +452,17 @@
                     "field": "ConversationId",
                     "seqType": "Sequelize.INTEGER"
                 },
+                "ListingId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Listings",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "ListingId",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "ProfileId": {
                     "allowNull": true,
                     "references": {

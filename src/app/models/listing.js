@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Buyer'
       });
       Listing.belongsToMany(models.Profile, { through: 'Offer' });
+      Listing.hasMany(models.Message);
     }
   }
   Listing.init({

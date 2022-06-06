@@ -5,6 +5,11 @@ const dbConnect = require('./src/database/connection');
 const email = require('./src/app/utils/emailVerificator');
 const app = express();
 
+const {EventEmitter} = require('events');
+const eventEmitter = new EventEmitter();
+
+global.eventEmitter = eventEmitter;
+
 global.appRoot = path.resolve(__dirname);
 
 const appMiddlewares = require('./src/middlewares/global');

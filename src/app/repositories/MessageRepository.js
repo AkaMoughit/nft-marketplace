@@ -1,5 +1,6 @@
 const BaseRepository = require("./BaseRepository");
 const Message = require("../models").Message;
+const models = require("../models");
 
 class MessageRepository extends BaseRepository {
     constructor(Message) {
@@ -11,7 +12,8 @@ class MessageRepository extends BaseRepository {
             send_date: new Date(),
             body: message.body,
             ConversationId: message.ConversationId,
-            ProfileId: message.ProfileId
+            ProfileId: message.ProfileId,
+            ListingId: message.ListingId
         })
     }
 
@@ -19,7 +21,31 @@ class MessageRepository extends BaseRepository {
         return this.model.findAll({
             where: {
                 ConversationId: conversationId
-            }
+            },
+            include: [
+                {
+                    model: models.Listing,
+                    include: [
+                        models.Nft
+                    ]
+                }
+            ]
+        });
+    }
+
+    findDetailedById(id) {
+        return this.model.findOne({
+            where: {
+                id: id
+            },
+            include: [
+                {
+                    model: models.Listing,
+                    include: [
+                        models.Nft
+                    ]
+                }
+            ]
         });
     }
 
