@@ -54,6 +54,10 @@ class NftCardDTO {
             ? null
             : isListed
 
+        this.isPublic = listing === undefined
+            ? null
+            : listing.isPublic
+
         this.itemId = listing === undefined
             ? null
             : listing.id

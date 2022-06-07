@@ -147,6 +147,7 @@ class ListingRepository extends BaseRepository {
                         'type',
                         'sale_end_date',
                         'transaction_date',
+                        'isPublic',
                         'NftId',
                         'SellerId',
                         [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
@@ -193,6 +194,7 @@ class ListingRepository extends BaseRepository {
                         'type',
                         'sale_end_date',
                         'transaction_date',
+                        'isPublic',
                         'NftId',
                         'SellerId',
                         [this.model.sequelize.literal('(SELECT COUNT(*) FROM FavoriteLists WHERE FavoriteLists.NftId = Nft.id)'), 'favoritesCount']
