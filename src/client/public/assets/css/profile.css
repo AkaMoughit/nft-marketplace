@@ -84,3 +84,8 @@ input[type=number]{
 .form-popup-container .btn:hover, .open-button:hover {
     background-color:#3114E9;
 }
+
+.icofont-heart:hover {
+    color: #0a53be;
+    cursor: pointer;
+}
