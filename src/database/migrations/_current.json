@@ -365,6 +365,13 @@
                     "field": "transaction_date",
                     "seqType": "Sequelize.DATE"
                 },
+                "isPublic": {
+                    "defaultValue": {
+                        "value": true
+                    },
+                    "field": "isPublic",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -1037,8 +1044,8 @@
             "indexes": []
         }
     },
-    "path": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current.json",
-    "backupPath": "E:\\Backup\\Documents\\CI2\\Projects\\nft-marketplace\\src\\database\\migrations\\_current_bak.json",
+    "path": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current.json",
+    "backupPath": "/home/asus_/Documents/Project/Web/ExpressJS/nft-marketplace/src/database/migrations/_current_bak.json",
     "exists": false,
     "revision": 1
 }

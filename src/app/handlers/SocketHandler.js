@@ -1,4 +1,5 @@
 const messageRepository = require('../repositories/MessageRepository');
+const listingRepository = require('../repositories/ListingRepository');
 
 module.exports = handleSocket = (io) => {
     io.on('connection', socket => {
@@ -13,6 +14,11 @@ module.exports = handleSocket = (io) => {
                     const waitListing = new Promise((resolve) => {
                         // Improvement: use filters to filter out which listing exactly
                         global.eventEmitter.once('listingDone', async () => {
+                            const listing = {
+                                isPublic: false,
+                                updatedAt: new Date()
+                            }
+                            await listingRepository.updateById(message.ListingId, listing);
                             resolve("listing inserted");
                         });
                     });
