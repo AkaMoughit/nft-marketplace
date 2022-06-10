@@ -54,28 +54,12 @@ class ConversationRepository extends BaseRepository {
                     }
                 }
             })
-            console.log("found conversation : ", conversation);
             if (!conversation) {
                 let conversationFromDB = await this.createConversation(participent1Id, participent2Id, customOffer);
                 conversation = conversationFromDB.dataValues;
-                console.log("conversation created : ", conversation);
             }
             resolve(conversation);
         })
-        // const initiator = customOffer? participent1Id : null;
-        // return this.model.findOrCreate({
-        //     where: {
-        //         participent1Id: Math.min(participent1Id, participent2Id),
-        //         participent2Id : Math.max(participent1Id, participent2Id),
-        //         isCustomOffer : customOffer,
-        //         initiator : initiator
-        //     },
-        //     defaults: {
-        //         creation_date: new Date(),
-        //         createdAt: new Date(),
-        //         updatedAt: new Date(),
-        //     }
-        // });
     }
 
     findAllByProfileId(id) {
