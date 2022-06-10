@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="assets/css/lightcase.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="stylesheet" href="assets/css/offer-details.css">
 
 
     <!-- site title -->
@@ -87,6 +88,13 @@
                                             <%- customOffer.creation_date %></span>
                                         <h3><%- customOffer.title %></h3>
                                         <p><%- customOffer.body %></p>
+                                        <% if (sessionData.profile.profile_id !== customOffer.creator.profile_id) { %>
+                                            <div class="start-conversation">
+                                                <a href="chat?p1Id=<%- sessionData.profile.profile_id%>&p2Id=<%- customOffer.creator.profile_id%>&customOffer=true">
+                                                    <span class="icon"><i class="icofont-speech-comments"></i> Start a conversation</span>
+                                                </a>
+                                            </div>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>

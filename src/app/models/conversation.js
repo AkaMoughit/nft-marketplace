@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       Conversation.hasMany(models.Message);
       Conversation.belongsTo(models.Profile, { foreignKey : 'participent1Id' });
       Conversation.belongsTo(models.Profile, { foreignKey : 'participent2Id' });
-      Conversation.belongsTo(models.Profile, { foreignKey : {name: 'initiator', allowNull: true} });
     }
   }
   Conversation.init({

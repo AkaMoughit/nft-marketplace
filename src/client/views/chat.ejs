@@ -144,7 +144,7 @@
                 </div>
         <% if (conversation && conversation.isCustomOffer) { %>
             <div class="custom-offer-container">
-                <%if (conversation.initiator === sessionData.profile.id) { %>
+                <%if (conversation.participent1Id === sessionData.profile.id) { %>
                     <button id="make-offer-button" class="btn b-btn">Make offer</button>
                 <% } %>
                 <button class="btn c-btn" id="close-conversation">Close</button>
@@ -155,7 +155,7 @@
          style="display: flex; justify-content: space-evenly;">
         <a hidden id="offer-popup-trigger" href="#popup-create-nft" data-effect="mfp-zoom-in">Test</a>
     </div>
-        <% if(sessionData.isAuth && conversation && conversation.initiator === sessionData.profile.id) { %>
+        <% if(sessionData.isAuth && conversation && conversation.participent1Id === sessionData.profile.id) { %>
             <div id="popup-create-nft" class="blue-popup mfp-with-anim mfp-hide create-nft py-7 px-3">
                 <section class="create-nft-form">
                     <!-- upload field -->

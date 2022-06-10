@@ -1,0 +1,8 @@
+.start-conversation {
+    border-radius: 7px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
