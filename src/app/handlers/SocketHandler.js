@@ -30,7 +30,7 @@ module.exports = handleSocket = (io) => {
                     savedMessage = await messageRepository.save(message);
                     savedMessage = await messageRepository.findDetailedById(savedMessage.id);
                 }
-                io.sockets.in(savedMessage.dataValues.ConversationId.toString()).emit('message', savedMessage.dataValues);
+                io.sockets.in(message.ConversationId).emit('message', savedMessage.dataValues);
             } catch (e) {
                 console.log("error saving message to DB")
                 console.log(e);
