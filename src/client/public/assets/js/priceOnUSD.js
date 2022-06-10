@@ -7,10 +7,11 @@ function getPriceOnUSD() {
         success: function (response) {
             let priceOnUSD = response.ETH.USD * priceOnEth;
             document.getElementById("priceOnUSD").innerHTML = `
-                <span id="priceOnETH"><i class="icofont-coins"></i> ${priceOnEth} ETH </span>($ ${priceOnUSD})
+                <span id="priceOnETH"><i class="icofont-coins"></i> ${priceOnEth} ETH </span>($ ${priceOnUSD.toFixed(4)})
                 `
         },
         error: function (response) {
+            console.log(response);
             document.getElementById("priceOnUSD").innerHTML = `
                 <span id="priceOnETH"><i class="icofont-coins"></i> ${priceOnEth} ETH </span>
                 `

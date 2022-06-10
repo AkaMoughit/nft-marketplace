@@ -254,7 +254,7 @@
                             <div class="item-price">
                                 <h4>Price</h4>
                                 <p id="priceOnUSD">
-                                    <span id="priceOnETH"><i class="icofont-coins"></i> <%- nft.price %> ETH </span>($ 6,227.15)
+                                    <span id="priceOnETH"><i class="icofont-coins"></i> <%- nft.price %> ETH </span>
                                 </p>
                             </div>
                             <div class="buying-btns d-flex flex-wrap">
@@ -266,10 +266,14 @@
                                         <a id="remove-nft-btn" data-itemid="<%- nft.itemId %>" data-auth="<%- sessionData.isAuth %>" class="remove-nft-btn default-btn move-right" style="cursor: pointer">
                                             <span>Remove</span>
                                         </a>
-                                <% } else { %>
+                                <% } else if(nft.isPublic) { %>
                                     <a id="buy-nft-btn" data-itemid="<%- nft.itemId %>" data-auth="<%- sessionData.isAuth %>" class="default-btn move-right" style="cursor: pointer">
                                         <span>Buy Now</span>
                                     </a>
+                                <% } else { %>
+                                        <div class="default-btn move-right" style="pointer-events: none; background-color: gray">
+                                            <span>You cannot buy this item</span>
+                                        </div>
                                 <% } %>
                             </div>
                         </div>

@@ -75,7 +75,8 @@
                         <div class="nft-slider-wrapper">
                             <div class="banner-item-slider">
                                 <div class="swiper-wrapper">
-                                    <% for(let index = 0; index < 4 && nfts.length >= 4; index++) { %>
+                                    <% var lastIndex = 4; for(let index = 0; index < lastIndex && nfts.length >= 4; index++) { %>
+                                        <% if(!nfts[index].isPublic) {lastIndex++; continue;} %>
                                         <div class="swiper-slide">
                                             <div class="nft-item home-3">
                                                 <div class="nft-inner">
@@ -116,6 +117,7 @@
                                                     <div class="nft-item-bottom">
                                                         <div class="nft-thumb">
                                                             <div data-src="<%- nfts[index].uri %>" class="file-data-container nft-thumb">
+                                                            </div>
 
                                                             <!-- nft countdwon -->
                                                             <!-- <ul class="nft-countdown count-down" data-date="July 05, 2022 21:14:01">
@@ -587,77 +589,78 @@
                 <div class="ex-drop-wrapper">
                     <div class="row justify-content-center gx-4 gy-3">
                         <% nfts.forEach(nft => { %>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="nft-item home-3">
-                                    <div class="nft-inner">
-                                        <!-- nft top part -->
-                                        <div class="nft-item-top d-flex justify-content-between align-items-center">
-                                            <div class="author-part">
-                                                <ul class="author-list d-flex">
-                                                    <li class="single-author d-flex align-items-center">
-                                                        <a href="author?profileId=<%- nft.owner_profile_id %>" class="veryfied"><img loading="lazy" style="aspect-ratio: 1/1;"
-                                                                                               src="<%- nft.owner.picture_url %>" alt="author-img" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
-                                                        <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner_name %></a></h6>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="more-part">
-                                                <div class=" dropstart">
-                                                    <a class=" dropdown-toggle" href="#" role="button"
-                                                       data-bs-toggle="dropdown" aria-expanded="false"
-                                                       data-bs-offset="25,0">
-                                                        <i class="icofont-flikr"></i>
-                                                    </a>
-
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#"><span>
-                                                                <i class="icofont-warning"></i>
-                                                            </span> Report </a>
+                            <% if(nft.isPublic) { %>
+                                <div class="col-xl-3 col-lg-4 col-sm-6">
+                                    <div class="nft-item home-3">
+                                        <div class="nft-inner">
+                                            <!-- nft top part -->
+                                            <div class="nft-item-top d-flex justify-content-between align-items-center">
+                                                <div class="author-part">
+                                                    <ul class="author-list d-flex">
+                                                        <li class="single-author d-flex align-items-center">
+                                                            <a href="author?profileId=<%- nft.owner_profile_id %>" class="veryfied"><img loading="lazy" style="aspect-ratio: 1/1;"
+                                                                                                                                         src="<%- nft.owner.picture_url %>" alt="author-img" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';"></a>
+                                                            <h6><a href="author?profileId=<%- nft.owner_profile_id %>"><%- nft.owner_name %></a></h6>
                                                         </li>
-                                                        <li><a class="dropdown-item" href="#"><span><i
-                                                                            class="icofont-reply"></i></span> Share</a></li>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- nft-bottom part -->
-                                        <div class="nft-item-bottom">
-                                            <div class="nft-thumb">
-                                                <div data-src="<%- nft.uri %>" class="file-data-container nft-thumb">
+                                                <div class="more-part">
+                                                    <div class=" dropstart">
+                                                        <a class=" dropdown-toggle" href="#" role="button"
+                                                           data-bs-toggle="dropdown" aria-expanded="false"
+                                                           data-bs-offset="25,0">
+                                                            <i class="icofont-flikr"></i>
+                                                        </a>
 
-                                                <!-- nft countdwon -->
-                                                <!-- <ul class="nft-countdown count-down" data-date="July 05, 2022 21:14:01">
-                                                    <li>
-                                                        <span class="days">34</span><span class="count-txt">D</span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="hours">09</span><span class="count-txt">H</span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="minutes">32</span><span class="count-txt">M</span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="seconds">32</span><span class="count-txt">S</span>
-                                                    </li>
-                                                </ul> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#"><span>
+                                                                <i class="icofont-warning"></i>
+                                                            </span> Report </a>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="#"><span><i
+                                                                                class="icofont-reply"></i></span> Share</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="nft-content">
-                                                <h4><a href="item-details?nft_id=<%- nft.token_id %>"><%- nft.name %></a> </h4>
-                                                <div class="price-like d-flex justify-content-between align-items-center">
-                                                    <p class="nft-price">Price: <span class="yellow-color"><%- nft.price %> ETH</span>
-                                                    </p>
-                                                    <a href="#" class="nft-like"><i class="icofont-heart"></i>
-                                                        <%- nft.favoriteCount %></a>
+                                            <!-- nft-bottom part -->
+                                            <div class="nft-item-bottom">
+                                                <div class="nft-thumb">
+                                                    <div data-src="<%- nft.uri %>" class="file-data-container nft-thumb">
+                                                    </div>
+
+                                                    <!-- nft countdwon -->
+                                                    <!-- <ul class="nft-countdown count-down" data-date="July 05, 2022 21:14:01">
+                                                        <li>
+                                                            <span class="days">34</span><span class="count-txt">D</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="hours">09</span><span class="count-txt">H</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="minutes">32</span><span class="count-txt">M</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="seconds">32</span><span class="count-txt">S</span>
+                                                        </li>
+                                                    </ul> -->
+                                                </div>
+                                                <div class="nft-content">
+                                                    <h4><a href="item-details?nft_id=<%- nft.token_id %>"><%- nft.name %></a> </h4>
+                                                    <div class="price-like d-flex justify-content-between align-items-center">
+                                                        <p class="nft-price">Price: <span class="yellow-color"><%- nft.price %> ETH</span>
+                                                        </p>
+                                                        <a href="#" class="nft-like"><i class="icofont-heart"></i>
+                                                            <%- nft.favoriteCount %></a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <% } %>
                         <% }); %>
                     </div>
-
-
                 </div>
             </div>
         </div>

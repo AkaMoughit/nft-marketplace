@@ -25,5 +25,6 @@ router.post('/create-nft', web3handlers.loadingHandler, upload.single('file'),
     nftCreationValidator.validate, nftController.create);
 router.post('/uploadFile', authenticationHandlers.isAuth, web3handlers.loadingHandler, upload.single('file'), nftController.uploadFile);
 router.post('/uploadData', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.uploadData);
+router.post('/toggle-nft-favorite', authenticationHandlers.isAuth, web3handlers.loadingHandler, nftController.toggleFavorite)
 
 module.exports = router;

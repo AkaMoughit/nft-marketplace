@@ -443,7 +443,8 @@
 
                                                         <div class="row justify-content-center gx-3 gy-2">
                                                             <% profile.onSaleListings.rows.forEach(onSaleNftCard => { %>
-                                                                <div class="col-lg-4 col-sm-6">
+                                                                <% if(onSaleNftCard.isPublic) { %>
+                                                                    <div class="col-lg-4 col-sm-6">
                                                                     <div class="nft-item">
                                                                         <div class="nft-inner">
                                                                             <!-- nft top part -->
@@ -534,16 +535,20 @@
                                                                                                     class="yellow-color"><%- onSaleNftCard.price %>
                                                                                                 ETH</span>
                                                                                         </p>
-                                                                                        <a href="#" class="nft-like"><i
-                                                                                                    class="icofont-heart"></i>
-                                                                                            <%- onSaleNftCard.favoriteCount %>
-                                                                                        </a>
+                                                                                        <span class="nft-like">
+                                                                                            <div style="display: none"><%- onSaleNftCard.token_id %></div>
+                                                                                            <i class="icofont-heart"></i>
+                                                                                            <span>
+                                                                                                <%- onSaleNftCard.favoriteCount %>
+                                                                                            </span>
+                                                                                        </span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <% } %>
                                                             <% }) %>
                                                         </div>
                                                         <div class="load-btn">
@@ -648,9 +653,13 @@
                                                                                         <!--                                                                                                        class="yellow-color">0.34-->
                                                                                         <!--                                                                                                ETH</span>-->
                                                                                         <!--                                                                                            </p>-->
-                                                                                        <a href="#" class="nft-like"><i
-                                                                                                    class="icofont-heart"></i>
-                                                                                            <%- nft.favoriteCount %></a>
+                                                                                        <span class="nft-like">
+                                                                                            <div style="display: none"><%- nft.token_id %></div>
+                                                                                            <i class="icofont-heart"></i>
+                                                                                            <span>
+                                                                                            <%- nft.favoriteCount %>
+                                                                                            </span>
+                                                                                        </span>
                                                                                         <% if(sessionData.isAuth && sessionData.profile.profile_id === profile.profile_id && !nft.isListed) { %>
                                                                                             <button data-auth="<%- sessionData.isAuth %>" data-tokenid="<%- nft.token_id %>" class="owned-nft-card-list-button btn btn-primary">List</button>
                                                                                         <% } %>
@@ -761,10 +770,13 @@
                                                                                         <!--                                                                                                        class="yellow-color">0.34-->
                                                                                         <!--                                                                                                    ETH</span>-->
                                                                                         <!--                                                                                            </p>-->
-                                                                                        <a href="#" class="nft-like"><i
-                                                                                                    class="icofont-heart"></i>
-                                                                                            <%- createdNft.favoriteCount %>
-                                                                                        </a>
+                                                                                        <span class="nft-like">
+                                                                                            <div style="display: none"><%- createdNft.token_id %></div>
+                                                                                            <i class="icofont-heart"></i>
+                                                                                            <span>
+                                                                                                <%- createdNft.favoriteCount %>
+                                                                                            </span>
+                                                                                        </span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1419,6 +1431,7 @@
 <script src="assets/js/edit-profile.js"></script>
 <script src="assets/js/create-custom-offer.js"></script>
 <script src="assets/js/file-display.js"></script>
+<script src="assets/js/toggle-favorite.js"></script>
 </body>
 
 </html>

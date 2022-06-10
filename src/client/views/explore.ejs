@@ -109,7 +109,8 @@
                 <div class="explore-wrapper">
                     <div class="row justify-content-center gx-4 gy-3">
                         <% nfts.forEach(nft => { %>
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
+                            <% if(nft.isPublic) { %>
+                                <div class="col-xl-3 col-lg-4 col-sm-6">
                                 <div class="nft-item">
                                     <div class="nft-inner">
                                         <!-- nft top part -->
@@ -176,6 +177,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
                         <% }); %>
                     </div>
                     <div class="load-btn mt-5">

@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-06T20:57:21.128Z",
+  created: "2022-06-07T13:34:25.659Z",
   comment: "",
 };
 
@@ -587,6 +587,11 @@ const migrationCommands = (transaction) => [
         type: { type: Sequelize.STRING, field: "type", allowNull: false },
         sale_end_date: { type: Sequelize.DATE, field: "sale_end_date" },
         transaction_date: { type: Sequelize.DATE, field: "transaction_date" },
+        isPublic: {
+          type: Sequelize.BOOLEAN,
+          field: "isPublic",
+          defaultValue: true,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",

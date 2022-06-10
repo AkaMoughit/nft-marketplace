@@ -1,12 +1,14 @@
 'use strict'
 
 const nftRepository = require("../repositories/NftRepository");
+const favoriteListRepository = require('../repositories/FavoriteListRepository');
 const {reject} = require("bcrypt/promises");
 
 
 class NftService {
-    constructor(nftRepository) {
+    constructor(nftRepository, favoriteListRepository) {
         this.nftRepository = nftRepository;
+        this.favoriteListRepository = favoriteListRepository;
     }
 
     findByTokenId(tokenId) {
@@ -43,6 +45,27 @@ class NftService {
         return this.nftRepository.listAll();
     }
 
+    toggleFavorite(profileId, nftTokenId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let nft = await this.nftRepository.findByTokenId(nftTokenId);
+                let favoriteList = await this.favoriteListRepository.findByProfileIdAndNftId(profileId, nft.dataValues.id);
+
+                if (favoriteList) {
+                    await this.favoriteListRepository.deleteByProfileIdAndNftId(profileId, nft.dataValues.id);
+                } else {
+                    await this.favoriteListRepository.add(profileId, nft.dataValues.id);
+                }
+
+                let nftFavoriteCount = await this.favoriteListRepository.countByNftId(nft.dataValues.id);
+                resolve(nftFavoriteCount);
+            } catch (error) {
+                console.log(error);
+                reject(error);
+            }
+        })
+    }
+
     // deprecated
     findNftCardByTokenId(tokenId) {
         return this.nftRepository.findNftCardByTokenId(tokenId);
@@ -54,4 +77,4 @@ class NftService {
         return this.nftRepository.findAllNftCardsOrderedByFavoriteCount(limit, offset, name);
     }
 }
-module.exports = new NftService(nftRepository);
+module.exports = new NftService(nftRepository, favoriteListRepository);

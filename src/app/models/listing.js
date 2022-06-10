@@ -41,13 +41,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     sale_end_date: DataTypes.DATE,
-    transaction_date: DataTypes.DATE
+    transaction_date: DataTypes.DATE,
+    isPublic: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'Listing',
     hooks: {
       async afterUpdate(instance, options) {
-        if(instance.BuyerId !== undefined && instance.transaction_date !== undefined) {
+        if(instance.BuyerId != undefined && instance.transaction_date != undefined) {
           await this.models.NftOwnership.update(
               {
                 OwnerId: instance.BuyerId,

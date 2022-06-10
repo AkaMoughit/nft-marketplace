@@ -269,7 +269,7 @@ chatForm.addEventListener('submit', (e) => {
     document.getElementById('msg').value = ''
 })
 
-closeButton.addEventListener('click', () => {
+$("#close-conversation").on('click', () => {
     $.ajax({
         url: '/delete-conversation/',
         data: {conversationId},
