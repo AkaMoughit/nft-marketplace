@@ -26,7 +26,7 @@ class ChatService {
                 let participant1 = await this.profileRepository.findByProfileId(p1Id);
                 let participant2 = await this.profileRepository.findByProfileId(p2Id);
 
-                let [conversation, created] = await this.conversationRepository.findOrCreate(participant1.id, participant2.id, customOffer);
+                let conversation = await this.conversationRepository.findOrCreate(participant1.id, participant2.id, customOffer);
                 resolve(conversation);
             } catch (error) {
                 console.log(error);

@@ -142,8 +142,11 @@
                                                                 <p class="nft-price">Price: <span class="yellow-color"><%- nfts[index].price %>
                                                                     ETH</span>
                                                                 </p>
-                                                                <a href="#" class="nft-like"><i class="icofont-heart"></i>
-                                                                    <%- nfts[index].favoriteCount %></a>
+                                                                <span class="nft-like">
+                                                                    <div style="display: none"><%- nfts[index].token_id %></div>
+                                                                    <i class="icofont-heart"></i>
+                                                                    <%- nfts[index].favoriteCount %>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -650,8 +653,11 @@
                                                     <div class="price-like d-flex justify-content-between align-items-center">
                                                         <p class="nft-price">Price: <span class="yellow-color"><%- nft.price %> ETH</span>
                                                         </p>
-                                                        <a href="#" class="nft-like"><i class="icofont-heart"></i>
-                                                            <%- nft.favoriteCount %></a>
+                                                        <span class="nft-like">
+                                                            <div style="display: none"><%- nft.token_id %></div>
+                                                            <i class="icofont-heart"></i>
+                                                            <span><%- nft.favoriteCount %></span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -897,6 +903,7 @@
     <script type="module" src="assets/js/utils.js"></script>
     <script type="module" src="assets/js/metamask.js"></script>
     <script src="assets/js/file-display.js"></script>
+    <script src="assets/js/toggle-favorite.js"></script>
 </body>
 
 </html>

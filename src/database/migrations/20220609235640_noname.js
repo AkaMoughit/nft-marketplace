@@ -8,7 +8,7 @@ const Sequelize = require("sequelize");
  * createTable() => "CustomOffers", deps: [Profiles]
  * createTable() => "NftCollections", deps: [Profiles]
  * createTable() => "CollectionFavoriteLists", deps: [NftCollections, Profiles]
- * createTable() => "Conversations", deps: [Profiles, Profiles, Profiles]
+ * createTable() => "Conversations", deps: [Profiles, Profiles]
  * createTable() => "Nfts", deps: [CustomOffers, Profiles, NftCollections]
  * createTable() => "Comments", deps: [CustomOffers, Profiles, Comments]
  * createTable() => "Attachments", deps: [CustomOffers, Nfts]
@@ -27,7 +27,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "noname",
-  created: "2022-06-07T13:34:25.659Z",
+  created: "2022-06-09T23:56:40.220Z",
   comment: "",
 };
 
@@ -325,15 +325,6 @@ const migrationCommands = (transaction) => [
           onUpdate: "CASCADE",
           onDelete: "SET NULL",
           references: { model: "Profiles", key: "id" },
-          allowNull: true,
-        },
-        initiator: {
-          type: Sequelize.INTEGER,
-          field: "initiator",
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
-          references: { model: "Profiles", key: "id" },
-          name: "initiator",
           allowNull: true,
         },
       },

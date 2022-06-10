@@ -7,21 +7,75 @@ class ConversationRepository extends BaseRepository {
         super(Conversation);
     }
 
-    findOrCreate(participent1Id, participent2Id, customOffer) {
-        const initiator = customOffer? participent1Id : null;
-        return this.model.findOrCreate({
+    findAllByParticipentsIds(participent1Id, participent2Id) {
+        return this.model.findAll({
             where: {
-                participent1Id: Math.min(participent1Id, participent2Id),
-                participent2Id : Math.max(participent1Id, participent2Id),
-                isCustomOffer : customOffer,
-                initiator : initiator
-            },
-            defaults: {
-                creation_date: new Date(),
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                [Op.or]: [{
+                    [Op.and]: [{participent1Id: participent1Id}, {participent2Id: participent2Id}]
+                },
+                {
+                    [Op.and]: [{participent1Id: participent2Id}, {participent2Id: participent1Id}]
+                }]
             }
-        });
+        })
+    }
+
+    createConversation(participent1Id, participent2Id, customOffer) {
+        return this.model.create({
+            creation_date: new Date(),
+            isCustomOffer: customOffer,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            participent1Id: participent1Id,
+            participent2Id: participent2Id,
+        })
+    }
+
+    findOrCreate(participent1Id, participent2Id, customOffer) {
+        return new Promise(async (resolve, reject) => {
+            let conversationsFromDB = await this.findAllByParticipentsIds(participent1Id, participent2Id);
+            let conversation;
+            conversationsFromDB.forEach(conversationFromDB => {
+                if (customOffer) {
+                    if (conversationFromDB.dataValues.participent1Id === participent1Id
+                        && conversationFromDB.dataValues.participent2Id === participent2Id
+                        && conversationFromDB.dataValues.isCustomOffer) {
+                        conversation = conversationFromDB.dataValues;
+                    }
+                } else {
+                    if (
+                        (conversationFromDB.dataValues.participent1Id === participent1Id
+                        && conversationFromDB.dataValues.participent2Id === participent2Id
+                        && !conversationFromDB.dataValues.isCustomOffer)
+                        || (conversationFromDB.dataValues.participent1Id === participent2Id
+                            && conversationFromDB.dataValues.participent2Id === participent1Id
+                            && !conversationFromDB.dataValues.isCustomOffer)) {
+                        conversation = conversationFromDB.dataValues;
+                    }
+                }
+            })
+            console.log("found conversation : ", conversation);
+            if (!conversation) {
+                let conversationFromDB = await this.createConversation(participent1Id, participent2Id, customOffer);
+                conversation = conversationFromDB.dataValues;
+                console.log("conversation created : ", conversation);
+            }
+            resolve(conversation);
+        })
+        // const initiator = customOffer? participent1Id : null;
+        // return this.model.findOrCreate({
+        //     where: {
+        //         participent1Id: Math.min(participent1Id, participent2Id),
+        //         participent2Id : Math.max(participent1Id, participent2Id),
+        //         isCustomOffer : customOffer,
+        //         initiator : initiator
+        //     },
+        //     defaults: {
+        //         creation_date: new Date(),
+        //         createdAt: new Date(),
+        //         updatedAt: new Date(),
+        //     }
+        // });
     }
 
     findAllByProfileId(id) {
