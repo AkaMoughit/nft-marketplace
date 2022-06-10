@@ -39,3 +39,12 @@ exports.create = function (req, res) {
             res.status(303).redirect("/author?profileId=" + req.session.profile.profile_id);
         })
 }
+exports.toggleFavorite = function (req, res) {
+    nftService.toggleFavorite(req.session.profile.id, req.body.tokenId)
+        .then( nftFavoriteCount => {
+            res.status(200).json({nftFavoriteCount: nftFavoriteCount});
+        })
+        .catch(error => {
+            res.status(500).json({error: error});
+        })
+}

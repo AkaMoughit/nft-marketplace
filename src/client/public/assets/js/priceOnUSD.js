@@ -11,6 +11,7 @@ function getPriceOnUSD() {
                 `
         },
         error: function (response) {
+            console.log(response);
             document.getElementById("priceOnUSD").innerHTML = `
                 <span id="priceOnETH"><i class="icofont-coins"></i> ${priceOnEth} ETH </span>
                 `
