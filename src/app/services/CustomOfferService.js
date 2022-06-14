@@ -5,13 +5,15 @@ const nftRepository = require("../repositories/NftRepository");
 const listingRepository = require("../repositories/ListingRepository");
 const userRepository = require("../repositories/UserRepository");
 const walletRepository = require("../repositories/WalletRepository");
-const commentRepository = require('../repositories/CommentRepository')
+const commentRepository = require('../repositories/CommentRepository');
 const AuthorDTO = require("../models/dtos/AuthorDTO");
 const NftProfileListingDTO = require("../models/dtos/NftCardDTO");
 const getDeltaInDHMS = require("../utils/DateHelper");
 const bcrypt = require('bcrypt');
 const path = require("path");
+const models = require("../models");
 
+// ????
 const customOfferModel = require('../models').CustomOffer;
 
 class CustomOfferService {
@@ -49,6 +51,18 @@ class CustomOfferService {
             } catch (e) {
                 console.log(e);
                 reject(e);
+            }
+        });
+    }
+
+    findAllCustomOffers(limit, offset, title=null) {
+        return customOfferModel.findAndCountAll({
+            limit: limit,
+            offset: offset,
+            where: {
+                title: {
+                    [models.Sequelize.Op.like]: title==null?"%":"%"+title+"%"
+                }
             }
         });
     }

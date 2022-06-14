@@ -1,11 +1,9 @@
 'use strict'
 
-const path = require('path');
 const nftRepository = require('../repositories/NftRepository');
 const listingRepository = require('../repositories/ListingRepository');
-const {faker} = require("@faker-js/faker");
-const {request} = require("express");
-
+const profileService = require('../services/ProfileService');
+const customOfferService = require('../services/CustomOfferService');
 exports.welcomePage = async function (req, res) {
 
     // You can access the contract by simply grabbing it from the app.locals variable
@@ -13,18 +11,27 @@ exports.welcomePage = async function (req, res) {
     // console.log(items);
 
     let pageNumberElements = 8;
-    listingRepository.findAllActiveListings(pageNumberElements, 0)
-        .then(data => {
-            res.status(200).render('index', {
-                nfts: data.rows,
-                sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
-            });
-        }).catch(error => {
+    try {
+        let activeListings = await listingRepository.findAllActiveListings(pageNumberElements, 0);
+        let sellers = await profileService.findAllAuthors(pageNumberElements, 0);
+        let customOffers = await customOfferService.findAllCustomOffers(pageNumberElements, 0);
+
+        if(!activeListings || !sellers || !customOffers) {
+            throw new Error("Could not fetch data from database");
+        }
+
+        res.status(200).render('index', {
+            customOffers: customOffers.rows,
+            sellers: sellers.rows,
+            nfts: activeListings.rows,
+            sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
+        });
+    } catch (error) {
         res.status(404).render('404', {
             error: error,
             sessionData: {isAuth: req.session.isAuth, profile: req.session.profile}
         });
-    });
+    }
 };
 
 exports.errorNotFoundPage = function (req, res) {

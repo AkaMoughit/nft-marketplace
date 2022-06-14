@@ -374,206 +374,36 @@
             <div class="section-wrapper">
                 <div class="nft-sell-wrapper">
                     <div class="row justify-content-center gx-4 gy-3">
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img src="assets/images/nft-item/style-2/01.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img
-                                                    src="assets/images/seller/04.png" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">01</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">Gihan Fernindo</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
+                        <% sellers.forEach(seller => { %>
+                            <div class="col-xl-3 col-lg-4 col-sm-6">
+                                <div class="nft-item home-3 style-2">
+                                    <div class="nft-inner">
+                                        <div class="nft-thumb">
+                                            <img loading="lazy" style="aspect-ratio: 1/1;"
+                                                 src="<%- seller.banner_url %>" alt="author-img" onerror="this.onerror=null;this.src='assets/images/profile/cover.jpg';">
 
+                                        </div>
+                                        <div class="nft-content">
+                                            <div class="author-thumb">
+                                                <a href="author" class="veryfied"><img loading="lazy" style="aspect-ratio: 1/1;"
+                                                                                       src="<%- seller.picture_url %>" alt="author-img" onerror="this.onerror=null;this.src='assets/images/profile/Profile.jpg';">
+                                                </a>
+                                            </div>
+                                            <div class="author-details d-flex flex-wrap align-items-center gap-15">
+                                                <div class="author-number">
+                                                    <h3 class="fs-36">0<%- seller.id %></h3>
+                                                </div>
+                                                <div class="author-det-info">
+                                                    <h5><a href="author"><%- seller.name %></a> </h5>
+                                                    <p class="nft-price yellow-color"><%- seller.specialize_in %></p>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/02.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/02.gif" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">02</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">liao 5er</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/03.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/03.png" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">03</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">xox3 nindo</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/04.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/05.gif" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">04</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">raxel mrh</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/05.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/02.png" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">05</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">lsr 33xr </a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/06.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/07.gif" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">06</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">Gihan Fernindo</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/07.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/05.png" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">07</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">xihan f3rd</a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
-                            <div class="nft-item home-3 style-2">
-                                <div class="nft-inner">
-                                    <div class="nft-thumb">
-                                        <img loading="lazy" src="assets/images/nft-item/style-2/08.jpg" alt="nft-img">
-                                    </div>
-                                    <div class="nft-content">
-                                        <div class="author-thumb">
-                                            <a href="author" class="veryfied"><img loading="lazy"
-                                                                                       src="assets/images/seller/04.gif" alt="author-img"></a>
-                                        </div>
-                                        <div class="author-details d-flex flex-wrap align-items-center gap-15">
-                                            <div class="author-number">
-                                                <h3 class="fs-36">08</h3>
-                                            </div>
-                                            <div class="author-det-info">
-                                                <h5><a href="author">Leo F3s </a> </h5>
-                                                <p class="nft-price yellow-color">$23,002.98</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <% }) %>
                     </div>
                 </div>
             </div>
@@ -587,7 +417,7 @@
         <div class="container">
             <div class="section-header style-3">
                 <div class="header-shape"><span></span></div>
-                <h3>Exclusive aNFT Drops</h3>
+                <h3>Top Listed Nft</h3>
             </div>
             <div class="section-wrapper">
                 <div class="ex-drop-wrapper">
