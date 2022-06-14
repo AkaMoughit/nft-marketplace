@@ -14,7 +14,7 @@ exports.welcomePage = async function (req, res) {
     try {
         let activeListings = await listingRepository.findAllActiveListings(pageNumberElements, 0);
         let sellers = await profileService.findAllAuthors(pageNumberElements, 0);
-        let customOffers = await customOfferService.findAllCustomOffers(pageNumberElements, 0);
+        let customOffers = await customOfferService.findAllCustomOffers(3, 0);
 
         if(!activeListings || !sellers || !customOffers) {
             throw new Error("Could not fetch data from database");

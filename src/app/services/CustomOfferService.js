@@ -57,6 +57,11 @@ class CustomOfferService {
 
     findAllCustomOffers(limit, offset, title=null) {
         return customOfferModel.findAndCountAll({
+            include: [
+                {
+                    model: models.Profile
+                }
+            ],
             limit: limit,
             offset: offset,
             where: {
