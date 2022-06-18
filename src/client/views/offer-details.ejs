@@ -88,7 +88,7 @@
                                             <%- customOffer.creation_date %></span>
                                         <h3><%- customOffer.title %></h3>
                                         <p><%- customOffer.body %></p>
-                                        <% if (sessionData.profile.profile_id !== customOffer.creator.profile_id) { %>
+                                        <% if (sessionData.profile && sessionData.profile.profile_id !== customOffer.creator.profile_id) { %>
                                             <div class="start-conversation">
                                                 <a href="chat?p1Id=<%- sessionData.profile.profile_id%>&p2Id=<%- customOffer.creator.profile_id%>&customOffer=true">
                                                     <span class="icon"><i class="icofont-speech-comments"></i> Start a conversation</span>
