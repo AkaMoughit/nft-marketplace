@@ -5,7 +5,7 @@ const listingService = require("../services/ListingService");
 let pageIndex = 1;
 
 exports.listingPage = function(req, res) {
-    let pageNumberElements = 16;
+    let pageNumberElements = 8;
 
     if(req.query.loadMore !== undefined) pageIndex++;
     // else if(req.query.pageIndex > 0) pageIndex = req.query.pageIndex;
